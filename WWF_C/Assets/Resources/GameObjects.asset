@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43af28e6cdf105c4db327b7c2d4aaca3, type: 3}
+  m_Name: GameObjects
+  m_EditorClassIdentifier: 
+  playerL: {fileID: 5797216588032733630, guid: 49081ebc7dde0c54d9bc6f51dacd105e, type: 3}
+  playerS: {fileID: 8357188228527803147, guid: c4b258bb760a64f4ba595c5e912482f3, type: 3}
+  playerN: {fileID: 5949236861259751136, guid: 5a4b985d701141f49b56b2c98d559303, type: 3}
+  characterL: {fileID: 4458700297543866182, guid: 6bc2299a33fcc2844b78fb6e908771b5, type: 3}
+  characterS: {fileID: 4458700297543866182, guid: 5bf79760b43df9e468802c296a540ff5, type: 3}
+  characterN: {fileID: 76886144880635061, guid: ad967332f5124da469043c510c1898ac, type: 3}
+  SFX_base: {fileID: 0}
+  wep_P25: {fileID: 408202206650809432, guid: dc8d17727562c624c8807868824bd955, type: 3}
+  bullet_45: {fileID: 0}

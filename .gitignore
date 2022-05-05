@@ -10,6 +10,22 @@
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 
+/WWF_S/[Ll]ibrary/
+/WWF_S/[Tt]emp/
+/WWF_S/[Oo]bj/
+/WWF_S/[Bb]uild/
+/WWF_S/[Bb]uilds/
+/WWF_S/[Ll]ogs/
+/WWF_S/[Mm]emoryCaptures/
+
+/WWF_C/[Ll]ibrary/
+/WWF_C/[Tt]emp/
+/WWF_C/[Oo]bj/
+/WWF_C/[Bb]uild/
+/WWF_C/[Bb]uilds/
+/WWF_C/[Ll]ogs/
+/WWF_C/[Mm]emoryCaptures/
+
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
