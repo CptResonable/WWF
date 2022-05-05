@@ -2400,7 +2400,7 @@ MonoBehaviour:
   x: 1
   y: 1
   z: 1
-  lateUpdate: 0
+  lateUpdate: 1
   eulerOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &3371919803566669549
 GameObject:
@@ -3566,7 +3566,7 @@ MonoBehaviour:
       handGrip: {fileID: 0}
     pelvisRef: {fileID: 4458700297543866179}
     animTest: {fileID: 4458700297543866176}
-    aimOriginHeightOffset: 0
+    aimOriginHeightOffset: -0.12
     aimForwardDistance: 0.25
     runYawOffset: 0
   equipment:
