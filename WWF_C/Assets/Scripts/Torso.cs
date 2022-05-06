@@ -4,8 +4,8 @@ using UnityEngine;
 
 [System.Serializable]
 public class Torso {
-    public Arm armL;
-    public Arm armR;
+    public ArmLeft armL;
+    public ArmRight armR;
     [SerializeField] private Transform pelvisRef;
     private CharacterLS character;
     private Bodypart bpPelvis, bpTorso1, bpTorso2, bpHead;

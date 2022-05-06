@@ -7,7 +7,7 @@ using VacuumBreather;
 public class Arm {
     [SerializeField] protected Transform tCompensator;
     [SerializeField] private Vector3 pidValues;
-    [SerializeField] private Transform tHandRotationTarget;
+    [SerializeField] protected Transform tHandRotationTarget;
 
     public Enums.Side side;
     public Transform tGripPosition;
@@ -21,16 +21,16 @@ public class Arm {
     public virtual void Initialize(CharacterLS character) {
         this.character = character;
 
-        if (side == Enums.Side.left) {
-            bpArm_1 = character.body.arm_1_L;
-            bpArm_2 = character.body.arm_2_L;
-            bpHand = character.body.hand_L;
-        }
-        else {
-            bpArm_1 = character.body.arm_1_R;
-            bpArm_2 = character.body.arm_2_R;
-            bpHand = character.body.hand_R;
-        }
+        //if (side == Enums.Side.left) {
+        //    bpArm_1 = character.body.arm_1_L;
+        //    bpArm_2 = character.body.arm_2_L;
+        //    bpHand = character.body.hand_L;
+        //}
+        //else {
+        //    bpArm_1 = character.body.arm_1_R;
+        //    bpArm_2 = character.body.arm_2_R;
+        //    bpHand = character.body.hand_R;
+        //}
 
         character.updateEvent += Character_updateEvent;
         character.lateUpdateEvent += Character_lateUpdateEvent;
@@ -39,56 +39,56 @@ public class Arm {
 
     protected virtual void Character_updateEvent() {
         
-        bpHand.target.rotation = tHandRotationTarget.rotation;
-        bpHand.ikTarget.rotation = tHandRotationTarget.rotation;
+        //bpHand.target.rotation = tHandRotationTarget.rotation;
+        //bpHand.ikTarget.rotation = tHandRotationTarget.rotation;
 
-        if (side == Enums.Side.left)
-            return;
+        //if (side == Enums.Side.left)
+        //    return;
 
-        bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
-        bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
-        bpHand.target.rotation = character.body.armAimRig.hand_R.rotation;
+        //bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
+        //bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
+        //bpHand.target.rotation = character.body.armAimRig.hand_R.rotation;
     }
     protected virtual void Character_lateUpdateEvent() {
        
-        bpHand.target.rotation = tHandRotationTarget.rotation;
-        bpHand.ikTarget.rotation = tHandRotationTarget.rotation;
+        //bpHand.target.rotation = tHandRotationTarget.rotation;
+        //bpHand.ikTarget.rotation = tHandRotationTarget.rotation;
 
-        if (side == Enums.Side.right) {
-            bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
-            bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
-            bpHand.target.rotation = character.body.armAimRig.hand_R.rotation;
+        //if (side == Enums.Side.right) {
+        //    bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
+        //    bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
+        //    bpHand.target.rotation = character.body.armAimRig.hand_R.rotation;
 
-            WeaponPoint_hip();
-        }
-        else {
-            bpArm_1.target.rotation = character.body.armAimRig.arm_1_L.rotation;
-            bpArm_2.target.rotation = character.body.armAimRig.arm_2_L.rotation;
-            bpHand.target.rotation = character.body.armAimRig.hand_L.rotation;
+        //    WeaponPoint_hip();
+        //}
+        //else {
+        //    bpArm_1.target.rotation = character.body.armAimRig.arm_1_L.rotation;
+        //    bpArm_2.target.rotation = character.body.armAimRig.arm_2_L.rotation;
+        //    bpHand.target.rotation = character.body.armAimRig.hand_L.rotation;
 
-            if (character.equipment.equipedType == Equipment.Type.gun)
-                WeaponGrip();
-        }
+        //    if (character.equipment.equipedType == Equipment.Type.gun)
+        //        WeaponGrip();
+        //}
     }
 
     protected virtual void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
 
-        if (side == Enums.Side.right) {
+        //if (side == Enums.Side.right) {
 
-            // Move item to grip position and rotation
-            item.transform.position = tGripPosition.position;
-            item.transform.rotation = tGripPosition.rotation;
+        //    // Move item to grip position and rotation
+        //    item.transform.position = tGripPosition.position;
+        //    item.transform.rotation = tGripPosition.rotation;
 
-            // Create and attach fixed joint
-            item.rb.velocity = Vector3.zero;
-            handGrip = tGripPosition.gameObject.AddComponent<FixedJoint>();
-            handGrip.connectedBody = item.rb;
-        }
-        else {
-            if (character.equipment.equipedType == Equipment.Type.gun) {
-                character.StartCoroutine(GrabGripCorutine(item)); 
-            }
-        }
+        //    // Create and attach fixed joint
+        //    item.rb.velocity = Vector3.zero;
+        //    handGrip = tGripPosition.gameObject.AddComponent<FixedJoint>();
+        //    handGrip.connectedBody = item.rb;
+        //}
+        //else {
+        //    if (character.equipment.equipedType == Equipment.Type.gun) {
+        //        character.StartCoroutine(GrabGripCorutine(item)); 
+        //    }
+        //}
     }
 
     protected IkTargetStruct InterpolateTargetStruct(IkTargetStruct lastStruct, IkTargetStruct newStruct, float t) {
@@ -103,11 +103,6 @@ public class Arm {
         Vector3 aimOrigin = character.tCamera.position + character.tCamera.up * character.torso.aimOriginHeightOffset;
         Vector3 rightHandTarget = aimOrigin + character.tCamera.forward * character.torso.aimForwardDistance;
         character.body.hand_R.ikTarget.position = rightHandTarget;
-    }
-
-    private void WeaponGrip() {
-        Gun gun = character.equipment.equipedItem as Gun;
-        character.body.hand_L.ikTarget.position = gun.tGrip.position;
     }
 
     private IEnumerator GrabGripCorutine(Equipable item) {
