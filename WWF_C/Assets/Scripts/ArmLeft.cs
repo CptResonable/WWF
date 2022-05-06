@@ -18,6 +18,13 @@ public class ArmLeft : Arm {
 
         if (character.equipment.equipedType == Equipment.Type.gun)
             WeaponGrip();
+
+        bpHand.target.rotation = tHandRotationTarget.rotation;
+        bpHand.ikTarget.rotation = tHandRotationTarget.rotation;
+
+        bpArm_1.target.rotation = character.body.armAimRig.arm_1_L.rotation;
+        bpArm_2.target.rotation = character.body.armAimRig.arm_2_L.rotation;
+        bpHand.target.rotation = character.body.armAimRig.hand_L.rotation;
     }
 
     protected override void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
@@ -27,18 +34,27 @@ public class ArmLeft : Arm {
     }
 
     private void WeaponGrip() {
-        Gun gun = character.equipment.equipedItem as Gun;
-        character.body.hand_L.ikTarget.position = gun.tGrip.position;
+        character.body.hand_L.ikTarget.position = tOffHandGripPosition.position;
+        //Gun gun = character.equipment.equipedItem as Gun;
+        //character.body.hand_L.ikTarget.position = gun.tGrip.position;
     }
 
     private IEnumerator GrabGripCorutine(Equipable item) {
         yield return new WaitForSeconds(0.5f);
-        bpArm_1.ragdoll.rotation = bpArm_1.target.rotation;
-        bpArm_2.ragdoll.rotation = bpArm_2.target.rotation;
-        bpHand.ragdoll.rotation = character.body.hand_R.target.rotation;
+        yield return new WaitForEndOfFrame();
+
+        //bpArm_1.ragdoll.rotation = bpArm_1.target.rotation;
+        //bpArm_2.ragdoll.rotation = bpArm_2.target.rotation;
+        //bpHand.ragdoll.rotation = character.body.hand_R.target.rotation;
+
+        bpArm_1.ragdoll.rotation = character.body.armAimRig.arm_1_L.rotation;
+        bpArm_2.ragdoll.rotation = character.body.armAimRig.arm_2_L.rotation;
+        bpHand.ragdoll.rotation = character.body.armAimRig.hand_L.rotation;
 
         handGrip = tGripPosition.gameObject.AddComponent<FixedJoint>();
         handGrip.connectedBody = item.rb;
+        handGrip.anchor = Vector3.zero;
+
 
         Debug.Log("Gripped");
     }

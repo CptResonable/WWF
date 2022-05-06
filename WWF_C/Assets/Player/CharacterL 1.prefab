@@ -1603,7 +1603,7 @@ MonoBehaviour:
   x: 1
   y: 1
   z: 1
-  lateUpdate: 0
+  lateUpdate: 1
   eulerOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &2439034134156467949
 GameObject:
@@ -2853,7 +2853,7 @@ MonoBehaviour:
   x: 1
   y: 1
   z: 1
-  lateUpdate: 0
+  lateUpdate: 1
   eulerOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &4199069194531428625
 GameObject:
@@ -3637,6 +3637,7 @@ MonoBehaviour:
   torso:
     armL:
       tCompensator: {fileID: 0}
+      tOffHandGripPosition: {fileID: 3708232384817587465}
       pidValues: {x: 0, y: 0, z: 0}
       tHandRotationTarget: {fileID: 8902250507435893431}
       side: 0
@@ -3644,6 +3645,7 @@ MonoBehaviour:
       handGrip: {fileID: 0}
     armR:
       tCompensator: {fileID: 0}
+      tOffHandGripPosition: {fileID: 3708232384817587465}
       pidValues: {x: 0, y: 0, z: 0}
       tHandRotationTarget: {fileID: 8902250507435893431}
       side: 1
@@ -4618,7 +4620,7 @@ MonoBehaviour:
   x: 1
   y: 1
   z: 1
-  lateUpdate: 0
+  lateUpdate: 1
   eulerOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &5644958352570923881
 GameObject:
@@ -6184,7 +6186,7 @@ MonoBehaviour:
   x: 1
   y: 1
   z: 1
-  lateUpdate: 0
+  lateUpdate: 1
   eulerOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &8304271934861198477
 GameObject:
@@ -6648,7 +6650,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4458700297543866149}
-  - component: {fileID: 6500687728888458639}
   - component: {fileID: 6548310488899900740}
   m_Layer: 6
   m_Name: Hand_R
@@ -6672,25 +6673,6 @@ Transform:
   m_Father: {fileID: 4458700297543866151}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6500687728888458639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8704082807097640007}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed97417f643c1e9499cb854d0d3bc85b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 4542126598592929674}
-  localRotation: 0
-  x: 1
-  y: 1
-  z: 1
-  lateUpdate: 1
-  eulerOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &6548310488899900740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6708,7 +6690,7 @@ MonoBehaviour:
   x: 1
   y: 1
   z: 1
-  lateUpdate: 0
+  lateUpdate: 1
   eulerOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &8744938954601670868
 GameObject:
@@ -7006,7 +6988,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4188544858111417894}
   - component: {fileID: 6457784056323098842}
-  - component: {fileID: 6220619803246285826}
   m_Layer: 6
   m_Name: Hand_R
   m_TagString: Untagged
@@ -7049,25 +7030,6 @@ MonoBehaviour:
   Iterations: 10
   Delta: 0.001
   SnapBackStrength: 1
---- !u!114 &6220619803246285826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9056093165854878751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed97417f643c1e9499cb854d0d3bc85b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 4542126598592929674}
-  localRotation: 0
-  x: 1
-  y: 1
-  z: 1
-  lateUpdate: 1
-  eulerOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &9098388956948609117
 GameObject:
   m_ObjectHideFlags: 0

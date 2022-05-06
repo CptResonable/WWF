@@ -13,15 +13,9 @@ public class ArmRight : Arm {
     }
 
     protected override void Character_updateEvent() {
-
-        bpHand.target.rotation = tHandRotationTarget.rotation;
-        bpHand.ikTarget.rotation = tHandRotationTarget.rotation;
-
-        bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
-        bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
-        bpHand.target.rotation = character.body.armAimRig.hand_R.rotation;
     }
     protected override void Character_lateUpdateEvent() {
+        WeaponPoint_hip();
 
         bpHand.target.rotation = tHandRotationTarget.rotation;
         bpHand.ikTarget.rotation = tHandRotationTarget.rotation;
@@ -29,8 +23,6 @@ public class ArmRight : Arm {
         bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
         bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
         bpHand.target.rotation = character.body.armAimRig.hand_R.rotation;
-
-        WeaponPoint_hip();
     }
 
     protected override void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
@@ -43,6 +35,12 @@ public class ArmRight : Arm {
         item.rb.velocity = Vector3.zero;
         handGrip = tGripPosition.gameObject.AddComponent<FixedJoint>();
         handGrip.connectedBody = item.rb;
+
+        if (type == Equipment.Type.gun) {
+            Gun gun = (Gun)item;
+            tOffHandGripPosition.localPosition = gun.tGrip.localPosition;
+        }
+        
     }
 
     private void WeaponPoint_hip() {
