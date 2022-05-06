@@ -2761,6 +2761,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2839264245663218558}
+  - component: {fileID: 7875437676790156196}
   m_Layer: 6
   m_Name: Hand_L
   m_TagString: Untagged
@@ -2783,6 +2784,26 @@ Transform:
   m_Father: {fileID: 8006792266443215688}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7875437676790156196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4081988890020434114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ca45bb53dc94f478358a1b6475653d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateInUpdate: 0
+  copyRotation: 1
+  ChainLength: 2
+  Target: {fileID: 4458700297543866144}
+  Pole: {fileID: 1731164550140829324}
+  Iterations: 10
+  Delta: 0.001
+  SnapBackStrength: 1
 --- !u!1 &4099920023045949844
 GameObject:
   m_ObjectHideFlags: 0
@@ -3568,7 +3589,7 @@ MonoBehaviour:
       joint: {fileID: 0}
     hand_L:
       target: {fileID: 4458700297543866146}
-      ragdoll: {fileID: 4458700297543866147}
+      ragdoll: {fileID: 945802353356862299}
       ikTarget: {fileID: 4458700297543866144}
       ikPole: {fileID: 0}
       inertiaTensorMod: 20
@@ -6241,7 +6262,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8346548897028269499}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.15499973, y: 0.22500002, z: -0.37599945}
+  m_LocalPosition: {x: -0.42, y: 0.184, z: 0.226}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3196910462886281466}

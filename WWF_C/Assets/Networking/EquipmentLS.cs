@@ -9,7 +9,6 @@ public class EquipmentLS : Equipment {
         this.character = (CharacterLS)character;
         base.Initialize(this.character);
         this.character.input.equip_s1.keyDownEvent += Equip_S1_keyDownEvent;
-        Debug.Log("INIT!");
     }
     private void Equip_S1_keyDownEvent() {
         equipedType = Type.gun;
