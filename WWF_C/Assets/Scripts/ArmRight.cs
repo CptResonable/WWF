@@ -36,9 +36,11 @@ public class ArmRight : Arm {
         handGrip = tGripPosition.gameObject.AddComponent<FixedJoint>();
         handGrip.connectedBody = item.rb;
 
+
         if (type == Equipment.Type.gun) {
             Gun gun = (Gun)item;
             tOffHandGripPosition.localPosition = gun.tGrip.localPosition;
+            character.torso.armL.UpperBodyController_stateTransitionCompleteEvent();
         }
         
     }
