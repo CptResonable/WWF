@@ -33,7 +33,7 @@ public class ArmRight : Arm {
 
         // Create and attach fixed joint
         item.rb.velocity = Vector3.zero;
-        handGrip = tGripPosition.gameObject.AddComponent<FixedJoint>();
+        handGrip = bpHand.ragdoll.gameObject.AddComponent<FixedJoint>();
         handGrip.connectedBody = item.rb;
 
 

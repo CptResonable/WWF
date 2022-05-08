@@ -105,7 +105,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 229499224483398350}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4458700297543866146}
-  PidValues: {x: 1800, y: 0, z: 0.15}
+  PidValues: {x: 1800, y: 0, z: 0.45}
   mode: 0
   strengthMod: 1
 --- !u!1 &341413848399367103
@@ -331,7 +331,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377287753254101338}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -478,7 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4458700297543866151}
-  PidValues: {x: 900, y: 0, z: 0.2}
+  PidValues: {x: 900, y: 0, z: 0.4}
   mode: 0
   strengthMod: 1
 --- !u!1 &582569439801321024
@@ -1341,7 +1341,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106447680078166358}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1488,7 +1488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4458700297543866145}
-  PidValues: {x: 900, y: 0, z: 0.35}
+  PidValues: {x: 900, y: 0, z: 0.4}
   mode: 0
   strengthMod: 1
 --- !u!1 &2168994341367377350
@@ -1711,7 +1711,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2825246244845030932}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1858,7 +1858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4458700297543866142}
-  PidValues: {x: 900, y: 0, z: 0.35}
+  PidValues: {x: 900, y: 0, z: 0.4}
   mode: 0
   strengthMod: 1
 --- !u!1 &2891936059463246940
@@ -2272,7 +2272,7 @@ ConfigurableJoint:
   m_SlerpDrive:
     serializedVersion: 3
     positionSpring: 1000
-    positionDamper: 15
+    positionDamper: 35
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 0
   m_ProjectionDistance: 0.1
@@ -2698,8 +2698,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7879626062815264179}
-  - component: {fileID: 9036299620559067783}
-  - component: {fileID: 3184864636114283447}
   m_Layer: 6
   m_Name: Grip_R
   m_TagString: Untagged
@@ -2721,37 +2719,6 @@ Transform:
   m_Father: {fileID: 4458700297543866154}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &9036299620559067783
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4069359255155646261}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!138 &3184864636114283447
-FixedJoint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4069359255155646261}
-  m_ConnectedBody: {fileID: 7711879977784359609}
-  m_ConnectedArticulationBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
 --- !u!1 &4081988890020434114
 GameObject:
   m_ObjectHideFlags: 0
@@ -4826,7 +4793,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5828361208190654698}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -4973,7 +4940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4458700297543866140}
-  PidValues: {x: 900, y: 0, z: 0.2}
+  PidValues: {x: 900, y: 0, z: 0.4}
   mode: 0
   strengthMod: 1
 --- !u!1 &6053736401511949002
@@ -5324,7 +5291,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6343177258325359059}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -5441,7 +5408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4458700297543866149}
-  PidValues: {x: 1800, y: 0, z: 0.15}
+  PidValues: {x: 1800, y: 0, z: 0.45}
   mode: 0
   strengthMod: 1
 --- !u!1 &6517795566963468249
@@ -5564,8 +5531,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3514534146301050873}
-  - component: {fileID: 846098642101737504}
-  - component: {fileID: 7745298709529208973}
   m_Layer: 6
   m_Name: Grip_L
   m_TagString: Untagged
@@ -5587,37 +5552,6 @@ Transform:
   m_Father: {fileID: 945802353356862299}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &846098642101737504
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6607425537532884206}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!138 &7745298709529208973
-FixedJoint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6607425537532884206}
-  m_ConnectedBody: {fileID: 5695679568390484437}
-  m_ConnectedArticulationBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
 --- !u!1 &6655596400116078391
 GameObject:
   m_ObjectHideFlags: 0
@@ -6638,7 +6572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4458700297543866162}
-  PidValues: {x: 400, y: 0, z: 0.15}
+  PidValues: {x: 150, y: 0, z: 0.15}
   mode: 0
   strengthMod: 1
 --- !u!1 &8704082807097640007
