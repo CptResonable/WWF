@@ -54,6 +54,8 @@ public class Gun : Equipable {
     public override void Attack() {
         base.Attack();
 
+        Debug.Log("FIRE!");
+
         if (bulletsInMagCount > 0) {
             ProjectileLaunchParams launchParams = projectileLauncher.Launch(tMuzzle.position, tMuzzle.forward, equipableData.equipableId);
             gunFiredEvent?.Invoke(this, launchParams);

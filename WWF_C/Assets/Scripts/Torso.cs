@@ -36,6 +36,12 @@ public class Torso {
 
         character.input.toggleAds.keyDownEvent += ToggleAds_keyDownEvent;
         character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent;
+
+        character.input.attack_1.keyDownEvent += Attack_1_keyDownEvent;
+    }
+
+    private void Attack_1_keyDownEvent() {
+        Debug.Log("TEST AC");
     }
 
     private void Character_updateEvent() {

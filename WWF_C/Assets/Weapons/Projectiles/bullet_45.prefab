@@ -110,11 +110,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1266009654110411125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1a2fa5d659f9194690c9b5c39d1e815, type: 3}
+  m_Script: {fileID: 11500000, guid: ef8a02a6dbe32ed45af08a31ae07bf07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
-  impactForce: 50
+  damage: 0
+  impactForce: 0
   projectileId: 0
   equipableId: 0
   clientId: 0
