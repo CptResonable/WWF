@@ -4,6 +4,10 @@ using UnityEngine;
 
 [System.Serializable]
 public class Torso {
+    public enum State { neutral, hipFire, ads }
+    public State lastState;
+    public State state;
+
     public ArmLeft armL;
     public ArmRight armR;
     [SerializeField] private Transform pelvisRef;
@@ -11,8 +15,9 @@ public class Torso {
     private Bodypart bpPelvis, bpTorso1, bpTorso2, bpHead;
     [SerializeField] private AnimalAnimator animTest;
 
-    [SerializeField] public float aimOriginHeightOffset;
-    [SerializeField] public float aimForwardDistance;
+    [HideInInspector] public Vector3 aimOffset;
+    [SerializeField] private Vector3 hipFireOffset;
+    [SerializeField] private Vector3 adsOffset;
 
     [HideInInspector] public float runYawOffset;
 
@@ -28,28 +33,40 @@ public class Torso {
         character.updateEvent += Character_updateEvent;
         character.lateUpdateEvent += Character_lateUpdateEvent;
         character.legController.stepStartedEvent += LegController_stepStartedEvent;
+
+        character.input.toggleAds.keyDownEvent += ToggleAds_keyDownEvent;
+        character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent;
     }
 
     private void Character_updateEvent() {
-        // Quaternion adjustedPelvisRotation = bpPelvis.ikTarget.rotation * Quaternion.Euler(bpPelvis.ikTarget.InverseTransformVector(new Vector3(-180, 0, 0)));
-        // bpTorso1.target.rotation = Quaternion.Lerp(pelvisRef.rotation, bpHead.target.rotation, 0.25f) * Quaternion.Euler(0, runYawOffset / 2, 0);
-        // bpTorso2.target.rotation = Quaternion.Lerp(pelvisRef.rotation, bpHead.target.rotation, 0.55f)  * Quaternion.Euler(0, runYawOffset, 0);
-        // // bpTorso1.target.rotation = Quaternion.Lerp(pelvisRef.rotation, bpHead.target.rotation, 0.25f) * Quaternion.Euler(0, 30 / 2, 0);
-        // // bpTorso2.target.rotation = Quaternion.Lerp(pelvisRef.rotation, bpHead.target.rotation, 0.55f)  * Quaternion.Euler(0, 60, 0);
-
         UpperBodyAnimation();
-        //WeaponPoint_hip();
     }
 
     private void Character_lateUpdateEvent() {
-        // Quaternion adjustedPelvisRotation = bpPelvis.ikTarget.rotation * Quaternion.Euler(bpPelvis.ikTarget.InverseTransformVector(new Vector3(-180, 0, 0)));
-        // bpTorso1.target.rotation = Quaternion.Lerp(pelvisRef.rotation, bpHead.target.rotation, 0.25f) * Quaternion.Euler(0, runYawOffset / 2, 0);
-        // bpTorso2.target.rotation = Quaternion.Lerp(pelvisRef.rotation, bpHead.target.rotation, 0.55f)  * Quaternion.Euler(0, runYawOffset, 0);
-        // // bpTorso1.target.rotation = Quaternion.Lerp(pelvisRef.rotation, bpHead.target.rotation, 0.25f) * Quaternion.Euler(0, 30 / 2, 0);
-        // // bpTorso2.target.rotation = Quaternion.Lerp(pelvisRef.rotation, bpHead.target.rotation, 0.55f)  * Quaternion.Euler(0, 60, 0);
+    }
 
-        //UpperBodyAnimation();
-        WeaponPoint_hip();
+    private void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
+
+        if (type == Equipment.Type.gun) {
+            SetState(State.hipFire);
+        }
+    }
+
+    private void ToggleAds_keyDownEvent() {
+        if (state == State.hipFire)
+            SetState(State.ads);
+        else if (state == State.ads)
+            SetState(State.hipFire);
+    }
+
+    private void SetState(State newState) {
+        lastState = state;
+        state = newState;
+
+        if (state == State.hipFire)
+            aimOffset = hipFireOffset;
+        else if (state == State.ads)
+            aimOffset = adsOffset;
     }
 
     float from;
@@ -74,14 +91,6 @@ public class Torso {
         t = Mathf.Lerp(from, to, stepT) % 1;
         animTest.f = t;
     }
-
-    private void WeaponPoint_hip() {
-        Vector3 aimOrigin = character.tCamera.position + character.tCamera.up * aimOriginHeightOffset;
-        Vector3 rightHandTarget = aimOrigin + character.tCamera.forward * aimForwardDistance;
-        GizmoManager.i.DrawSphere(Time.deltaTime, Color.red, rightHandTarget, 0.15f);
-        character.body.hand_R.ikTarget.position = rightHandTarget;
-    }
-
 
     // private void UpperBodyAnimation() {
     //     float stepT = character.legController.stepT;

@@ -41,14 +41,17 @@ public class ArmRight : Arm {
             Gun gun = (Gun)item;
             tOffHandGripPosition.localPosition = gun.tGrip.localPosition;
             character.torso.armL.UpperBodyController_stateTransitionCompleteEvent();
-        }
-        
+        }   
+    }
+    private void WeaponPoint_hip() {
+        character.body.hand_R.ikTarget.position = character.tCamera.position + character.tCamera.TransformVector(character.torso.aimOffset);
     }
 
-    private void WeaponPoint_hip() {
-        Vector3 aimOrigin = character.tCamera.position + character.tCamera.up * character.torso.aimOriginHeightOffset;
-        Vector3 rightHandTarget = aimOrigin + character.tCamera.forward * character.torso.aimForwardDistance;
-        character.body.hand_R.ikTarget.position = rightHandTarget;
-    }
+
+    //private void WeaponPoint_hip() {
+    //    Vector3 aimOrigin = character.tCamera.position + character.tCamera.up * character.torso.aimOriginHeightOffset;
+    //    Vector3 rightHandTarget = aimOrigin + character.tCamera.forward * character.torso.aimForwardDistance;
+    //    character.body.hand_R.ikTarget.position = rightHandTarget;
+    //}
 
 }
