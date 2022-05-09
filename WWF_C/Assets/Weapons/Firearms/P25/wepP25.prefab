@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 408202206650809447}
   - component: {fileID: 408202206650809446}
   - component: {fileID: 408202206650809445}
+  - component: {fileID: 8299368198286700540}
   m_Layer: 6
   m_Name: wepP25
   m_TagString: Untagged
@@ -34,7 +35,6 @@ Transform:
   - {fileID: 3520711569561831574}
   - {fileID: 6223067791280739350}
   - {fileID: 281973118441686220}
-  - {fileID: 6886890207003532213}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -82,6 +82,21 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!138 &8299368198286700540
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408202206650809432}
+  m_ConnectedBody: {fileID: 1625557373183498246}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &408202207133077786
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,12 +181,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6466832577672530206}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8660619685199529852}
-  m_Father: {fileID: 408202206650809447}
-  m_RootOrder: 5
+  m_Father: {fileID: 3520711569561831574}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8638741088833335538
 GameObject:
@@ -258,7 +273,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3520711569561831574}
   - component: {fileID: 1625557373183498246}
-  - component: {fileID: 653462597608028995}
   m_Layer: 6
   m_Name: Grip
   m_TagString: Untagged
@@ -276,7 +290,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 6886890207003532213}
   m_Father: {fileID: 408202206650809447}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -296,21 +311,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!138 &653462597608028995
-FixedJoint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8763985014291561763}
-  m_ConnectedBody: {fileID: 408202206650809445}
-  m_ConnectedArticulationBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
 --- !u!1001 &408202207094818789
 PrefabInstance:
   m_ObjectHideFlags: 0
