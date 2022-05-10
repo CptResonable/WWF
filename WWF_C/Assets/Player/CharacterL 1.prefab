@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4458700297543866146}
-  PidValues: {x: 1400, y: 0, z: 0.35}
+  PidValues: {x: 1000, y: 0, z: 0.35}
   mode: 0
   strengthMod: 1
 --- !u!1 &341413848399367103
@@ -5411,7 +5411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4458700297543866149}
-  PidValues: {x: 1400, y: 0, z: 0.35}
+  PidValues: {x: 1000, y: 0, z: 0.35}
   mode: 0
   strengthMod: 1
 --- !u!1 &6517795566963468249
