@@ -687,8 +687,8 @@ MonoBehaviour:
     pelvisRef: {fileID: 3632123171765181436}
     animTest: {fileID: 3632123171765181439}
     aimOffset: {x: 0, y: 0, z: 0}
-    hipFireOffset: {x: 0, y: 0, z: 0}
-    adsOffset: {x: 0, y: 0, z: 0}
+    hipFireOffset: {x: 0.08, y: -0.23, z: 0.25}
+    adsOffset: {x: 0, y: -0.132, z: 0.25}
     runYawOffset: 0
   equipment:
     tEquipmentContainer: {fileID: 0}
@@ -750,6 +750,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1475377756880361096, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: -8932597944891709060}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
 --- !u!4 &3632123171765181325 stripped
