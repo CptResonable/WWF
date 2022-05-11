@@ -30,8 +30,6 @@ public class Equipable : MonoBehaviour {
 
         character.input.attack_1.keyDownEvent += Attack_1_keyDownEvent;
         character.fixedUpdateEvent += Character_fixedUpdateEvent;
-
-        Debug.Log("EQUIPED!");
     }
 
     public virtual void EquipN(CharacterN characterN) {
@@ -44,7 +42,6 @@ public class Equipable : MonoBehaviour {
     }
 
     protected virtual void Attack_1_keyDownEvent() {
-        Attack();
     }
     public virtual void Attack() {        
     }

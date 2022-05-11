@@ -51,9 +51,29 @@ public class Gun : Equipable {
 
     }
 
-    public override void Attack() {
-        base.Attack();
+    protected override void Attack_1_keyDownEvent() {
+        base.Attack_1_keyDownEvent();
 
+        if (specs.fireMode == GunSpecs.FireModes.semiAuto)
+            Fire();
+        else if (specs.fireMode == GunSpecs.FireModes.fullAuto)
+            StartCoroutine(AutoFireCorutine());
+    }
+
+    public override void Attack() {
+        //base.Attack();
+
+        //Debug.Log("FIRE!");
+
+        //if (bulletsInMagCount > 0) {
+        //    ProjectileLaunchParams launchParams = projectileLauncher.Launch(tMuzzle.position, tMuzzle.forward, equipableData.equipableId);
+        //    gunFiredEvent?.Invoke(this, launchParams);
+        //    Recoil();
+        //    bulletsInMagCount--;
+        //}
+    }
+
+    private void Fire() {
         Debug.Log("FIRE!");
 
         if (bulletsInMagCount > 0) {
@@ -109,6 +129,18 @@ public class Gun : Equipable {
     public void FinishReload(int bulletsInMagCount) {
         Debug.Log("Reloaded!");
         this.bulletsInMagCount = bulletsInMagCount;
+    }
+
+    private IEnumerator AutoFireCorutine() {
+        bool interupted = false;
+        while (!interupted && character.input.attack_1.isTriggered) {
+            if (bulletsInMagCount <= 0) {
+                interupted = true;
+                continue;
+            }
+            Fire();
+            yield return new WaitForSeconds(specs.minFireInterval);
+        }
     }
 
     private IEnumerator ReloadCorutine() {

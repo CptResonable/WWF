@@ -19,8 +19,8 @@ MonoBehaviour:
   magSize: 300
   reloadTime: 1
   hasSlideStop: 0
-  recoilForce: {x: 0, y: -3500, z: 0}
-  recoilTorque: {x: 0, y: 0, z: 0}
+  recoilForce: {x: 0, y: -1500, z: 0}
+  recoilTorque: {x: 2000, y: 0, z: 0}
   recoilAngleHead: {x: -2, y: 0}
   recoilMultiplierCurve:
     serializedVersion: 2
