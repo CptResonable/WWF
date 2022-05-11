@@ -20,4 +20,5 @@ MonoBehaviour:
   characterN: {fileID: 76886144880635061, guid: ad967332f5124da469043c510c1898ac, type: 3}
   SFX_base: {fileID: 0}
   wep_P25: {fileID: 408202206650809432, guid: dc8d17727562c624c8807868824bd955, type: 3}
+  wep_AK: {fileID: 408202206650809432, guid: a02202dd29573db429d5312b2aac97e6, type: 3}
   bullet_45: {fileID: 1266009654110411125, guid: e597060a81e105a468a84a5dd01670b0, type: 3}

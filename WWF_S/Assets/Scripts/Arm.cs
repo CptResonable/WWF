@@ -6,7 +6,9 @@ using VacuumBreather;
 [System.Serializable]
 public class Arm {
     [SerializeField] protected Transform tCompensator;
+    [SerializeField] protected Transform tOffHandGripPosition;
     [SerializeField] private Vector3 pidValues;
+    [SerializeField] protected Transform tHandRotationTarget;
 
     public Enums.Side side;
     public Transform tGripPosition;
@@ -20,38 +22,19 @@ public class Arm {
     public virtual void Initialize(CharacterLS character) {
         this.character = character;
 
-        if (side == Enums.Side.left) {
-            bpArm_1 = character.body.arm_1_L;
-            bpArm_2 = character.body.arm_2_L;
-            bpHand = character.body.hand_L;
-        }
-        else {
-            bpArm_1 = character.body.arm_1_R;
-            bpArm_2 = character.body.arm_2_R;
-            bpHand = character.body.hand_R;
-        }
-
         character.updateEvent += Character_updateEvent;
+        character.lateUpdateEvent += Character_lateUpdateEvent;
         character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent;
     }
 
     protected virtual void Character_updateEvent() {
     }
 
+    protected virtual void Character_lateUpdateEvent() {
+    }
+
     protected virtual void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
 
-        if (side == Enums.Side.left)
-            return;
-
-        // Move item to grip position and rotation
-        item.transform.position = tGripPosition.position;
-        item.transform.rotation = tGripPosition.rotation;
-
-        // Create and attach fixed joint
-        item.rb.velocity = Vector3.zero;
-        handGrip = bpHand.ragdoll.gameObject.AddComponent<FixedJoint>();
-        handGrip.connectedBody = item.rb;
-        Debug.Log("ARM EQUIP");
     }
 
     protected IkTargetStruct InterpolateTargetStruct(IkTargetStruct lastStruct, IkTargetStruct newStruct, float t) {

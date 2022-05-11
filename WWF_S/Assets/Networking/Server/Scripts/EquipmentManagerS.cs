@@ -33,7 +33,6 @@ public class EquipmentManagerS {
     }
     
     private void OnCharacterSpawned(CharacterS character) {
-        Debug.Log("COMENTED OUT EQUIPMENT STUFF");
         character.equipment.itemEquipedEvent += OnItemEquiped;
         SpawnEquipment(character);
     }
@@ -43,9 +42,9 @@ public class EquipmentManagerS {
 
     //TODO: FIX
     private void SpawnEquipment(CharacterS character) {
-        DrDatas.EquipmentDatas.EquipableData equipableData = new DrDatas.EquipmentDatas.EquipableData(GameObjects.EquipablesEnums.wep_P25, equipableIdTicker);
+        DrDatas.EquipmentDatas.EquipableData equipableData = new DrDatas.EquipmentDatas.EquipableData(GameObjects.EquipablesEnums.wep_AK, equipableIdTicker);
 
-        GameObject goEquipable = GameObject.Instantiate(GameObjects.i.equipables[GameObjects.EquipablesEnums.wep_P25]); // TODO: make the spawn not hardcoded
+        GameObject goEquipable = GameObject.Instantiate(GameObjects.i.equipables[equipableData.equipableEnum]); // TODO: make the spawn not hardcoded
         Equipable equipable = goEquipable.GetComponent<Equipable>();
         equipable.Initialize(equipableData);     
         equipableIdTicker++; // Tick up for next id

@@ -22,7 +22,8 @@ public class GameObjects : ScriptableObject {
     // Equipables
     [Header("Equipables")]
     public GameObject wep_P25;
-    public enum EquipablesEnums { wep_P25 }
+    public GameObject wep_AK;
+    public enum EquipablesEnums { wep_P25, wep_AK }
     public Dictionary<EquipablesEnums, GameObject> equipables = new Dictionary<EquipablesEnums, GameObject>();
 
     // Projectiles
@@ -36,6 +37,7 @@ public class GameObjects : ScriptableObject {
             if (_i == null) {
                 _i = Resources.Load("GameObjects") as GameObjects;
                 i.equipables.Add(EquipablesEnums.wep_P25, i.wep_P25);
+                i.equipables.Add(EquipablesEnums.wep_AK, i.wep_AK);
 
                 i.projectiles.Add(ProjectileEnums.bullet_45, i.bullet_45);
             }

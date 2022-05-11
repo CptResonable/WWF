@@ -14,11 +14,8 @@ public abstract class Character : MonoBehaviour {
     public event Delegates.EmptyDelegate lateUpdateEvent;
 
     protected virtual void Awake() {
-        Debug.Log("AWAKE_0");
         player = transform.parent.GetComponent<Player>();
-        Debug.Log("AWAKE_1");
         equipment.Initialize(this);
-        Debug.Log("AWAKE_2");
         health.Initialize(this);
     }
 

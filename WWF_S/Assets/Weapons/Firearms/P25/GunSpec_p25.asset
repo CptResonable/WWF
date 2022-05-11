@@ -14,20 +14,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ammoType: 0
   fireMode: 0
-  muzzleVelocity: 0
-  rpm: 0
-  magSize: 0
-  reloadTime: 0
+  muzzleVelocity: 512
+  rpm: 600
+  magSize: 120
+  reloadTime: 1
   hasSlideStop: 0
-  recoilForce: {x: 0, y: 0, z: 0}
-  recoilTorque: {x: 0, y: 0, z: 0}
-  recoilAngleHead: {x: 0, y: 0}
+  recoilForce: {x: -300, y: -1000, z: 0}
+  recoilTorque: {x: 3000, y: 0, z: 0}
+  recoilAngleHead: {x: -0.5, y: 0}
   recoilMultiplierCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.9998802
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.0009487
+      value: 1.4971716
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  defaultNoiseOffset: {x: 0, y: 0}
-  recoilInceasePerBullet: 0
-  recoilResetSpeed: 0
+  defaultNoiseOffset: {x: 323, y: -56347}
+  recoilInceasePerBullet: 0.2
+  recoilResetSpeed: 7

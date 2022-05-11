@@ -12,6 +12,7 @@ namespace DitzelGames.FastIK
     public class FastIKFabric : MonoBehaviour
     {
         [SerializeField] private bool updateInUpdate;
+        [SerializeField] private bool copyRotation;
         /// <summary>
         /// Chain length of bones
         /// </summary>
@@ -200,6 +201,10 @@ namespace DitzelGames.FastIK
                     SetRotationRootSpace(Bones[i], Quaternion.FromToRotation(StartDirectionSucc[i], Positions[i + 1] - Positions[i]) * Quaternion.Inverse(StartRotationBone[i]));
                 SetPositionRootSpace(Bones[i], Positions[i]);
             }
+
+            if (copyRotation) {
+                transform.rotation = Target.rotation;
+            }
         }
 
         private Vector3 GetPositionRootSpace(Transform current)
@@ -235,9 +240,9 @@ namespace DitzelGames.FastIK
                 current.rotation = Root.rotation * rotation;
         }
 
+#if UNITY_EDITOR
         void OnDrawGizmos()
         {
-#if UNITY_EDITOR
             var current = this.transform;
             for (int i = 0; i < ChainLength && current != null && current.parent != null; i++)
             {

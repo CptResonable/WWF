@@ -11,8 +11,22 @@ public class AnimalAnimator : MonoBehaviour {
     [SerializeField] public float f;
     RuntimeAnimatorController controller;
 
+    public AvatarMask mask;
+
+    public enum MaskTransformIndexes { armature, pelvis, leg_1_L, leg_2_L, foot_L, leg_1_R, leg_2_R, foot_R, 
+        torso_1, torso_2, arm_1_L, arm_2_L, hand_L, handEnd_L, arm_1_R, arm_2_R, hand_R, handEnd_R, head, headEnd
+    }
+
     private void Awake() {
+        
         controller = animator.runtimeAnimatorController;
+        //for (int i = 0; i < 16; i++) {
+        //    mask.SetTransformActive(i, false);
+        //    //mask.SetHumanoidBodyPartActive(mask.get, false);
+        //}
+        //mask.SetTransformActive((int)MaskTransformIndexes.arm_1_R, false);
+        //mask.SetTransformActive((int)MaskTransformIndexes.arm_2_R, false);
+        //mask.SetTransformActive((int)MaskTransformIndexes.hand_R, false);
     }
     
     private void Update() {

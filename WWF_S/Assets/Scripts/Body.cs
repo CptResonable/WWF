@@ -28,6 +28,8 @@ public class Body {
     public Bodypart hand_R;
     public Bodypart head;
 
+    public ArmAimRig armAimRig;
+
     //private Character character;
 
     // public void Initialize(Character character) {
@@ -119,3 +121,9 @@ public class Bodypart {
         rotCopy.strengthMod = value;
     }
 }
+
+[System.Serializable]
+public class ArmAimRig {
+    public Transform arm_1_L, arm_2_L, hand_L, arm_1_R, arm_2_R, hand_R;
+}
+

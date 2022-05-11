@@ -37,7 +37,7 @@ public class GameObjects : ScriptableObject {
             if (_i == null) {
                 _i = Resources.Load("GameObjects") as GameObjects;
                 i.equipables.Add(EquipablesEnums.wep_P25, i.wep_P25);
-                i.equipables.Add(EquipablesEnums.wep_P25, i.wep_AK);
+                i.equipables.Add(EquipablesEnums.wep_AK, i.wep_AK);
 
                 i.projectiles.Add(ProjectileEnums.bullet_45, i.bullet_45);
             }
