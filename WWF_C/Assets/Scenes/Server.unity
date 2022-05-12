@@ -454,7 +454,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
-  equipmentManager: {}
+  equipmentManager:
+    defaultLoadout: {fileID: 11400000, guid: f115a681afb22954b8b01cb3c1036606, type: 2}
   playerManager:
     playerContainer: {fileID: 147693728}
     characterCount: 0

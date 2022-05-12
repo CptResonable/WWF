@@ -11,6 +11,9 @@ public class PlayerInput {
     public Action toggleAds;
     public Action attack_1;
     public Action equip_s1;
+    public Action equip_s2;
+    public Action equip_s3;
+    public Action equip_s4;
     public Action jump;
     public Action crouch;
     public Action reload;

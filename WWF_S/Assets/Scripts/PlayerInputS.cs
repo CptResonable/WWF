@@ -12,9 +12,12 @@ public class PlayerInputS : PlayerInput {
         toggleAds = new Action();
         attack_1 = new Action();
         equip_s1 = new Action();
+        equip_s2 = new Action();
+        equip_s3 = new Action();
+        equip_s4 = new Action();
         jump = new Action();
         reload = new Action();
-        actions = new Action[5] { toggleAds, attack_1, equip_s1, jump, reload };
+        actions = new Action[8] { toggleAds, attack_1, equip_s1, equip_s2, equip_s3, equip_s4, jump, reload };
     }
 
     public void OnMsg_updateInput(DrDatas.Player.PlayerInputData inputData) {

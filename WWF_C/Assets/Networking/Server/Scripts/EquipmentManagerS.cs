@@ -19,6 +19,7 @@ public class EquipmentManagerS {
     private List<DrDatas.EquipmentDatas.EquipablesSpawnedDatas> equipablesSpawnedDataList = new List<DrDatas.EquipmentDatas.EquipablesSpawnedDatas>();
     private List<DrDatas.EquipmentDatas.EquipableEquipedData> equipableEquipedDataList = new List<DrDatas.EquipmentDatas.EquipableEquipedData>();
 
+    [SerializeField] private Loadout defaultLoadout;
     public void Initialize() {
         ServerManagerS.i.playerManager.characterSpawnedEvent += OnCharacterSpawned;
         weaponManager.Initialize(this);
@@ -34,32 +35,56 @@ public class EquipmentManagerS {
     
     private void OnCharacterSpawned(CharacterS character) {
         character.equipment.itemEquipedEvent += OnItemEquiped;
-        SpawnEquipment(character);
+        SpawnEquipment(character, defaultLoadout);
     }
 
     private void OnCharacterDespawned() {
     }
 
     //TODO: FIX
-    private void SpawnEquipment(CharacterS character) {
-        DrDatas.EquipmentDatas.EquipableData equipableData = new DrDatas.EquipmentDatas.EquipableData(GameObjects.EquipablesEnums.wep_AK, equipableIdTicker);
+    private void SpawnEquipment(CharacterS character, Loadout loadout) {
+        DrDatas.EquipmentDatas.EquipableSpawnedData[] equipablesSpawnedDatasArray = new DrDatas.EquipmentDatas.EquipableSpawnedData[loadout.allItems.Count];
+        for (int i = 0; i < loadout.allItems.Count; i++) {
+            DrDatas.EquipmentDatas.EquipableData equipableData = new DrDatas.EquipmentDatas.EquipableData(loadout.allItems[i], equipableIdTicker);
 
-        GameObject goEquipable = GameObject.Instantiate(GameObjects.i.equipables[equipableData.equipableEnum]); // TODO: make the spawn not hardcoded
-        Equipable equipable = goEquipable.GetComponent<Equipable>();
-        equipable.Initialize(equipableData);     
-        equipableIdTicker++; // Tick up for next id
-        equipables.Add(equipableData.equipableId, equipable); // Add to dictionary
-        character.equipment.AddItem(equipable); // Give character item
+            GameObject goEquipable = GameObject.Instantiate(GameObjects.i.equipables[equipableData.equipableEnum]); // TODO: make the spawn not hardcoded
+            Equipable equipable = goEquipable.GetComponent<Equipable>();
+            equipable.Initialize(equipableData);
+            equipableIdTicker++; // Tick up for next id
+            equipables.Add(equipableData.equipableId, equipable); // Add to dictionary
+            character.equipment.AddItem(equipable); // Give character item
 
-        DrDatas.EquipmentDatas.EquipableSpawnedData equipableSpawnedData = new DrDatas.EquipmentDatas.EquipableSpawnedData(equipableData);
-        DrDatas.EquipmentDatas.EquipableSpawnedData[] equipablesSpawnedDatasArray = new DrDatas.EquipmentDatas.EquipableSpawnedData[1] {
-            equipableSpawnedData
-        };
+            DrDatas.EquipmentDatas.EquipableSpawnedData equipableSpawnedData = new DrDatas.EquipmentDatas.EquipableSpawnedData(equipableData);
+            equipablesSpawnedDatasArray[i] = equipableSpawnedData;
+        }
+
         DrDatas.EquipmentDatas.EquipablesSpawnedDatas equipablesSpawnedDatas = new DrDatas.EquipmentDatas.EquipablesSpawnedDatas(character.GetClientID(), equipablesSpawnedDatasArray);
 
         equipablesSpawnedDataList.Add(equipablesSpawnedDatas);
         equipablesSpawnedEvent?.Invoke(equipablesSpawnedDatas);
     }
+
+
+    ////TODO: FIX
+    //private void SpawnEquipment(CharacterS character) {
+    //    DrDatas.EquipmentDatas.EquipableData equipableData = new DrDatas.EquipmentDatas.EquipableData(GameObjects.EquipablesEnums.wep_AK, equipableIdTicker);
+
+    //    GameObject goEquipable = GameObject.Instantiate(GameObjects.i.equipables[equipableData.equipableEnum]); // TODO: make the spawn not hardcoded
+    //    Equipable equipable = goEquipable.GetComponent<Equipable>();
+    //    equipable.Initialize(equipableData);     
+    //    equipableIdTicker++; // Tick up for next id
+    //    equipables.Add(equipableData.equipableId, equipable); // Add to dictionary
+    //    character.equipment.AddItem(equipable); // Give character item
+
+    //    DrDatas.EquipmentDatas.EquipableSpawnedData equipableSpawnedData = new DrDatas.EquipmentDatas.EquipableSpawnedData(equipableData);
+    //    DrDatas.EquipmentDatas.EquipableSpawnedData[] equipablesSpawnedDatasArray = new DrDatas.EquipmentDatas.EquipableSpawnedData[1] {
+    //        equipableSpawnedData
+    //    };
+    //    DrDatas.EquipmentDatas.EquipablesSpawnedDatas equipablesSpawnedDatas = new DrDatas.EquipmentDatas.EquipablesSpawnedDatas(character.GetClientID(), equipablesSpawnedDatasArray);
+
+    //    equipablesSpawnedDataList.Add(equipablesSpawnedDatas);
+    //    equipablesSpawnedEvent?.Invoke(equipablesSpawnedDatas);
+    //}
 
     private void OnItemEquiped(Equipment.Type type, Equipable item) {
         DrDatas.EquipmentDatas.EquipableEquipedData equipedData = new DrDatas.EquipmentDatas.EquipableEquipedData(item.character.GetClientID(), item.equipableData);

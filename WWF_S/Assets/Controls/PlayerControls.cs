@@ -99,6 +99,30 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Equip_S2"",
+                    ""type"": ""Button"",
+                    ""id"": ""cdc6d7f9-52c3-40c7-99a9-8ebb7520314d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Equip_S3"",
+                    ""type"": ""Button"",
+                    ""id"": ""e2328e50-fb43-4f97-81ef-d3b1e8df4813"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Equip_S4"",
+                    ""type"": ""Button"",
+                    ""id"": ""9bc3afb9-45a9-4830-9f07-64e4c49d6837"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Crouch"",
                     ""type"": ""Button"",
                     ""id"": ""ea5d4668-67ba-497e-bdc1-f1c637d714a1"",
@@ -294,6 +318,39 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b3616fe-9f27-4074-9ec9-d709fb6fc07c"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equip_S2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""177d9ce9-6189-4ae3-8fe1-89d7caff21b9"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equip_S3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""26662415-3868-4046-8a71-276611856203"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Equip_S4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -312,6 +369,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Land_MouseDelta = m_Land.FindAction("MouseDelta", throwIfNotFound: true);
         m_Land_ToggleAds = m_Land.FindAction("ToggleAds", throwIfNotFound: true);
         m_Land_Equip_S1 = m_Land.FindAction("Equip_S1", throwIfNotFound: true);
+        m_Land_Equip_S2 = m_Land.FindAction("Equip_S2", throwIfNotFound: true);
+        m_Land_Equip_S3 = m_Land.FindAction("Equip_S3", throwIfNotFound: true);
+        m_Land_Equip_S4 = m_Land.FindAction("Equip_S4", throwIfNotFound: true);
         m_Land_Crouch = m_Land.FindAction("Crouch", throwIfNotFound: true);
     }
 
@@ -372,6 +432,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Land_MouseDelta;
     private readonly InputAction m_Land_ToggleAds;
     private readonly InputAction m_Land_Equip_S1;
+    private readonly InputAction m_Land_Equip_S2;
+    private readonly InputAction m_Land_Equip_S3;
+    private readonly InputAction m_Land_Equip_S4;
     private readonly InputAction m_Land_Crouch;
     public struct LandActions
     {
@@ -387,6 +450,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @MouseDelta => m_Wrapper.m_Land_MouseDelta;
         public InputAction @ToggleAds => m_Wrapper.m_Land_ToggleAds;
         public InputAction @Equip_S1 => m_Wrapper.m_Land_Equip_S1;
+        public InputAction @Equip_S2 => m_Wrapper.m_Land_Equip_S2;
+        public InputAction @Equip_S3 => m_Wrapper.m_Land_Equip_S3;
+        public InputAction @Equip_S4 => m_Wrapper.m_Land_Equip_S4;
         public InputAction @Crouch => m_Wrapper.m_Land_Crouch;
         public InputActionMap Get() { return m_Wrapper.m_Land; }
         public void Enable() { Get().Enable(); }
@@ -427,6 +493,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Equip_S1.started -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S1;
                 @Equip_S1.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S1;
                 @Equip_S1.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S1;
+                @Equip_S2.started -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S2;
+                @Equip_S2.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S2;
+                @Equip_S2.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S2;
+                @Equip_S3.started -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S3;
+                @Equip_S3.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S3;
+                @Equip_S3.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S3;
+                @Equip_S4.started -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S4;
+                @Equip_S4.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S4;
+                @Equip_S4.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnEquip_S4;
                 @Crouch.started -= m_Wrapper.m_LandActionsCallbackInterface.OnCrouch;
                 @Crouch.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnCrouch;
                 @Crouch.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnCrouch;
@@ -464,6 +539,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Equip_S1.started += instance.OnEquip_S1;
                 @Equip_S1.performed += instance.OnEquip_S1;
                 @Equip_S1.canceled += instance.OnEquip_S1;
+                @Equip_S2.started += instance.OnEquip_S2;
+                @Equip_S2.performed += instance.OnEquip_S2;
+                @Equip_S2.canceled += instance.OnEquip_S2;
+                @Equip_S3.started += instance.OnEquip_S3;
+                @Equip_S3.performed += instance.OnEquip_S3;
+                @Equip_S3.canceled += instance.OnEquip_S3;
+                @Equip_S4.started += instance.OnEquip_S4;
+                @Equip_S4.performed += instance.OnEquip_S4;
+                @Equip_S4.canceled += instance.OnEquip_S4;
                 @Crouch.started += instance.OnCrouch;
                 @Crouch.performed += instance.OnCrouch;
                 @Crouch.canceled += instance.OnCrouch;
@@ -483,6 +567,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMouseDelta(InputAction.CallbackContext context);
         void OnToggleAds(InputAction.CallbackContext context);
         void OnEquip_S1(InputAction.CallbackContext context);
+        void OnEquip_S2(InputAction.CallbackContext context);
+        void OnEquip_S3(InputAction.CallbackContext context);
+        void OnEquip_S4(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
     }
 }

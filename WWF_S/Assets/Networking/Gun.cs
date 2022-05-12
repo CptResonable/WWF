@@ -77,7 +77,7 @@ public class Gun : Equipable {
         Debug.Log("FIRE!");
 
         if (bulletsInMagCount > 0) {
-            ProjectileLaunchParams launchParams = projectileLauncher.Launch(tMuzzle.position, tMuzzle.forward, equipableData.equipableId);
+            ProjectileLaunchParams launchParams = projectileLauncher.Launch(specs.muzzleVelocity, tMuzzle.position, tMuzzle.forward, equipableData.equipableId);
             gunFiredEvent?.Invoke(this, launchParams);
             Recoil();
             bulletsInMagCount--;

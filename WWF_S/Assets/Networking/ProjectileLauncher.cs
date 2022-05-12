@@ -5,11 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class ProjectileLauncher {
     public GameObjects.ProjectileEnums projectileType;
-    public float muzzleVelocity;
+    //public float muzzleVelocity;
     public delegate void ProjectileLaunchedDelegate(ProjectileLaunchParams launchParams, ushort launchedFromId);
     public static event ProjectileLaunchedDelegate projectileLaunchedEvent;
     
-    public ProjectileLaunchParams Launch(Vector3 position, Vector3 direction, ushort launchedFromId) {
+    public ProjectileLaunchParams Launch(float muzzleVelocity, Vector3 position, Vector3 direction, ushort launchedFromId) {
         ProjectileLaunchParams launchParams = new ProjectileLaunchParams(projectileType, muzzleVelocity, position, direction);
         projectileLaunchedEvent?.Invoke(launchParams, launchedFromId);
         return launchParams;

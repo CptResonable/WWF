@@ -86,6 +86,30 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Equip_S2",
+                    "type": "Button",
+                    "id": "cdc6d7f9-52c3-40c7-99a9-8ebb7520314d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Equip_S3",
+                    "type": "Button",
+                    "id": "e2328e50-fb43-4f97-81ef-d3b1e8df4813",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Equip_S4",
+                    "type": "Button",
+                    "id": "9bc3afb9-45a9-4830-9f07-64e4c49d6837",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Crouch",
                     "type": "Button",
                     "id": "ea5d4668-67ba-497e-bdc1-f1c637d714a1",
@@ -279,6 +303,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b3616fe-9f27-4074-9ec9-d709fb6fc07c",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Equip_S2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "177d9ce9-6189-4ae3-8fe1-89d7caff21b9",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Equip_S3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "26662415-3868-4046-8a71-276611856203",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Equip_S4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -16,10 +16,13 @@ public class PlayerInputL : PlayerInput {
         toggleAds = new Action(playerControls.Land.ToggleAds);
         attack_1 = new Action(playerControls.Land.Attack_1);
         equip_s1 = new Action(playerControls.Land.Equip_S1);
+        equip_s2 = new Action(playerControls.Land.Equip_S2);
+        equip_s3 = new Action(playerControls.Land.Equip_S3);
+        equip_s4 = new Action(playerControls.Land.Equip_S4);
         jump = new Action(playerControls.Land.Jump);
         crouch = new Action(playerControls.Land.Crouch);
         reload = new Action(playerControls.Land.Reload);
-        actions = new Action[5] { toggleAds, attack_1, equip_s1, jump, reload };
+        actions = new Action[8] { toggleAds, attack_1, equip_s1, equip_s2, equip_s3, equip_s4, jump, reload };
 
         character.updateEvent += Character_updateEvent;
         character.fixedUpdateEvent += Character_fixedUpdateEvent;
