@@ -36,12 +36,11 @@ public class Equipment {
     }
 
     protected void ItemEquiped(Type equipedType, Equipable equipedItem) {
-        Debug.Log("ITEM EQUIPED!");
         character.GetPlayer().playerData.characterData.equipmentData.EquipableEquiped(equipedItem.equipableData.equipableId);
         itemEquipedEvent?.Invoke(equipedType, equipedItem);
     }
 
-    protected void ItemUnequiped(Type unequipedType, Equipable unequipedItem) {
+    protected virtual void ItemUnequiped(Type unequipedType, Equipable unequipedItem) {
         character.GetPlayer().playerData.characterData.equipmentData.EquipableUnequiped();
         itemUnequipedEvent?.Invoke(unequipedType, unequipedItem);
     }

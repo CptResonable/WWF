@@ -36,13 +36,17 @@ public class ArmRight : Arm {
         handGrip = bpHand.ragdoll.gameObject.AddComponent<FixedJoint>();
         handGrip.connectedBody = item.rb;
 
-
         if (type == Equipment.Type.gun) {
             Gun gun = (Gun)item;
             tOffHandGripPosition.localPosition = gun.tGrip.localPosition;
             character.torso.armL.UpperBodyController_stateTransitionCompleteEvent();
         }   
     }
+
+    protected override void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item) {
+        GameObject.Destroy(handGrip);
+    }
+
     private void WeaponPoint_hip() {
         character.body.hand_R.ikTarget.position = character.tCamera.position + character.tCamera.TransformVector(character.torso.aimOffset);
     }

@@ -34,6 +34,10 @@ public class ArmLeft : Arm {
         }
     }
 
+    protected override void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item) {
+        GameObject.Destroy(handGrip);
+    }
+
     private void WeaponGrip() {
         character.body.hand_L.ikTarget.position = tOffHandGripPosition.position;
     }

@@ -25,6 +25,7 @@ public class Arm {
         character.updateEvent += Character_updateEvent;
         character.lateUpdateEvent += Character_lateUpdateEvent;
         character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent;
+        character.equipment.itemUnequipedEvent += Equipment_itemUnequipedEvent;
     }
 
     protected virtual void Character_updateEvent() {
@@ -34,8 +35,11 @@ public class Arm {
     }
 
     protected virtual void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
-
     }
+
+    protected virtual void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item) {
+    }
+
 
     protected IkTargetStruct InterpolateTargetStruct(IkTargetStruct lastStruct, IkTargetStruct newStruct, float t) {
         IkTargetStruct targetStruct = new IkTargetStruct();

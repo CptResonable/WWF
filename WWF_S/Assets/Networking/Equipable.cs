@@ -38,6 +38,21 @@ public class Equipable : MonoBehaviour {
         //characterN.fixedUpdateEvent += Character_fixedUpdateEvent;
     }
 
+    public virtual void UnequipL() {
+        gameObject.SetActive(false);
+        isEquiped = false;
+
+        character.input.attack_1.keyDownEvent -= Attack_1_keyDownEvent;
+        character.fixedUpdateEvent -= Character_fixedUpdateEvent;
+
+        this.character = null;
+    }
+
+    public virtual void UnequipN() {
+        gameObject.SetActive(false);
+        isEquiped = false;
+    }
+
     protected virtual void Character_fixedUpdateEvent() {
     }
 

@@ -13,6 +13,9 @@ public class EquipmentLS : Equipment {
     }
 
     private void Equip_S1_keyDownEvent() {
+        if (this.equipedType != Type.none)
+            ItemUnequiped(this.equipedType, this.equipedItem);
+
         equipedType = Type.gun;
 
         equipedItem = equipables[0];
@@ -22,11 +25,19 @@ public class EquipmentLS : Equipment {
     }
 
     private void Equip_s2_keyDownEvent() {
+        if (this.equipedType != Type.none)
+            ItemUnequiped(this.equipedType, this.equipedItem);
+
         equipedType = Type.gun;
 
         equipedItem = equipables[1];
         equipedItem.EquipL(character);
 
         ItemEquiped(equipedItem.itemType, equipedItem);
+    }
+
+    protected override void ItemUnequiped(Type unequipedType, Equipable unequipedItem) {
+        equipedItem.UnequipL();
+        base.ItemUnequiped(unequipedType, unequipedItem);
     }
 }

@@ -36,6 +36,10 @@ public class Gun : Equipable {
         base.EquipL(character);
     }
 
+    public override void UnequipL() {
+        base.UnequipL();
+    }
+
     protected override void Character_fixedUpdateEvent() {
         base.Character_fixedUpdateEvent();
 
