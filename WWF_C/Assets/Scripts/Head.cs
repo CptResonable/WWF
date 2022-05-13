@@ -13,6 +13,10 @@ public class Head {
 
     //[HideInInspector] public Vector3 xzForwardTarget;
     [SerializeField] private float adsTilt;
+    private float tiltTarget;
+    private float tilt;
+    private float tiltTransitionSpeed = 9;
+    private Coroutine tiltTransitionCorutine;
 
     public void Initialize(CharacterLS character) {
         this.character = character;
@@ -20,20 +24,42 @@ public class Head {
         bpPelvis = character.body.pelvis;
         bpTorso1 = character.body.torso_1;
 
-        //character.updateEvent += Character_updateEvent;
-        //character.fixedUpdateEvent += Character_fixedUpdateEvent;
+        character.torso.stateChangedEvent += Torso_stateChangedEvent;
     }
+
+    private void Torso_stateChangedEvent(Torso.State newState) {
+        if (newState == Torso.State.ads) {
+            tiltTarget = adsTilt;
+        }
+        else {
+            tiltTarget = 0;
+        }
+
+        Debug.Log("TargetSet! " + tiltTarget);
+
+        if (Mathf.Abs(tiltTarget - tilt) > 0.1f) {
+            Debug.Log("hello?");
+
+            if (tiltTransitionCorutine == null)
+                tiltTransitionCorutine = character.StartCoroutine(TiltTransitionCorutine());
+        }
+    }
+
     public void CalculateHeadTargetRotation() {
         bpHead.ikTarget.rotation = Quaternion.Euler(new Vector3(character.input.headPitchYaw.x, character.input.headPitchYaw.y, 0));
         tTargetYaw.rotation = Quaternion.Euler(new Vector3(0, character.input.headPitchYaw.y, 0));
     }
 
     public void AddAdsHeadTilt() {
-        bpHead.ikTarget.Rotate(0, 0, adsTilt, Space.Self);
+        bpHead.ikTarget.Rotate(0, 0, tilt, Space.Self);
     }
 
-    //private void Character_updateEvent() {
-    //    bpHead.ikTarget.rotation = Quaternion.Euler(new Vector3(character.input.headPitchYaw.x, character.input.headPitchYaw.y, 0));
-    //    tTargetYaw.rotation = Quaternion.Euler(new Vector3(0, character.input.headPitchYaw.y, 0));
-    //}
+    private IEnumerator TiltTransitionCorutine() {
+        while (Mathf.Abs(tiltTarget - tilt) > 0.1f) {
+            tilt = Mathf.Lerp(tilt, tiltTarget, Time.deltaTime * tiltTransitionSpeed);
+            yield return new WaitForEndOfFrame();
+        }
+        tiltTransitionCorutine = null;
+        yield return null;
+    }
 }

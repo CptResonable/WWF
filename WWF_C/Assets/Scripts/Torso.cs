@@ -8,6 +8,9 @@ public class Torso {
     public State lastState;
     public State state;
 
+    public delegate void StateChangedDelegate(State newState);
+    public event StateChangedDelegate stateChangedEvent;
+
     public Head head;
     public KeyframedAnimationUpdater keyframedAnimationUpdater;
     public ArmLeft armL;
@@ -90,5 +93,8 @@ public class Torso {
             aimOffset = hipFireOffset;
         else if (state == State.ads)
             aimOffset = adsOffset;
+
+        Debug.Log("State set: " + state);
+        stateChangedEvent?.Invoke(state);
     }
 }
