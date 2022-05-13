@@ -49,6 +49,7 @@ MonoBehaviour:
   cameras:
   - {fileID: 4613660741192293991}
   - {fileID: 1347554857088694357}
+  - {fileID: 3426195708463592309}
   fpCamera: {fileID: 0}
 --- !u!114 &4458700297543866177
 MonoBehaviour:
@@ -109,10 +110,6 @@ MonoBehaviour:
     velocityLeanAmount: 3
     leanChangeSpeed: 10
     positionOffset: {x: 0, y: 0, z: 0}
-  head:
-    iktEyes: {fileID: 4458700297543866158}
-    tTargetYaw: {fileID: 4458700297543866162}
-    adsTilt: -30
   legController:
     legState: 0
     legL:
@@ -921,6 +918,11 @@ Transform:
 --- !u!4 &1196558061644555427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4108095653969536363, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_PrefabInstance: {fileID: 2997677771063951816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3426195708463592309 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 438448768366064317, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &4458700297543866136 stripped

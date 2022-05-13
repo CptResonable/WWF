@@ -14,15 +14,9 @@ public class ArmRight : Arm {
 
     protected override void Character_updateEvent() {
     }
+
     protected override void Character_lateUpdateEvent() {
         WeaponPoint_hip();
-
-        bpHand.target.rotation = tHandRotationTarget.rotation;
-        bpHand.ikTarget.rotation = tHandRotationTarget.rotation;
-
-        bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
-        bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
-        bpHand.target.rotation = character.body.armAimRig.hand_R.rotation;
     }
 
     protected override void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
@@ -45,6 +39,15 @@ public class ArmRight : Arm {
 
     protected override void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item) {
         GameObject.Destroy(handGrip);
+    }
+
+    public override void CalculateHandPosRot() {
+        bpHand.target.rotation = tHandRotationTarget.rotation;
+        bpHand.ikTarget.rotation = tHandRotationTarget.rotation;
+
+        bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
+        bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
+        bpHand.target.rotation = character.body.armAimRig.hand_R.rotation;
     }
 
     private void WeaponPoint_hip() {

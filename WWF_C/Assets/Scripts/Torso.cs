@@ -57,6 +57,9 @@ public class Torso {
         head.CalculateHeadTargetRotation();
         UpdateUpperBody_turnTowardsHead();
         head.AddAdsHeadTilt();
+        head.CalculateEyePositionAndRotation();
+        armR.CalculateHandPosRot();
+        armL.CalculateHandPosRot();
     }
 
     private void UpdateUpperBody_turnTowardsHead() {

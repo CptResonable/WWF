@@ -693,11 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd61ec53ff07a14f807d45fc3605152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tCamera: {fileID: 4458700297543866158}
-  tCharacter: {fileID: 4865299568445300383}
   character: {fileID: 4458700297543866177}
-  torso1: {fileID: 4458700297543866139}
-  torso2: {fileID: 4458700297543866178}
   animator: {fileID: 8221951682947108368}
   f: 0
   mask: {fileID: 31900000, guid: 1ca1c84e1e2675241bf35af6cb243efc, type: 2}
@@ -2767,6 +2763,7 @@ MonoBehaviour:
   cameras:
   - {fileID: 4613660741192293991}
   - {fileID: 1347554857088694357}
+  - {fileID: 1347554857088694357}
   fpCamera: {fileID: 0}
 --- !u!114 &4458700297543866177
 MonoBehaviour:
@@ -2827,9 +2824,6 @@ MonoBehaviour:
     velocityLeanAmount: 3
     leanChangeSpeed: 10
     positionOffset: {x: 0, y: 0, z: 0}
-  head:
-    tTargetYaw: {fileID: 4458700297543866162}
-    xzForwardTarget: {x: 0, y: 0, z: 0}
   legController:
     legState: 0
     legL:
@@ -3402,8 +3396,18 @@ MonoBehaviour:
       arm_2_R: {fileID: 1031306994967921877}
       hand_R: {fileID: 4188544858111417894}
   torso:
+    lastState: 0
+    state: 0
+    head:
+      iktEyes: {fileID: 0}
+      tTargetYaw: {fileID: 0}
+      adsTilt: 0
+    keyframedAnimationUpdater:
+      animator: {fileID: 0}
+      mask: {fileID: 0}
     armL:
       tCompensator: {fileID: 0}
+      tOffHandGripPosition: {fileID: 0}
       pidValues: {x: 0, y: 0, z: 0}
       tHandRotationTarget: {fileID: 8902250507435893431}
       side: 0
@@ -3411,15 +3415,16 @@ MonoBehaviour:
       handGrip: {fileID: 0}
     armR:
       tCompensator: {fileID: 0}
+      tOffHandGripPosition: {fileID: 0}
       pidValues: {x: 0, y: 0, z: 0}
       tHandRotationTarget: {fileID: 8902250507435893431}
       side: 1
       tGripPosition: {fileID: 4458700297543866154}
       handGrip: {fileID: 0}
     pelvisRef: {fileID: 4458700297543866179}
-    animTest: {fileID: 4458700297543866176}
-    aimOriginHeightOffset: 0
-    aimForwardDistance: 0.25
+    aimOffset: {x: 0, y: 0, z: 0}
+    hipFireOffset: {x: 0, y: 0, z: 0}
+    adsOffset: {x: 0, y: 0, z: 0}
     runYawOffset: 0
   equipment:
     tEquipmentContainer: {fileID: 0}

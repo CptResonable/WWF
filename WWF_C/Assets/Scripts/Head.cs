@@ -54,11 +54,19 @@ public class Head {
         bpHead.ikTarget.Rotate(0, 0, tilt, Space.Self);
     }
 
+    public void CalculateEyePositionAndRotation() {
+        iktEyes.position = bpHead.rb.position + bpHead.rb.transform.TransformVector(0, 0.18f, 0.072f);
+        Vector3 rightDirection = Vector3.Cross(bpHead.ikTarget.forward, Vector3.up);
+        Vector3 upDirection = Vector3.Cross(rightDirection, bpHead.ikTarget.forward);
+        iktEyes.rotation = Quaternion.LookRotation(bpHead.ikTarget.forward, upDirection);
+    }
+
     private IEnumerator TiltTransitionCorutine() {
         while (Mathf.Abs(tiltTarget - tilt) > 0.1f) {
             tilt = Mathf.Lerp(tilt, tiltTarget, Time.deltaTime * tiltTransitionSpeed);
             yield return new WaitForEndOfFrame();
         }
+
         tiltTransitionCorutine = null;
         yield return null;
     }

@@ -40,7 +40,6 @@ public class Arm {
     protected virtual void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item) {
     }
 
-
     protected IkTargetStruct InterpolateTargetStruct(IkTargetStruct lastStruct, IkTargetStruct newStruct, float t) {
         IkTargetStruct targetStruct = new IkTargetStruct();
         targetStruct.targetPosition = Vector3.Lerp(lastStruct.targetPosition, newStruct.targetPosition, t);
@@ -48,6 +47,10 @@ public class Arm {
         targetStruct.polePosition = Vector3.Lerp(lastStruct.polePosition, newStruct.polePosition, t);
         return targetStruct;
     }
+
+    public virtual void CalculateHandPosRot() {
+    }
+
 
     //protected void Compensate() {
     //    Vector3 newError = VectorUtils.FromToVector(bpHand.ragdoll.position, bpHand.ikTarget.position);
