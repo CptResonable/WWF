@@ -233,7 +233,7 @@ public class DrDatas {
                 headPitchYaw = e.Reader.ReadVector2();
 
                 // Read action states
-                actionStates = new bool[5];
+                actionStates = new bool[8];
                 for (int i = 0; i < actionStates.Length; i++) {
                     actionStates[i] = e.Reader.ReadBoolean();
                 }

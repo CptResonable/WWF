@@ -35,7 +35,7 @@ public class Equipment {
 
     }
 
-    protected void ItemEquiped(Type equipedType, Equipable equipedItem) {
+    protected virtual void ItemEquiped(Type equipedType, Equipable equipedItem) {
         character.GetPlayer().playerData.characterData.equipmentData.EquipableEquiped(equipedItem.equipableData.equipableId);
         itemEquipedEvent?.Invoke(equipedType, equipedItem);
     }

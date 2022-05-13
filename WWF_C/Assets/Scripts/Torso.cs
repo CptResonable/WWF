@@ -36,12 +36,6 @@ public class Torso {
 
         character.input.toggleAds.keyDownEvent += ToggleAds_keyDownEvent;
         character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent;
-
-        character.input.attack_1.keyDownEvent += Attack_1_keyDownEvent;
-    }
-
-    private void Attack_1_keyDownEvent() {
-        Debug.Log("TEST AC");
     }
 
     private void Character_updateEvent() {
@@ -49,6 +43,15 @@ public class Torso {
     }
 
     private void Character_lateUpdateEvent() {
+        Quaternion qT1 = QuaternionHelpers.DeltaQuaternion(character.rbMain.rotation, bpTorso1.target.rotation);
+        Quaternion qT2 = bpTorso2.target.localRotation;
+
+        bpTorso1.target.rotation = Quaternion.Slerp(character.rbMain.rotation, character.head.iktEyes.rotation, 0.2f);
+        bpTorso2.target.rotation = Quaternion.Slerp(character.rbMain.rotation, character.head.iktEyes.rotation, 0.50f);
+        character.body.head.target.rotation = character.head.iktEyes.rotation;
+
+        bpTorso1.target.localRotation *= qT1;// * qT1;
+        bpTorso2.target.localRotation *= qT2;
     }
 
     private void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {

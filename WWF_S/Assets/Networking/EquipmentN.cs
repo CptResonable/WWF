@@ -24,9 +24,4 @@ public class EquipmentN : Equipment {
 
         ItemEquiped(item.itemType, item);
     }
-
-    protected override void ItemUnequiped(Type unequipedType, Equipable unequipedItem) {
-        equipedItem.UnequipN();
-        base.ItemUnequiped(unequipedType, unequipedItem);
-    }
 }
