@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TETETET : MonoBehaviour {
+public class UpperBodyConnector : MonoBehaviour {
     [SerializeField] private Transform tTarget;
     private Rigidbody rb;
 
