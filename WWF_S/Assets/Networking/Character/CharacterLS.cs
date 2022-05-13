@@ -14,14 +14,12 @@ public abstract class CharacterLS : Character {
     public Locomotion locomotion;
     public LeanController LeanController;
     public Telemetry telemetry;
-    public Head head;
     public LegController legController;
     public Body body;
     public Torso torso;
     new public EquipmentLS equipment;
 
     protected override void Awake() {
-        Debug.Log("fdsf AWAKE_0");
         equipment.Initialize(this);
         base.Awake();
         base.equipment = equipment;
@@ -32,7 +30,6 @@ public abstract class CharacterLS : Character {
         locomotion.Initialize(this);
         LeanController.Initialize(this);
         legController.Initialize(this);
-        head.Initialize(this);
         torso.Initialize(this);
     }
 }

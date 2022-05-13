@@ -8,12 +8,13 @@ public class Torso {
     public State lastState;
     public State state;
 
+    public Head head;
+    public KeyframedAnimationUpdater keyframedAnimationUpdater;
     public ArmLeft armL;
     public ArmRight armR;
     [SerializeField] private Transform pelvisRef;
     private CharacterLS character;
     private Bodypart bpPelvis, bpTorso1, bpTorso2, bpHead;
-    [SerializeField] private AnimalAnimator animTest;
 
     [HideInInspector] public Vector3 aimOffset;
     [SerializeField] private Vector3 hipFireOffset;
@@ -25,6 +26,8 @@ public class Torso {
         this.character = character;
         armL.Initialize(character);
         armR.Initialize(character);
+        head.Initialize(character);
+        keyframedAnimationUpdater.Inititialize(character);
         bpPelvis = character.body.pelvis;
         bpTorso1 = character.body.torso_1;
         bpTorso2 = character.body.torso_2;
@@ -32,23 +35,37 @@ public class Torso {
 
         character.updateEvent += Character_updateEvent;
         character.lateUpdateEvent += Character_lateUpdateEvent;
-        character.legController.stepStartedEvent += LegController_stepStartedEvent;
+        //character.legController.stepStartedEvent += LegController_stepStartedEvent;
 
         character.input.toggleAds.keyDownEvent += ToggleAds_keyDownEvent;
         character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent;
-
-        character.input.attack_1.keyDownEvent += Attack_1_keyDownEvent;
-    }
-
-    private void Attack_1_keyDownEvent() {
-        Debug.Log("TEST AC");
     }
 
     private void Character_updateEvent() {
-        UpperBodyAnimation();
     }
 
     private void Character_lateUpdateEvent() {
+        UpdateUpperBody();
+    }
+
+    /// <summary> Calculate rotation targets of upper body, all is called from here in order to execute functions in the right order </summary>
+    private void UpdateUpperBody() {
+        keyframedAnimationUpdater.Update();
+        head.CalculateHeadTargetRotation();
+        UpdateUpperBody_turnTowardsHead();
+        head.AddAdsHeadTilt();
+    }
+
+    private void UpdateUpperBody_turnTowardsHead() {
+        Quaternion qT1 = QuaternionHelpers.DeltaQuaternion(character.rbMain.rotation, bpTorso1.target.rotation);
+        Quaternion qT2 = bpTorso2.target.localRotation;
+
+        bpTorso1.target.rotation = Quaternion.Slerp(character.rbMain.rotation, character.body.head.ikTarget.rotation, 0.2f);
+        bpTorso2.target.rotation = Quaternion.Slerp(character.rbMain.rotation, character.body.head.ikTarget.rotation, 0.50f);
+        character.body.head.target.rotation = character.body.head.ikTarget.rotation;
+
+        bpTorso1.target.localRotation *= qT1;// * qT1;
+        bpTorso2.target.localRotation *= qT2;
     }
 
     private void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
@@ -74,46 +91,4 @@ public class Torso {
         else if (state == State.ads)
             aimOffset = adsOffset;
     }
-
-    float from;
-    float to;
-    float t;
-    private void LegController_stepStartedEvent() {
-        Enums.Side stepSide = character.legController.lastStepSide;
-        if (stepSide == Enums.Side.right) {
-            from = t;
-            to = 0.75f;
-        }
-        else {
-            from = t;
-            to = 1.25f;
-        }
-    }
-
-    private void UpperBodyAnimation() {
-        float stepT = character.legController.stepT;
-        Enums.Side stepSide = character.legController.lastStepSide;
-
-        t = Mathf.Lerp(from, to, stepT) % 1;
-        animTest.f = t;
-    }
-
-    // private void UpperBodyAnimation() {
-    //     float stepT = character.legController.stepT;
-    //     Enums.Side stepSide = character.legController.lastStepSide;
-
-    //     if (stepSide == Enums.Side.left) {
-    //         t = Mathf.Lerp(0.25f, 0.75f, stepT);
-    //     }
-    //     else {
-    //         t = Mathf.Lerp(0.75f, 1.25f, stepT) % 1;
-    //     }
-    //     animTest.f = t;
-    // }
-
-    //public void SetArmSwingValue(float t) {
-    //    runYawOffset = t * 45;
-    //    armL.SetArmSwing(t);
-    //    armR.SetArmSwing(t);
-    //}
 }
