@@ -4,6 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class Torso {
+    public KeyframedAnimationUpdater keyframedAnimationUpdater;
     public enum State { neutral, hipFire, ads }
     public State lastState;
     public State state;
@@ -13,7 +14,6 @@ public class Torso {
     [SerializeField] private Transform pelvisRef;
     private CharacterLS character;
     private Bodypart bpPelvis, bpTorso1, bpTorso2, bpHead;
-    [SerializeField] private AnimalAnimator animTest;
 
     [HideInInspector] public Vector3 aimOffset;
     [SerializeField] private Vector3 hipFireOffset;
@@ -25,6 +25,7 @@ public class Torso {
         this.character = character;
         armL.Initialize(character);
         armR.Initialize(character);
+        keyframedAnimationUpdater.Inititialize(character);
         bpPelvis = character.body.pelvis;
         bpTorso1 = character.body.torso_1;
         bpTorso2 = character.body.torso_2;
@@ -32,17 +33,26 @@ public class Torso {
 
         character.updateEvent += Character_updateEvent;
         character.lateUpdateEvent += Character_lateUpdateEvent;
-        character.legController.stepStartedEvent += LegController_stepStartedEvent;
+        //character.legController.stepStartedEvent += LegController_stepStartedEvent;
 
         character.input.toggleAds.keyDownEvent += ToggleAds_keyDownEvent;
         character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent;
     }
 
     private void Character_updateEvent() {
-        UpperBodyAnimation();
+        //UpperBodyAnimation();
     }
 
     private void Character_lateUpdateEvent() {
+        UpdateUpperBody();
+    }
+
+    private void UpdateUpperBody() {
+        keyframedAnimationUpdater.Update();
+        UpdateUpperBody_turnTowardsHead();
+    }
+
+    private void UpdateUpperBody_turnTowardsHead() {
         Quaternion qT1 = QuaternionHelpers.DeltaQuaternion(character.rbMain.rotation, bpTorso1.target.rotation);
         Quaternion qT2 = bpTorso2.target.localRotation;
 
@@ -78,28 +88,28 @@ public class Torso {
             aimOffset = adsOffset;
     }
 
-    float from;
-    float to;
-    float t;
-    private void LegController_stepStartedEvent() {
-        Enums.Side stepSide = character.legController.lastStepSide;
-        if (stepSide == Enums.Side.right) {
-            from = t;
-            to = 0.75f;
-        }
-        else {
-            from = t;
-            to = 1.25f;
-        }
-    }
+    //float from;
+    //float to;
+    //float t;
+    //private void LegController_stepStartedEvent() {
+    //    Enums.Side stepSide = character.legController.lastStepSide;
+    //    if (stepSide == Enums.Side.right) {
+    //        from = t;
+    //        to = 0.75f;
+    //    }
+    //    else {
+    //        from = t;
+    //        to = 1.25f;
+    //    }
+    //}
 
-    private void UpperBodyAnimation() {
-        float stepT = character.legController.stepT;
-        Enums.Side stepSide = character.legController.lastStepSide;
+    //private void UpperBodyAnimation() {
+    //    float stepT = character.legController.stepT;
 
-        t = Mathf.Lerp(from, to, stepT) % 1;
-        animTest.f = t;
-    }
+    //    //Enums.Side stepSide = character.legController.lastStepSide;
+    //    t = Mathf.Lerp(from, to, stepT) % 1;
+    //    keyframedAnimationUpdater.f = t;
+    //}
 
     // private void UpperBodyAnimation() {
     //     float stepT = character.legController.stepT;
