@@ -25,6 +25,8 @@ public class Torso {
 
     [HideInInspector] public float runYawOffset;
 
+    private float adsTorsoRotation = 30;
+
     public void Initialize(CharacterLS character) {
         this.character = character;
         armL.Initialize(character);
@@ -53,6 +55,7 @@ public class Torso {
 
     /// <summary> Calculate rotation targets of upper body, all is called from here in order to execute functions in the right order </summary>
     private void UpdateUpperBody() {
+        character.LeanController.DoLean();
         keyframedAnimationUpdater.Update();
         head.CalculateHeadTargetRotation();
         UpdateUpperBody_turnTowardsHead();
@@ -63,11 +66,11 @@ public class Torso {
     }
 
     private void UpdateUpperBody_turnTowardsHead() {
-        Quaternion qT1 = QuaternionHelpers.DeltaQuaternion(character.rbMain.rotation, bpTorso1.target.rotation);
+        Quaternion qT1 = QuaternionHelpers.DeltaQuaternion(character.LeanController.tLeanPivot.rotation, bpTorso1.target.rotation);
         Quaternion qT2 = bpTorso2.target.localRotation;
 
-        bpTorso1.target.rotation = Quaternion.Slerp(character.rbMain.rotation, character.body.head.ikTarget.rotation, 0.2f);
-        bpTorso2.target.rotation = Quaternion.Slerp(character.rbMain.rotation, character.body.head.ikTarget.rotation, 0.50f);
+        bpTorso1.target.rotation = Quaternion.Slerp(character.LeanController.tLeanPivot.rotation, character.body.head.ikTarget.rotation, 0.2f);
+        bpTorso2.target.rotation = Quaternion.Slerp(character.LeanController.tLeanPivot.rotation, character.body.head.ikTarget.rotation, 0.50f);
         character.body.head.target.rotation = character.body.head.ikTarget.rotation;
 
         bpTorso1.target.localRotation *= qT1;// * qT1;
@@ -97,7 +100,6 @@ public class Torso {
         else if (state == State.ads)
             aimOffset = adsOffset;
 
-        Debug.Log("State set: " + state);
         stateChangedEvent?.Invoke(state);
     }
 }

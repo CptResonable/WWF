@@ -810,6 +810,14 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: 0.00000005355104
       objectReference: {fileID: 0}
+    - target: {fileID: 4273055191991435878, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_Antialiasing
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4273055191991435878, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_AntialiasingQuality
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4535701048682364926, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: 0.00000009406358
@@ -829,6 +837,14 @@ PrefabInstance:
     - target: {fileID: 6594353365351059416, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702054625464720766, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_Antialiasing
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702054625464720766, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_AntialiasingQuality
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7307382115114112873, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_ConnectedAnchor.x
