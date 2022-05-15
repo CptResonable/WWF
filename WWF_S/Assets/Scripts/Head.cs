@@ -4,14 +4,11 @@ using UnityEngine;
 
 [System.Serializable]
 public class Head {
+    public Eyes eyes;
     private CharacterLS character;
     private Bodypart bpHead;
-    private Bodypart bpPelvis;
-    private Bodypart bpTorso1;
     public Transform iktEyes;
     [SerializeField] private Transform tTargetYaw;
-
-    //[HideInInspector] public Vector3 xzForwardTarget;
     [SerializeField] private float adsTilt;
     private float tiltTarget;
     private float tilt;
@@ -20,9 +17,8 @@ public class Head {
 
     public void Initialize(CharacterLS character) {
         this.character = character;
+        eyes.Initialize(character);
         bpHead = character.body.head;
-        bpPelvis = character.body.pelvis;
-        bpTorso1 = character.body.torso_1;
 
         character.torso.stateChangedEvent += Torso_stateChangedEvent;
     }
@@ -35,10 +31,7 @@ public class Head {
             tiltTarget = 0;
         }
 
-        Debug.Log("TargetSet! " + tiltTarget);
-
         if (Mathf.Abs(tiltTarget - tilt) > 0.1f) {
-            Debug.Log("hello?");
 
             if (tiltTransitionCorutine == null)
                 tiltTransitionCorutine = character.StartCoroutine(TiltTransitionCorutine());

@@ -60,7 +60,7 @@ MonoBehaviour:
   tTargetYaw: {fileID: 3632123171765181325}
   tTargetPitch: {fileID: 3632123171765181328}
   tMain: {fileID: 3443479776058299954}
-  tCamera: {fileID: 3499148030986982197}
+  tCamera: {fileID: 4868764771810792767}
   rbMain: {fileID: 3443479776058299953}
   animalController:
     moveSpeed: 3
@@ -666,6 +666,8 @@ MonoBehaviour:
     lastState: 0
     state: 0
     head:
+      eyes:
+        eyeCamera: {fileID: 4484282823286970475}
       iktEyes: {fileID: 2241842346003310620}
       tTargetYaw: {fileID: 3632123171765181325}
       adsTilt: -30
@@ -898,6 +900,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4108095653969536363, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &4868764771810792767 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7318119891614914632, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_PrefabInstance: {fileID: 2746769742774308215}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &4484282823286970475 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1739836410241570076, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_PrefabInstance: {fileID: 2746769742774308215}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8362266554729065992 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5914002185743229823, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_PrefabInstance: {fileID: 2746769742774308215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3632123171765181351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361168, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
@@ -951,16 +968,6 @@ Transform:
 --- !u!4 &3632123171765181334 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361185, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
-  m_PrefabInstance: {fileID: 2746769742774308215}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3499148030986982197 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1626085473370119746, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
-  m_PrefabInstance: {fileID: 2746769742774308215}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8362266554729065992 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5914002185743229823, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &3632123171765181360 stripped

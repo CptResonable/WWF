@@ -48,7 +48,6 @@ public class KeyframedAnimationUpdater {
         animator.SetFloat("VelocityX", character.telemetry.xzVelocityLocal.x);
         animator.SetFloat("VelocityZ", character.telemetry.xzVelocityLocal.z);
         animator.Play("Walk", -1, f);
-        Debug.Log("F: " + f);
         animator.speed = 0;
     }
 }
