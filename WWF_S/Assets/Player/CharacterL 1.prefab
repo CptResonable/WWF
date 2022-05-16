@@ -109,7 +109,7 @@ MonoBehaviour:
     accelerationLeanAmount: 2
     velocityLeanAmount: 3
     leanChangeSpeed: 10
-    positionOffset: {x: 0, y: 0, z: 0}
+    positionOffset: {x: 0, y: 5.73, z: -2.56}
   legController:
     legState: 0
     legL:
@@ -713,7 +713,12 @@ MonoBehaviour:
     aimOffset: {x: 0, y: 0, z: 0}
     hipFireOffset: {x: 0.08, y: -0.23, z: 0.25}
     adsOffset: {x: 0, y: -0.132, z: 0.25}
+    tOffset: {fileID: 4458700297543866156}
+    tLeanPivot: {fileID: 4458700297543866157}
     runYawOffset: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+    accelerationLeanAmount: 2
+    velocityLeanAmount: 3
   equipment:
     tEquipmentContainer: {fileID: 0}
     equipables: []
@@ -810,6 +815,14 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: 0.00000005355104
       objectReference: {fileID: 0}
+    - target: {fileID: 4273055191991435878, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_Antialiasing
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4273055191991435878, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_AntialiasingQuality
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4535701048682364926, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: 0.00000009406358
@@ -829,6 +842,14 @@ PrefabInstance:
     - target: {fileID: 6594353365351059416, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702054625464720766, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_Antialiasing
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702054625464720766, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_AntialiasingQuality
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7307382115114112873, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_ConnectedAnchor.x

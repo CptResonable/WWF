@@ -109,7 +109,7 @@ MonoBehaviour:
     accelerationLeanAmount: 2
     velocityLeanAmount: 3
     leanChangeSpeed: 10
-    positionOffset: {x: 0, y: 0, z: 0}
+    positionOffset: {x: 0, y: 5.73, z: -2.56}
   legController:
     legState: 0
     legL:
@@ -713,7 +713,12 @@ MonoBehaviour:
     aimOffset: {x: 0, y: 0, z: 0}
     hipFireOffset: {x: 0.08, y: -0.23, z: 0.25}
     adsOffset: {x: 0, y: -0.132, z: 0.25}
+    tOffset: {fileID: 4458700297543866156}
+    tLeanPivot: {fileID: 4458700297543866157}
     runYawOffset: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+    accelerationLeanAmount: 2
+    velocityLeanAmount: 3
   equipment:
     tEquipmentContainer: {fileID: 0}
     equipables: []
