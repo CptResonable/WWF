@@ -103,13 +103,6 @@ MonoBehaviour:
     tOffset: {fileID: 4458700297543866156}
     accelerationLeanAmount: 0.04
     lateralForceLimit: 500
-  LeanController:
-    tOffset: {fileID: 4458700297543866156}
-    tLeanPivot: {fileID: 4458700297543866157}
-    accelerationLeanAmount: 2
-    velocityLeanAmount: 3
-    leanChangeSpeed: 10
-    positionOffset: {x: 0, y: 5.73, z: -2.56}
   legController:
     legState: 0
     legL:
@@ -835,6 +828,14 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: 0.00000005355104
       objectReference: {fileID: 0}
+    - target: {fileID: 5108408161492046191, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5108408161492046191, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: lateUpdate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6383188029616590032, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: -0.17202759
@@ -842,6 +843,10 @@ PrefabInstance:
     - target: {fileID: 6594353365351059416, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6643197060424100067, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6702054625464720766, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_Antialiasing
@@ -863,6 +868,10 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: -0.0000005009687
       objectReference: {fileID: 0}
+    - target: {fileID: 7480214798824061601, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8040625432194355752, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: -0.000000007450581
@@ -874,6 +883,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8384622937095351794, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
     - {fileID: 196199843821914108, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+    - {fileID: 5108408161492046191, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
 --- !u!4 &4458700297543866162 stripped
 Transform:
