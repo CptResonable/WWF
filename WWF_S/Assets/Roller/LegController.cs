@@ -183,8 +183,6 @@ public class LegController {
 
     private void PelvisOffset() {
         bounceY = Mathf.Lerp(bounceY, bounceYTarget, Time.deltaTime * bounceLerpSpeed);
-        //Grapher.Log(bounceY, "Bounc Y");
-        //character.LeanController.positionOffset = new Vector3(0, -bounceY, 0);
         character.torso.positionOffset = new Vector3(0, -bounceY, 0);
     }
 

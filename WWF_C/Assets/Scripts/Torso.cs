@@ -26,13 +26,19 @@ public class Torso {
 
     [HideInInspector] public float runYawOffset;
 
-    private float adsTorsoRotation = 30;
+    private Vector3 hipTorso1Euler = new Vector3(0, 5, 0);
+    private Vector3 hipTorso2Euler = new Vector3(0, 10, 0);
+    private Vector3 adsTorso1Euler = new Vector3(0, 15, 0);
+    private Vector3 adsTorso2Euler = new Vector3(0, 25, 0);
+    private Vector3 interpolatedTorso1Euler;
+    private Vector3 interpolatedTorso2Euler;
+    private TWrapper adsInterpolator = new TWrapper(0, 1, 0);
+    private float adsInterpolationSpeed = 7f;
 
     [HideInInspector] public Vector3 positionOffset;
     private Vector3 basePosition;
     [SerializeField] private float accelerationLeanAmount;
     [SerializeField] private float velocityLeanAmount;
-
 
     public void Initialize(CharacterLS character) {
         this.character = character;
@@ -48,8 +54,9 @@ public class Torso {
 
         character.updateEvent += Character_updateEvent;
         character.lateUpdateEvent += Character_lateUpdateEvent;
-        character.input.toggleAds.keyDownEvent += ToggleAds_keyDownEvent;
+        character.input.toggleAds.keyDownEvent += ToggleAds_keyDownEvent; ;
         character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent;
+        stateChangedEvent += Torso_stateChangedEvent;
     }
 
     private void Character_updateEvent() {
@@ -59,19 +66,42 @@ public class Torso {
         UpdateUpperBody();
     }
 
+    private void ToggleAds_keyDownEvent() {
+        if (state == State.hipFire)
+            SetState(State.ads);
+        else if (state == State.ads)
+            SetState(State.hipFire);
+    }
+
+    private void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
+        if (type == Equipment.Type.gun) {
+            SetState(State.hipFire);
+        }
+    }
+
+    private void Torso_stateChangedEvent(State newState) {
+    }
+
     /// <summary> Calculate rotation targets of upper body, all is called from here in order to execute functions in the right order </summary>
     private void UpdateUpperBody() {
-        //character.LeanController.DoLean();
         tOffset.localPosition = basePosition + positionOffset; // Bounce n' stuff
 
         ApplyVelocityAndAccelerationLean();
         keyframedAnimationUpdater.Update();
         head.CalculateHeadTargetRotation();
+        UpdateUpperBody_adsTorsoAngle();
         UpdateUpperBody_turnTowardsHead();
         head.AddAdsHeadTilt();
         head.CalculateEyePositionAndRotation();
         armR.CalculateHandPosRot();
         armL.CalculateHandPosRot();
+    }
+
+    private void UpdateUpperBody_adsTorsoAngle() {
+        interpolatedTorso1Euler = Vector3.Lerp(hipTorso1Euler, adsTorso1Euler, adsInterpolator.t);
+        interpolatedTorso2Euler = Vector3.Lerp(hipTorso2Euler, adsTorso2Euler, adsInterpolator.t);
+        bpTorso1.target.localRotation *= Quaternion.Euler(interpolatedTorso1Euler);
+        bpTorso2.target.localRotation *= Quaternion.Euler(interpolatedTorso2Euler);
     }
 
     private void UpdateUpperBody_turnTowardsHead() {
@@ -105,29 +135,31 @@ public class Torso {
         return -character.telemetry.xzVelocity.magnitude * velocityLeanAmount * tiltAxis;
     }
 
-    private void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
-
-        if (type == Equipment.Type.gun) {
-            SetState(State.hipFire);
-        }
-    }
-
-    private void ToggleAds_keyDownEvent() {
-        if (state == State.hipFire)
-            SetState(State.ads);
-        else if (state == State.ads)
-            SetState(State.hipFire);
-    }
-
     private void SetState(State newState) {
         lastState = state;
         state = newState;
+        float t = 0;
 
-        if (state == State.hipFire)
+        if (state == State.hipFire) {
             aimOffset = hipFireOffset;
-        else if (state == State.ads)
+            t = 0;
+        }
+        else if (state == State.ads) {
             aimOffset = adsOffset;
+            t = 1;
+        }
+
+        // Smooth steps between 0 and 1 when players starts ADSing.
+        character.StartCoroutine(InterpolationUtils.i.SmoothStep(adsInterpolator.t, t, adsInterpolationSpeed, adsInterpolator, OnAdsTransitionFinished));
 
         stateChangedEvent?.Invoke(state);
     }
+
+    private void OnAdsTransitionFinished() {
+        Debug.Log(adsInterpolator.t);
+    }
+
+    //private IEnumerator AdsTransitionCorutine() {
+    //    while
+    //}
 }

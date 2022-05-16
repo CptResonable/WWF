@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// Wrapper for a float t used for interpolation,
 /// </summary>
@@ -59,23 +58,22 @@ public class InterpolationUtilsInstance {
         yield return null;
     }
 
-    // public IEnumerator SmoothStep(float from, float to, float transitionSpeed, TWrapper tWrap, Delegates.EmptyDelegate OnFinished) {
-    //     float linearTransition = 0;
-    //     //tWrap.isTransitioning = f
+    public IEnumerator SmoothStep(float from, float to, float transitionSpeed, TWrapper tWrap, Delegates.EmptyDelegate OnFinished) {
+        float linearTransition = 0;
 
-    //     while (linearTransition < 1) {
-    //         linearTransition += Time.deltaTime * transitionSpeed;
-    //         if (linearTransition > 1)
-    //             linearTransition = 1;
+        while (linearTransition < 1) {
+            linearTransition += Time.deltaTime * transitionSpeed;
+            if (linearTransition > 1)
+                linearTransition = 1;
 
-    //         float t = InterpolationUtils.LinearToSmoothStep(linearTransition);
-    //         tWrap.t = Mathf.Lerp(from, to, t);
+            float t = InterpolationUtils.LinearToSmoothStep(linearTransition);
+            tWrap.t = Mathf.Lerp(from, to, t);
 
-    //         yield return new WaitForEndOfFrame();
-    //     }
-    //     tWrap.t = to;
-    //     OnFinished();
+            yield return new WaitForEndOfFrame();
+        }
+        tWrap.t = to;
+        OnFinished();
 
-    //     yield return null;
-    // }
+        yield return null;
+    }
 }

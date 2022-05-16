@@ -12,7 +12,6 @@ public abstract class CharacterLS : Character {
     public PlayerInput input;
     public AnimalController animalController;
     public Locomotion locomotion;
-    //public LeanController LeanController;
     public Telemetry telemetry;
     public LegController legController;
     public Body body;
@@ -28,7 +27,6 @@ public abstract class CharacterLS : Character {
         //CharacterColliderSetup.SetupIgnores(body);
         telemetry = new Telemetry(this);
         locomotion.Initialize(this);
-        //LeanController.Initialize(this);
         legController.Initialize(this);
         torso.Initialize(this);
     }
