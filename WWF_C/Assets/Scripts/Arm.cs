@@ -7,8 +7,6 @@ using VacuumBreather;
 public class Arm {
     [SerializeField] protected Transform tCompensator;
     [SerializeField] protected Transform tOffHandGripPosition;
-    [SerializeField] private Vector3 pidValues;
-    [SerializeField] protected Transform tHandRotationTarget;
 
     public Enums.Side side;
     public Transform tGripPosition;
@@ -50,7 +48,7 @@ public class Arm {
         return targetStruct;
     }
 
-    public virtual void CalculateHandPosRot() {
+    public virtual void CalculateArm() {
     }
 
 

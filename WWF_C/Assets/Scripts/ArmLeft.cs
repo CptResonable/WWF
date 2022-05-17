@@ -28,23 +28,20 @@ public class ArmLeft : Arm {
         GameObject.Destroy(handGrip);
     }
 
-    public override void CalculateHandPosRot() {
+    public override void CalculateArm() {
 
-        if (character.equipment.equipedType == Equipment.Type.gun)
-            WeaponGrip();
+        // Set hand target and ik target rotation
+        bpHand.ikTarget.rotation = character.body.hand_R.ikTarget.rotation;
+        bpHand.target.rotation = bpHand.ikTarget.rotation;
 
-        bpHand.target.rotation = tHandRotationTarget.rotation;
-        bpHand.ikTarget.rotation = tHandRotationTarget.rotation;
-
+        // Copy rotation from aim rig to target rig
         bpArm_1.target.rotation = character.body.armAimRig.arm_1_L.rotation;
         bpArm_2.target.rotation = character.body.armAimRig.arm_2_L.rotation;
-        bpHand.target.rotation = character.body.armAimRig.hand_L.rotation;
-    }
 
-    private void WeaponGrip() {
-        character.body.hand_L.ikTarget.position = tOffHandGripPosition.position;
+        // Set ik target position
+        if (character.equipment.equipedType == Equipment.Type.gun)
+            bpHand.ikTarget.position = tOffHandGripPosition.position;
     }
-
 
     public void UpperBodyController_stateTransitionCompleteEvent() {
         Gun gun = (Gun)character.equipment.equipedItem;

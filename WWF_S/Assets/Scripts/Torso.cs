@@ -32,8 +32,8 @@ public class Torso {
     private Vector3 adsTorso2Euler = new Vector3(0, 25, 0);
     private Vector3 interpolatedTorso1Euler;
     private Vector3 interpolatedTorso2Euler;
-    private TWrapper adsInterpolator = new TWrapper(0, 1, 0);
-    private float adsInterpolationSpeed = 7f;
+    public TWrapper adsInterpolator = new TWrapper(0, 1, 0);
+    private float adsInterpolationSpeed = 5f;
 
     [HideInInspector] public Vector3 positionOffset;
     private Vector3 basePosition;
@@ -92,13 +92,14 @@ public class Torso {
         UpdateUpperBody_adsTorsoAngle();
         UpdateUpperBody_turnTowardsHead();
         head.AddAdsHeadTilt();
+        bpHead.target.rotation = bpHead.ikTarget.rotation;
         head.CalculateEyePositionAndRotation();
-        armR.CalculateHandPosRot();
-        armL.CalculateHandPosRot();
+        armR.CalculateArm();
+        armL.CalculateArm();
     }
 
     private void UpdateUpperBody_adsTorsoAngle() {
-        interpolatedTorso1Euler = Vector3.Lerp(hipTorso1Euler, adsTorso1Euler, adsInterpolator.t);
+        interpolatedTorso1Euler = Vector3.Lerp(hipTorso1Euler, adsTorso1Euler, adsInterpolator.t);// + new Vector3(90, 0, 0);
         interpolatedTorso2Euler = Vector3.Lerp(hipTorso2Euler, adsTorso2Euler, adsInterpolator.t);
         bpTorso1.target.localRotation *= Quaternion.Euler(interpolatedTorso1Euler);
         bpTorso2.target.localRotation *= Quaternion.Euler(interpolatedTorso2Euler);

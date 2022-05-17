@@ -94,8 +94,8 @@ public class Torso {
         head.AddAdsHeadTilt();
         bpHead.target.rotation = bpHead.ikTarget.rotation;
         head.CalculateEyePositionAndRotation();
-        armR.CalculateHandPosRot();
-        armL.CalculateHandPosRot();
+        armR.CalculateArm();
+        armL.CalculateArm();
     }
 
     private void UpdateUpperBody_adsTorsoAngle() {

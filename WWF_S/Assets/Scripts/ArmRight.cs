@@ -4,6 +4,9 @@ using UnityEngine;
 
 [System.Serializable]
 public class ArmRight : Arm {
+    [SerializeField] private Transform tAimOriginBase;
+    [SerializeField] private Transform tAimOrigin;
+
     public override void Initialize(CharacterLS character) {
         bpArm_1 = character.body.arm_1_R;
         bpArm_2 = character.body.arm_2_R;
@@ -16,7 +19,7 @@ public class ArmRight : Arm {
     }
 
     protected override void Character_lateUpdateEvent() {
-        WeaponPoint_hip();
+        //WeaponPoint_hip();
     }
 
     protected override void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
@@ -41,18 +44,39 @@ public class ArmRight : Arm {
         GameObject.Destroy(handGrip);
     }
 
-    public override void CalculateHandPosRot() {
-        bpHand.target.rotation = tHandRotationTarget.rotation;
-        bpHand.ikTarget.rotation = tHandRotationTarget.rotation;
+    public override void CalculateArm() {
 
+        // Set hand target and ik target rotation
+        bpHand.ikTarget.rotation = character.tCamera.rotation * Quaternion.Euler(-90, 0, -180);
+        bpHand.target.rotation = bpHand.ikTarget.rotation;
+
+        // Copy rotation from aim rig to target rig
         bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
         bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
-        bpHand.target.rotation = character.body.armAimRig.hand_R.rotation;
+
+        CalculateAimOrgin();
+
+        // Set ik target position
+        character.body.hand_R.ikTarget.position = tAimOrigin.position + character.tCamera.TransformVector(character.torso.aimOffset);
     }
 
-    private void WeaponPoint_hip() {
-        character.body.hand_R.ikTarget.position = character.tCamera.position + character.tCamera.TransformVector(character.torso.aimOffset);
+    // Calculates position and rotation of aim origin
+    private void CalculateAimOrgin() {
+        tAimOriginBase.position = character.body.head.rb.position;
+
+        float targetHeadTilt;
+        if (character.torso.state == Torso.State.hipFire)
+            targetHeadTilt = 0;
+        else
+            targetHeadTilt = torso.head.adsTilt;
+
+        tAimOriginBase.rotation = torso.head.iktEyes.rotation;
+        tAimOriginBase.Rotate(0, 0, targetHeadTilt, Space.Self);
     }
+
+    //private void WeaponPoint_hip() {
+    //    character.body.hand_R.ikTarget.position = character.tCamera.position + character.tCamera.TransformVector(character.torso.aimOffset);
+    //}
 
 
     //private void WeaponPoint_hip() {

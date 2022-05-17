@@ -7,20 +7,20 @@ using VacuumBreather;
 public class Arm {
     [SerializeField] protected Transform tCompensator;
     [SerializeField] protected Transform tOffHandGripPosition;
-    [SerializeField] private Vector3 pidValues;
-    [SerializeField] protected Transform tHandRotationTarget;
 
     public Enums.Side side;
     public Transform tGripPosition;
     public FixedJoint handGrip;
 
     protected CharacterLS character;
+    protected Torso torso;
     protected Bodypart bpArm_1, bpArm_2, bpHand;
 
     protected Vector3 error;
 
     public virtual void Initialize(CharacterLS character) {
         this.character = character;
+        this.torso = character.torso;
 
         character.updateEvent += Character_updateEvent;
         character.lateUpdateEvent += Character_lateUpdateEvent;
@@ -48,7 +48,7 @@ public class Arm {
         return targetStruct;
     }
 
-    public virtual void CalculateHandPosRot() {
+    public virtual void CalculateArm() {
     }
 
 
