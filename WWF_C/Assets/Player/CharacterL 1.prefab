@@ -702,6 +702,8 @@ MonoBehaviour:
       side: 1
       tGripPosition: {fileID: 7879626062815264179}
       handGrip: {fileID: 0}
+      tAimOriginBase: {fileID: 8663603744550114550}
+      tAimOrigin: {fileID: 2452679015169204278}
     pelvisRef: {fileID: 4458700297543866179}
     aimOffset: {x: 0, y: 0, z: 0}
     hipFireOffset: {x: 0.08, y: -0.23, z: 0.25}
@@ -975,6 +977,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5914002185743229823, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &8663603744550114550 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5882450674594960702, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_PrefabInstance: {fileID: 2997677771063951816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2452679015169204278 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 833252367824396798, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_PrefabInstance: {fileID: 2997677771063951816}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4458700297543866136 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361168, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
@@ -1150,9 +1162,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361156, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4458700297543866179 stripped
+--- !u!4 &4207200049158889849 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1475377756880361099, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1439777678227218609, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &4458700297543866157 stripped
@@ -1160,9 +1172,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361189, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4207200049158889849 stripped
+--- !u!4 &4458700297543866156 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1439777678227218609, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1475377756880361188, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &8221951682947108368 stripped
@@ -1200,14 +1212,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361180, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4458700297543866138 stripped
+--- !u!4 &4458700297543866179 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1475377756880361170, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1475377756880361099, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4458700297543866156 stripped
+--- !u!4 &4458700297543866139 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1475377756880361188, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1475377756880361171, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &4458700297543866178 stripped
@@ -1250,8 +1262,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361184, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4458700297543866139 stripped
+--- !u!4 &4458700297543866138 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1475377756880361171, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1475377756880361170, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}

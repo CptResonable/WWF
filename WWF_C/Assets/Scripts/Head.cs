@@ -9,7 +9,7 @@ public class Head {
     private Bodypart bpHead;
     public Transform iktEyes;
     [SerializeField] private Transform tTargetYaw;
-    [SerializeField] private float adsTilt;
+    [SerializeField] public float adsTilt;
     //private float tiltTarget;
     //private float tilt;
     //private float tiltTransitionSpeed = 9;
@@ -52,8 +52,15 @@ public class Head {
         bpHead.ikTarget.Rotate(0, 0, tilt, Space.Self);
     }
 
+    //public void CalculateEyePositionAndRotation() {
+    //    iktEyesBase.position = bpHead.rb.position + bpHead.rb.transform.TransformVector(0, 0.18f, 0.072f);
+    //    Vector3 rightDirection = Vector3.Cross(bpHead.ikTarget.forward, Vector3.up);
+    //    Vector3 upDirection = Vector3.Cross(rightDirection, bpHead.ikTarget.forward);
+    //    iktEyes.rotation = Quaternion.LookRotation(bpHead.ikTarget.forward, upDirection);
+    //}
+
     public void CalculateEyePositionAndRotation() {
-        iktEyes.position = bpHead.target.position + bpHead.target.transform.TransformVector(0, 0.18f, 0.072f);
+        iktEyes.position = bpHead.rb.position + bpHead.rb.transform.TransformVector(0, 0.18f, 0.072f);
         Vector3 rightDirection = Vector3.Cross(bpHead.ikTarget.forward, Vector3.up);
         Vector3 upDirection = Vector3.Cross(rightDirection, bpHead.ikTarget.forward);
         iktEyes.rotation = Quaternion.LookRotation(bpHead.ikTarget.forward, upDirection);

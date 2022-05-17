@@ -4,6 +4,9 @@ using UnityEngine;
 
 [System.Serializable]
 public class ArmRight : Arm {
+    [SerializeField] private Transform tAimOriginBase;
+    [SerializeField] private Transform tAimOrigin;
+
     public override void Initialize(CharacterLS character) {
         bpArm_1 = character.body.arm_1_R;
         bpArm_2 = character.body.arm_2_R;
@@ -51,8 +54,24 @@ public class ArmRight : Arm {
     }
 
     private void WeaponPoint_hip() {
-        character.body.hand_R.ikTarget.position = character.tCamera.position + character.tCamera.TransformVector(character.torso.aimOffset);
+        tAimOriginBase.position = character.body.head.rb.position;
+
+        float targetHeadTilt;
+        if (character.torso.state == Torso.State.hipFire)
+            targetHeadTilt = 0;
+        else
+            targetHeadTilt = torso.head.adsTilt;
+
+        tAimOriginBase.rotation = torso.head.iktEyes.rotation;
+        tAimOriginBase.Rotate(0, 0, targetHeadTilt, Space.Self);
+
+        character.body.hand_R.ikTarget.position = tAimOrigin.position + character.tCamera.TransformVector(character.torso.aimOffset);
+        //character.body.hand_R.ikTarget.position = character.tCamera.position + character.tCamera.TransformVector(character.torso.aimOffset);
     }
+
+    //private void WeaponPoint_hip() {
+    //    character.body.hand_R.ikTarget.position = character.tCamera.position + character.tCamera.TransformVector(character.torso.aimOffset);
+    //}
 
 
     //private void WeaponPoint_hip() {
