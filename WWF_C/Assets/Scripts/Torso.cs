@@ -14,7 +14,6 @@ public class Torso {
     public KeyframedAnimationUpdater keyframedAnimationUpdater;
     public ArmLeft armL;
     public ArmRight armR;
-    [SerializeField] private Transform pelvisRef;
     private CharacterLS character;
     private Bodypart bpPelvis, bpTorso1, bpTorso2, bpHead;
 
@@ -60,6 +59,7 @@ public class Torso {
     }
 
     private void Character_updateEvent() {
+        Debug.Log("Int: " + adsInterpolator.t);
     }
 
     private void Character_lateUpdateEvent() {

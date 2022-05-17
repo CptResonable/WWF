@@ -62,7 +62,7 @@ public class ArmRight : Arm {
 
     // Calculates position and rotation of aim origin
     private void CalculateAimOrgin() {
-        tAimOriginBase.position = character.body.head.rb.position;
+        tAimOriginBase.position = character.body.head.ragdoll.position;
 
         float targetHeadTilt;
         if (character.torso.state == Torso.State.hipFire)

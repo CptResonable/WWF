@@ -60,6 +60,7 @@ public class Torso {
     }
 
     private void Character_updateEvent() {
+        Debug.Log("Int: " + adsInterpolator.t);
     }
 
     private void Character_lateUpdateEvent() {

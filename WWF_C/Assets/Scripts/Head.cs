@@ -10,32 +10,11 @@ public class Head {
     public Transform iktEyes;
     [SerializeField] private Transform tTargetYaw;
     [SerializeField] public float adsTilt;
-    //private float tiltTarget;
-    //private float tilt;
-    //private float tiltTransitionSpeed = 9;
-    //private Coroutine tiltTransitionCorutine;
 
     public void Initialize(CharacterLS character) {
         this.character = character;
         eyes.Initialize(character);
         bpHead = character.body.head;
-
-        character.torso.stateChangedEvent += Torso_stateChangedEvent;
-    }
-
-    private void Torso_stateChangedEvent(Torso.State newState) {
-        //if (newState == Torso.State.ads) {
-        //    tiltTarget = adsTilt;
-        //}
-        //else {
-        //    tiltTarget = 0;
-        //}
-
-        //if (Mathf.Abs(tiltTarget - tilt) > 0.1f) {
-
-        //    if (tiltTransitionCorutine == null)
-        //        tiltTransitionCorutine = character.StartCoroutine(TiltTransitionCorutine());
-        //}
     }
 
     public void CalculateHeadTargetRotation() {
@@ -45,34 +24,13 @@ public class Head {
 
     public void AddAdsHeadTilt() {
         float tilt = Mathf.Lerp(0, adsTilt, character.torso.adsInterpolator.t);
-        //if (character.torso.state == Torso.State.hipFire)
-        //    tilt = 0;
-        //else
-        //    tilt = 30;
         bpHead.ikTarget.Rotate(0, 0, tilt, Space.Self);
     }
 
-    //public void CalculateEyePositionAndRotation() {
-    //    iktEyesBase.position = bpHead.rb.position + bpHead.rb.transform.TransformVector(0, 0.18f, 0.072f);
-    //    Vector3 rightDirection = Vector3.Cross(bpHead.ikTarget.forward, Vector3.up);
-    //    Vector3 upDirection = Vector3.Cross(rightDirection, bpHead.ikTarget.forward);
-    //    iktEyes.rotation = Quaternion.LookRotation(bpHead.ikTarget.forward, upDirection);
-    //}
-
     public void CalculateEyePositionAndRotation() {
-        iktEyes.position = bpHead.rb.position + bpHead.rb.transform.TransformVector(0, 0.18f, 0.072f);
+        iktEyes.position = bpHead.ragdoll.position + bpHead.ragdoll.transform.TransformVector(0, 0.18f, 0.072f);
         Vector3 rightDirection = Vector3.Cross(bpHead.ikTarget.forward, Vector3.up);
         Vector3 upDirection = Vector3.Cross(rightDirection, bpHead.ikTarget.forward);
         iktEyes.rotation = Quaternion.LookRotation(bpHead.ikTarget.forward, upDirection);
     }
-
-    //private IEnumerator TiltTransitionCorutine() {
-    //    while (Mathf.Abs(tiltTarget - tilt) > 0.1f) {
-    //        tilt = Mathf.Lerp(tilt, tiltTarget, Time.deltaTime * tiltTransitionSpeed);
-    //        yield return new WaitForEndOfFrame();
-    //    }
-
-    //    tiltTransitionCorutine = null;
-    //    yield return null;
-    //}
 }
