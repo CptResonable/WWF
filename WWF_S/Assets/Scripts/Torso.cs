@@ -14,7 +14,6 @@ public class Torso {
     public KeyframedAnimationUpdater keyframedAnimationUpdater;
     public ArmLeft armL;
     public ArmRight armR;
-    [SerializeField] private Transform pelvisRef;
     private CharacterLS character;
     private Bodypart bpPelvis, bpTorso1, bpTorso2, bpHead;
 
@@ -28,8 +27,8 @@ public class Torso {
 
     private Vector3 hipTorso1Euler = new Vector3(0, 5, 0);
     private Vector3 hipTorso2Euler = new Vector3(0, 10, 0);
-    private Vector3 adsTorso1Euler = new Vector3(0, 15, 0);
-    private Vector3 adsTorso2Euler = new Vector3(0, 25, 0);
+    private Vector3 adsTorso1Euler = new Vector3(0, 10, 0);
+    private Vector3 adsTorso2Euler = new Vector3(0, 20, 0);
     private Vector3 interpolatedTorso1Euler;
     private Vector3 interpolatedTorso2Euler;
     public TWrapper adsInterpolator = new TWrapper(0, 1, 0);
@@ -60,7 +59,6 @@ public class Torso {
     }
 
     private void Character_updateEvent() {
-        Debug.Log("Int: " + adsInterpolator.t);
     }
 
     private void Character_lateUpdateEvent() {
@@ -100,6 +98,12 @@ public class Torso {
     }
 
     private void UpdateUpperBody_adsTorsoAngle() {
+        float f = Mathf.Lerp(1f, 0.5f, adsInterpolator.t);
+        bpTorso1.target.localRotation = Quaternion.Slerp(Quaternion.Euler(90, 0, 0), bpTorso1.target.localRotation, f);
+        bpTorso2.target.localRotation = Quaternion.Slerp(Quaternion.Euler(0, 0, 0), bpTorso2.target.localRotation, f);
+        //bpTorso1.target.localRotation =  Quaternion.Euler(bpTorso1.target.localRotation.eulerAngles.x, bpTorso1.target.localRotation.eulerAngles.y * f, bpTorso1.target.localRotation.eulerAngles.z);
+        //bpTorso2.target.localRotation = Quaternion.Euler(bpTorso2.target.localRotation.eulerAngles.x, bpTorso2.target.localRotation.eulerAngles.y * f, bpTorso2.target.localRotation.eulerAngles.z);
+
         interpolatedTorso1Euler = Vector3.Lerp(hipTorso1Euler, adsTorso1Euler, adsInterpolator.t);// + new Vector3(90, 0, 0);
         interpolatedTorso2Euler = Vector3.Lerp(hipTorso2Euler, adsTorso2Euler, adsInterpolator.t);
         bpTorso1.target.localRotation *= Quaternion.Euler(interpolatedTorso1Euler);

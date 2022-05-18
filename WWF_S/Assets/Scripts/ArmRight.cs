@@ -19,7 +19,6 @@ public class ArmRight : Arm {
     }
 
     protected override void Character_lateUpdateEvent() {
-        //WeaponPoint_hip();
     }
 
     protected override void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
@@ -62,7 +61,7 @@ public class ArmRight : Arm {
 
     // Calculates position and rotation of aim origin
     private void CalculateAimOrgin() {
-        tAimOriginBase.position = character.body.head.rb.position;
+        tAimOriginBase.position = character.body.head.ragdoll.position;
 
         float targetHeadTilt;
         if (character.torso.state == Torso.State.hipFire)

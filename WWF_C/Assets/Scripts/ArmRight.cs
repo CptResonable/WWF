@@ -19,7 +19,6 @@ public class ArmRight : Arm {
     }
 
     protected override void Character_lateUpdateEvent() {
-        //WeaponPoint_hip();
     }
 
     protected override void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {

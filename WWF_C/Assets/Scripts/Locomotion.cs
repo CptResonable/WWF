@@ -5,6 +5,10 @@ using VacuumBreather;
 
 [System.Serializable]
 public class Locomotion {
+    private const float WALK_SPEED = 8;
+    private const float JOG_SPEED = 14;
+    private const float SPRINT_SPEED = 17;
+
     private CharacterLS character;
 
     [SerializeField] private Vector3 pidValues_move;
@@ -23,6 +27,16 @@ public class Locomotion {
 
         character.updateEvent += Update;
         character.fixedUpdateEvent += Character_fixedUpdateEvent;
+        character.input.sprint.keyDownEvent += Sprint_keyDownEvent;
+        character.input.sprint.keyUpEvent += Sprint_keyUpEvent;
+    }
+
+    private void Sprint_keyDownEvent() {
+        moveSpeed = SPRINT_SPEED;
+    }
+
+    private void Sprint_keyUpEvent() {
+        moveSpeed = JOG_SPEED;
     }
 
     private void Update() {
@@ -57,8 +71,10 @@ public class Locomotion {
             Vector3 normalForce = character.telemetry.groundNormal * output;
             Vector3 normalUpForce = new Vector3(0, normalForce.y, 0);
             Vector3 normalXZForce = normalForce - normalUpForce;
+
             if (character.input.vecMoveXZ.magnitude < 0.1f && normalXZForce.magnitude < lateralForceLimit)
                 normalXZForce = Vector3.zero;
+
             character.rbMain.AddForce(normalUpForce + normalXZForce);
         }
     }

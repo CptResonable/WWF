@@ -17,7 +17,8 @@ public class PlayerInputS : PlayerInput {
         equip_s4 = new Action();
         jump = new Action();
         reload = new Action();
-        actions = new Action[8] { toggleAds, attack_1, equip_s1, equip_s2, equip_s3, equip_s4, jump, reload };
+        sprint = new Action();
+        actions = new Action[9] { toggleAds, attack_1, equip_s1, equip_s2, equip_s3, equip_s4, jump, reload, sprint };
     }
 
     public void OnMsg_updateInput(DrDatas.Player.PlayerInputData inputData) {

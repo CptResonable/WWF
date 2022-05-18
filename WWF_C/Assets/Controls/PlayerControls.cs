@@ -129,6 +129,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba04a208-a9e0-4627-886e-e09297aef601"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -351,6 +359,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Equip_S4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""820c7744-4483-484a-8bb4-495860a7c4ea"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -373,6 +392,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Land_Equip_S3 = m_Land.FindAction("Equip_S3", throwIfNotFound: true);
         m_Land_Equip_S4 = m_Land.FindAction("Equip_S4", throwIfNotFound: true);
         m_Land_Crouch = m_Land.FindAction("Crouch", throwIfNotFound: true);
+        m_Land_Sprint = m_Land.FindAction("Sprint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -436,6 +456,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Land_Equip_S3;
     private readonly InputAction m_Land_Equip_S4;
     private readonly InputAction m_Land_Crouch;
+    private readonly InputAction m_Land_Sprint;
     public struct LandActions
     {
         private @PlayerControls m_Wrapper;
@@ -454,6 +475,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Equip_S3 => m_Wrapper.m_Land_Equip_S3;
         public InputAction @Equip_S4 => m_Wrapper.m_Land_Equip_S4;
         public InputAction @Crouch => m_Wrapper.m_Land_Crouch;
+        public InputAction @Sprint => m_Wrapper.m_Land_Sprint;
         public InputActionMap Get() { return m_Wrapper.m_Land; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -505,6 +527,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Crouch.started -= m_Wrapper.m_LandActionsCallbackInterface.OnCrouch;
                 @Crouch.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnCrouch;
                 @Crouch.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnCrouch;
+                @Sprint.started -= m_Wrapper.m_LandActionsCallbackInterface.OnSprint;
+                @Sprint.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnSprint;
+                @Sprint.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnSprint;
             }
             m_Wrapper.m_LandActionsCallbackInterface = instance;
             if (instance != null)
@@ -551,6 +576,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Crouch.started += instance.OnCrouch;
                 @Crouch.performed += instance.OnCrouch;
                 @Crouch.canceled += instance.OnCrouch;
+                @Sprint.started += instance.OnSprint;
+                @Sprint.performed += instance.OnSprint;
+                @Sprint.canceled += instance.OnSprint;
             }
         }
     }
@@ -571,5 +599,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnEquip_S3(InputAction.CallbackContext context);
         void OnEquip_S4(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
     }
 }
