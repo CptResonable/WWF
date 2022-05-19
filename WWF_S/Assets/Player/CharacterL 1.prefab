@@ -95,7 +95,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   locomotion:
-    pidValues_move: {x: 120, y: 0, z: 0.02}
+    pidValues_move: {x: 800, y: 0, z: 0.02}
     moveSpeed: 10
     pidValues_hoover: {x: 20000, y: 0, z: 5}
     targetHooverHeight: 0.75
@@ -701,8 +701,8 @@ MonoBehaviour:
       tAimOriginBase: {fileID: 8663603744550114550}
       tAimOrigin: {fileID: 2452679015169204278}
     aimOffset: {x: 0, y: 0, z: 0}
-    hipFireOffset: {x: 0.08, y: -0.23, z: 0.25}
-    adsOffset: {x: 0, y: -0.132, z: 0.25}
+    hipFireOffset: {x: -0.08, y: 0.23, z: -0.25}
+    adsOffset: {x: 0, y: 0.17, z: -0.152}
     tOffset: {fileID: 4458700297543866156}
     tLeanPivot: {fileID: 4458700297543866157}
     runYawOffset: 0

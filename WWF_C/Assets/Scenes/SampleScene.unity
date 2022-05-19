@@ -745,6 +745,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: df0526d6d71d33a47b194fd18d5459c8, type: 2}
+    - target: {fileID: 2911990388890915872, guid: dfd4d3f6d4c7de74681cf640703a4d07, type: 3}
+      propertyPath: flatShaded
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3066504325554075205, guid: dfd4d3f6d4c7de74681cf640703a4d07, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -2726,16 +2730,6 @@ MonoBehaviour:
     tOffset: {fileID: 2138741822590219473}
     accelerationLeanAmount: 0.04
     lateralForceLimit: 500
-  LeanController:
-    tOffset: {fileID: 2138741822590219473}
-    tLeanPivot: {fileID: 2138741822590219472}
-    accelerationLeanAmount: 2
-    velocityLeanAmount: 3
-    leanChangeSpeed: 10
-    positionOffset: {x: 0, y: 0, z: 0}
-  head:
-    tTargetYaw: {fileID: 2138741822590219471}
-    xzForwardTarget: {x: 0, y: 0, z: 0}
   legController:
     legState: 0
     legL:
@@ -3310,29 +3304,38 @@ MonoBehaviour:
   torso:
     lastState: 0
     state: 0
+    head:
+      eyes:
+        eyeCamera: {fileID: 0}
+      iktEyes: {fileID: 0}
+      tTargetYaw: {fileID: 0}
+      adsTilt: 0
+    keyframedAnimationUpdater:
+      animator: {fileID: 0}
+      mask: {fileID: 0}
     armL:
       tCompensator: {fileID: 0}
       tOffHandGripPosition: {fileID: 0}
-      pidValues: {x: 0, y: 0, z: 0}
-      tHandRotationTarget: {fileID: 0}
       side: 0
       tGripPosition: {fileID: 0}
       handGrip: {fileID: 0}
     armR:
       tCompensator: {fileID: 0}
       tOffHandGripPosition: {fileID: 0}
-      pidValues: {x: 0, y: 0, z: 0}
-      tHandRotationTarget: {fileID: 0}
       side: 1
       tGripPosition: {fileID: 2138741822590219479}
       handGrip: {fileID: 0}
-    pelvisRef: {fileID: 2138741822590219454}
-    animTest: {fileID: 0}
+      tAimOriginBase: {fileID: 0}
+      tAimOrigin: {fileID: 0}
+    aimOffset: {x: 0, y: 0, z: 0}
     hipFireOffset: {x: 0, y: 0, z: 0}
     adsOffset: {x: 0, y: 0, z: 0}
-    aimOriginHeightOffset: 0
-    aimForwardDistance: 0.25
+    tOffset: {fileID: 0}
+    tLeanPivot: {fileID: 0}
     runYawOffset: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+    accelerationLeanAmount: 0
+    velocityLeanAmount: 0
   equipment:
     tEquipmentContainer: {fileID: 0}
     equipables: []

@@ -47,6 +47,7 @@ public class ArmRight : Arm {
 
         // Set hand target and ik target rotation
         bpHand.ikTarget.rotation = character.tCamera.rotation * Quaternion.Euler(-90, 0, -180);
+        bpHand.ikTarget.Rotate(new Vector3(0, character.telemetry.xzVelocityLocal.x * -5, 0), Space.Self);
         bpHand.target.rotation = bpHand.ikTarget.rotation;
 
         // Copy rotation from aim rig to target rig
@@ -56,7 +57,8 @@ public class ArmRight : Arm {
         CalculateAimOrgin();
 
         // Set ik target position
-        character.body.hand_R.ikTarget.position = tAimOrigin.position + character.tCamera.TransformVector(character.torso.aimOffset);
+        character.body.hand_R.ikTarget.position = tAimOrigin.position + bpHand.ikTarget.TransformVector(character.torso.aimOffset);
+        //character.body.hand_R.ikTarget.position = tAimOrigin.position + character.tCamera.TransformVector(character.torso.aimOffset);
     }
 
     // Calculates position and rotation of aim origin

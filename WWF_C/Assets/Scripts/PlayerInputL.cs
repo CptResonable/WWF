@@ -33,6 +33,7 @@ public class PlayerInputL : PlayerInput {
         vecMoveXZ = playerControls.Land.Move.ReadValue<Vector2>();
         v3vecMoveXZ = new Vector3(vecMoveXZ.x, 0, vecMoveXZ.y);
         Vector2 mouseDelta = playerControls.Land.MouseDelta.ReadValue<Vector2>() * Settings.mouseSensitivity;
+        //Vector2 mouseDelta = new Vector2(9, 0) * Settings.mouseSensitivity;
         headPitchYaw += new Vector2(-mouseDelta.y, mouseDelta.x);
     }
 

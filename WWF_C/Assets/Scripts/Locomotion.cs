@@ -5,7 +5,7 @@ using VacuumBreather;
 
 [System.Serializable]
 public class Locomotion {
-    private const float WALK_SPEED = 8;
+    private const float WALK_SPEED = 10;
     private const float JOG_SPEED = 14;
     private const float SPRINT_SPEED = 17;
 
@@ -27,16 +27,9 @@ public class Locomotion {
 
         character.updateEvent += Update;
         character.fixedUpdateEvent += Character_fixedUpdateEvent;
+        character.torso.stateChangedEvent += Torso_stateChangedEvent;
         character.input.sprint.keyDownEvent += Sprint_keyDownEvent;
         character.input.sprint.keyUpEvent += Sprint_keyUpEvent;
-    }
-
-    private void Sprint_keyDownEvent() {
-        moveSpeed = SPRINT_SPEED;
-    }
-
-    private void Sprint_keyUpEvent() {
-        moveSpeed = JOG_SPEED;
     }
 
     private void Update() {
@@ -50,6 +43,26 @@ public class Locomotion {
     private void Character_fixedUpdateEvent() {
         Hoover();
         Move();
+    }
+
+    private void Sprint_keyDownEvent() {
+        moveSpeed = SPRINT_SPEED;
+    }
+
+    private void Sprint_keyUpEvent() {
+        moveSpeed = JOG_SPEED;
+    }
+
+    private void Torso_stateChangedEvent(Torso.State newState) {
+        if (newState == Torso.State.hipFire) {
+            if (character.input.sprint.isTriggered)
+                moveSpeed = SPRINT_SPEED;
+            else
+                moveSpeed = JOG_SPEED;
+        }
+        else if (newState == Torso.State.ads) {
+            moveSpeed = WALK_SPEED;
+        }
     }
 
     private void Hoover() {
@@ -87,7 +100,7 @@ public class Locomotion {
 
         Vector3 xzForward = new Vector3(character.tTargetYaw.forward.x, 0, character.tTargetYaw.forward.z).normalized;
         Vector3 xzRight = new Vector3(character.tTargetYaw.right.x, 0, character.tTargetYaw.right.z).normalized;
-        Vector3 vecMove = (character.rbMain.transform.forward * character.input.vecMoveXZ.y + character.rbMain.transform.transform.right * character.input.vecMoveXZ.x) * moveSpeed * Time.deltaTime;
+        Vector3 vecMove = (character.rbMain.transform.forward * character.input.vecMoveXZ.y + character.rbMain.transform.transform.right * character.input.vecMoveXZ.x).normalized * moveSpeed * Time.deltaTime;
 
         // I use velocity to target velocity for PID error.
         Vector3 error = vecMove * moveSpeed - character.rbMain.velocity;

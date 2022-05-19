@@ -66,7 +66,6 @@ MonoBehaviour:
   bulletsInMagCount: 1000
   projectileLauncher:
     projectileType: 0
-    muzzleVelocity: 434
 --- !u!54 &469210888717783648
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -713,10 +712,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6652725513331149018, guid: b23106927e9ab37428ce5bd23c349456, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f1aa3549bb1e4d498498e27be7f2934, type: 2}
+    - target: {fileID: -5898008660381507705, guid: b23106927e9ab37428ce5bd23c349456, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f1aa3549bb1e4d498498e27be7f2934, type: 2}
+    - target: {fileID: -5215299815803115452, guid: b23106927e9ab37428ce5bd23c349456, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f1aa3549bb1e4d498498e27be7f2934, type: 2}
+    - target: {fileID: -4683669308469848369, guid: b23106927e9ab37428ce5bd23c349456, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f1aa3549bb1e4d498498e27be7f2934, type: 2}
     - target: {fileID: 919132149155446097, guid: b23106927e9ab37428ce5bd23c349456, type: 3}
       propertyPath: m_Name
       value: diyAK_0.04 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1544971112021714887, guid: b23106927e9ab37428ce5bd23c349456, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f1aa3549bb1e4d498498e27be7f2934, type: 2}
+    - target: {fileID: 6985925772587347774, guid: b23106927e9ab37428ce5bd23c349456, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f1aa3549bb1e4d498498e27be7f2934, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b23106927e9ab37428ce5bd23c349456, type: 3}
 --- !u!4 &6658298010577332275 stripped

@@ -17,6 +17,7 @@ public class PlayerInput {
     public Action jump;
     public Action crouch;
     public Action reload;
+    public Action sprint;
 
     protected Character character;
 

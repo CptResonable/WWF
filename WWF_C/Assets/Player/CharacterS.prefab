@@ -681,10 +681,9 @@ MonoBehaviour:
       handGrip: {fileID: 0}
       tAimOriginBase: {fileID: 8628005456958707785}
       tAimOrigin: {fileID: 3282616265880349833}
-    pelvisRef: {fileID: 3632123171765181436}
     aimOffset: {x: 0, y: 0, z: 0}
-    hipFireOffset: {x: 0.08, y: -0.23, z: 0.25}
-    adsOffset: {x: 0, y: -0.132, z: 0.25}
+    hipFireOffset: {x: -0.08, y: 0.23, z: -0.25}
+    adsOffset: {x: 0, y: 0.17, z: -0.152}
     tOffset: {fileID: 3632123171765181331}
     tLeanPivot: {fileID: 3632123171765181330}
     runYawOffset: 0
@@ -1079,11 +1078,6 @@ Rigidbody:
 --- !u!4 &3632123171765181363 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361156, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
-  m_PrefabInstance: {fileID: 2746769742774308215}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3632123171765181436 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1475377756880361099, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &3632123171765181330 stripped

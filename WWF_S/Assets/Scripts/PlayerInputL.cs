@@ -22,7 +22,8 @@ public class PlayerInputL : PlayerInput {
         jump = new Action(playerControls.Land.Jump);
         crouch = new Action(playerControls.Land.Crouch);
         reload = new Action(playerControls.Land.Reload);
-        actions = new Action[8] { toggleAds, attack_1, equip_s1, equip_s2, equip_s3, equip_s4, jump, reload };
+        sprint = new Action(playerControls.Land.Sprint);
+        actions = new Action[9] { toggleAds, attack_1, equip_s1, equip_s2, equip_s3, equip_s4, jump, reload, sprint };
 
         character.updateEvent += Character_updateEvent;
         character.fixedUpdateEvent += Character_fixedUpdateEvent;

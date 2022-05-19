@@ -305,14 +305,14 @@ Shader "Custom/DMETerrainShader" {
 				float3 colorSmooth = lerp(_Color1.rgb, _Color2.rgb, IN.color.r); // Use red chanel to lerp between base and grass ground color
 				//colorSmooth = lerp(colorSmooth, _Color3, IN.color.g);
 				
-				float colorStep = floor((IN.color.r - 0.01f) * 3) / 3;
+				float colorStep = floor((IN.color.r - 0.01f) * 30) / 30;
 				half3 colorCel = lerp(_Color1.rgb, _Color2.rgb, colorStep);
 				float3 color = lerp(colorSmooth, colorCel, 0.5);
 			
 				float3 colorSmooth2 = lerp(color, _Color3.rgb, IN.color.g);
 				float3 colorStep2 = floor((IN.color.g) * 3) / 3;
-				half3 colorCel2 = lerp(color, _Color3.rgb, colorStep2);
-				color = lerp(colorSmooth2, colorCel2, 0.5);
+				half3 colorCel2 = lerp(color, _Color3.rgb, 0);
+				color = lerp(colorSmooth2, colorCel2, 0);
 			
 				// Grass stuff
 				if (IN.isGrass) {
