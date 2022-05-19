@@ -256,7 +256,7 @@ Material:
     - _Tess: 3
     - _TextureBlendingMode: 0
     - _TextureImpact: 1
-    - _TextureInfluence: 0.15
+    - _TextureInfluence: 0.198
     - _TilingN1: 6.06
     - _TilingN2: 0.05
     - _TilingN3: 1

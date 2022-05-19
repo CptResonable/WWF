@@ -95,7 +95,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   locomotion:
-    pidValues_move: {x: 800, y: 0, z: 0.02}
+    pidValues_move: {x: 125, y: 0, z: 0.02}
     moveSpeed: 10
     pidValues_hoover: {x: 20000, y: 0, z: 5}
     targetHooverHeight: 0.75
