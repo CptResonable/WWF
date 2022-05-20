@@ -13,11 +13,14 @@ public class EquipmentManagerS {
 
     public delegate void EquipablesSpawnedDelegate(DrDatas.EquipmentDatas.EquipablesSpawnedDatas equipablesSpawnedDatas);
     public delegate void EquipableEquipedDelegate(DrDatas.EquipmentDatas.EquipableEquipedData equipableEquipedData);
+    public delegate void EquipableUnequipedDelegate(DrDatas.EquipmentDatas.EquipableUnequipedData equipableUnequipedData);
     public event EquipablesSpawnedDelegate equipablesSpawnedEvent;
     public event EquipableEquipedDelegate equipableEquipedEvent;
+    public event EquipableUnequipedDelegate equipableUnequipedEvent;
 
     private List<DrDatas.EquipmentDatas.EquipablesSpawnedDatas> equipablesSpawnedDataList = new List<DrDatas.EquipmentDatas.EquipablesSpawnedDatas>();
     private List<DrDatas.EquipmentDatas.EquipableEquipedData> equipableEquipedDataList = new List<DrDatas.EquipmentDatas.EquipableEquipedData>();
+    private List<DrDatas.EquipmentDatas.EquipableUnequipedData> equipableUnequipedDataList = new List<DrDatas.EquipmentDatas.EquipableUnequipedData>();
 
     [SerializeField] private Loadout defaultLoadout;
     public void Initialize() {
@@ -27,15 +30,32 @@ public class EquipmentManagerS {
 
     /// <summary> Get all equipment update datas that should be synced to clients </summary>
     public DrDatas.EquipmentDatas.EquipmentUpdateData GetUpdates() {
-        DrDatas.EquipmentDatas.EquipmentUpdateData updateData = new DrDatas.EquipmentDatas.EquipmentUpdateData(equipablesSpawnedDataList.ToArray(), equipableEquipedDataList.ToArray());
+        DrDatas.EquipmentDatas.EquipmentUpdateData updateData = new DrDatas.EquipmentDatas.EquipmentUpdateData(equipablesSpawnedDataList.ToArray(), 
+            equipableEquipedDataList.ToArray(), 
+            equipableUnequipedDataList.ToArray());
+
         equipablesSpawnedDataList.Clear();
         equipableEquipedDataList.Clear();
+        equipableUnequipedDataList.Clear();
         return updateData;
     }
     
     private void OnCharacterSpawned(CharacterS character) {
-        character.equipment.itemEquipedEvent += OnItemEquiped;
+        character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent; ;
+        character.equipment.itemUnequipedEvent += Equipment_itemUnequipedEvent;
         SpawnEquipment(character, defaultLoadout);
+    }
+
+    private void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
+        DrDatas.EquipmentDatas.EquipableEquipedData equipedData = new DrDatas.EquipmentDatas.EquipableEquipedData(item.characterLS.GetClientID(), item.equipableData);
+        equipableEquipedDataList.Add(equipedData);
+        equipableEquipedEvent?.Invoke(equipedData);
+    }
+
+    private void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item, ushort characterId) {
+        DrDatas.EquipmentDatas.EquipableUnequipedData unequipedData = new DrDatas.EquipmentDatas.EquipableUnequipedData(characterId, item.equipableData);
+        equipableUnequipedDataList.Add(unequipedData);
+        equipableUnequipedEvent?.Invoke(unequipedData);
     }
 
     private void OnCharacterDespawned() {
@@ -63,35 +83,6 @@ public class EquipmentManagerS {
 
         equipablesSpawnedDataList.Add(equipablesSpawnedDatas);
         equipablesSpawnedEvent?.Invoke(equipablesSpawnedDatas);
-    }
-
-
-    ////TODO: FIX
-    //private void SpawnEquipment(CharacterS character) {
-    //    DrDatas.EquipmentDatas.EquipableData equipableData = new DrDatas.EquipmentDatas.EquipableData(GameObjects.EquipablesEnums.wep_AK, equipableIdTicker);
-
-    //    GameObject goEquipable = GameObject.Instantiate(GameObjects.i.equipables[equipableData.equipableEnum]); // TODO: make the spawn not hardcoded
-    //    Equipable equipable = goEquipable.GetComponent<Equipable>();
-    //    equipable.Initialize(equipableData);     
-    //    equipableIdTicker++; // Tick up for next id
-    //    equipables.Add(equipableData.equipableId, equipable); // Add to dictionary
-    //    character.equipment.AddItem(equipable); // Give character item
-
-    //    DrDatas.EquipmentDatas.EquipableSpawnedData equipableSpawnedData = new DrDatas.EquipmentDatas.EquipableSpawnedData(equipableData);
-    //    DrDatas.EquipmentDatas.EquipableSpawnedData[] equipablesSpawnedDatasArray = new DrDatas.EquipmentDatas.EquipableSpawnedData[1] {
-    //        equipableSpawnedData
-    //    };
-    //    DrDatas.EquipmentDatas.EquipablesSpawnedDatas equipablesSpawnedDatas = new DrDatas.EquipmentDatas.EquipablesSpawnedDatas(character.GetClientID(), equipablesSpawnedDatasArray);
-
-    //    equipablesSpawnedDataList.Add(equipablesSpawnedDatas);
-    //    equipablesSpawnedEvent?.Invoke(equipablesSpawnedDatas);
-    //}
-
-    private void OnItemEquiped(Equipment.Type type, Equipable item) {
-        DrDatas.EquipmentDatas.EquipableEquipedData equipedData = new DrDatas.EquipmentDatas.EquipableEquipedData(item.characterLS.GetClientID(), item.equipableData);
-        equipableEquipedDataList.Add(equipedData);
-        equipableEquipedEvent?.Invoke(equipedData);
-        //ServerManagerS.i.gameManager.AddItemEquipData(new DarkRiftSerializables.EquipmentSerializables.EquipableEquipedData(item.character.GetClientID(), item.itemId));
     }
     
     #region Messages recieved

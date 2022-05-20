@@ -11,8 +11,9 @@ public class Equipment {
     public Type equipedType = Type.none;
     public Equipable equipedItem; 
     public delegate void ItemEquipedDelegate(Type type, Equipable item);
+    public delegate void ItemUnequipedDelegate(Type type, Equipable item, ushort characterId);
     public event ItemEquipedDelegate itemEquipedEvent;
-    public event ItemEquipedDelegate itemUnequipedEvent;
+    public event ItemUnequipedDelegate itemUnequipedEvent;
 
     protected Character character;
 
@@ -34,7 +35,9 @@ public class Equipment {
     }
 
     public virtual void OnUpdate_equipableEquiped(DrDatas.EquipmentDatas.EquipableEquipedData equipableEquipedData) {
+    }
 
+    public virtual void OnUpdate_equipableUnequiped(DrDatas.EquipmentDatas.EquipableUnequipedData equipableUnequipedData) {
     }
 
     protected virtual void ItemEquiped(Type equipedType, Equipable equipedItem) {
@@ -42,8 +45,8 @@ public class Equipment {
         itemEquipedEvent?.Invoke(equipedType, equipedItem);
     }
 
-    protected virtual void ItemUnequiped(Type unequipedType, Equipable unequipedItem) {
+    protected virtual void ItemUnequiped(Type unequipedType, Equipable unequipedItem, ushort characterId) {
         character.GetPlayer().playerData.characterData.equipmentData.EquipableUnequiped();
-        itemUnequipedEvent?.Invoke(unequipedType, unequipedItem);
+        itemUnequipedEvent?.Invoke(unequipedType, unequipedItem, characterId);
     }
 }

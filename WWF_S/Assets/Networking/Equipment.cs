@@ -4,23 +4,26 @@ using UnityEngine;
 
 [System.Serializable]
 public class Equipment {
-    [SerializeField] private Transform tEquipmentContainer;
+    protected Transform tEquipmentContainer;
     public List<Equipable> equipables;
 
     public enum Type { none, gun};
     public Type equipedType = Type.none;
     public Equipable equipedItem; 
     public delegate void ItemEquipedDelegate(Type type, Equipable item);
+    public delegate void ItemUnequipedDelegate(Type type, Equipable item, ushort characterId);
     public event ItemEquipedDelegate itemEquipedEvent;
-    public event ItemEquipedDelegate itemUnequipedEvent;
+    public event ItemUnequipedDelegate itemUnequipedEvent;
 
     protected Character character;
 
-    public virtual void Initialize(Character character) {
+    public virtual void Initialize(Character character) {   
         this.character = character;
+        tEquipmentContainer = character.transform.Find("EquipmentContainer");
     }
 
     public void AddItem(Equipable item) {
+        Debug.Log("Adding item");
         item.transform.parent = tEquipmentContainer;
         equipables.Add(item);
         item.gameObject.SetActive(false);
@@ -32,7 +35,9 @@ public class Equipment {
     }
 
     public virtual void OnUpdate_equipableEquiped(DrDatas.EquipmentDatas.EquipableEquipedData equipableEquipedData) {
+    }
 
+    public virtual void OnUpdate_equipableUnequiped(DrDatas.EquipmentDatas.EquipableUnequipedData equipableUnequipedData) {
     }
 
     protected virtual void ItemEquiped(Type equipedType, Equipable equipedItem) {
@@ -40,8 +45,8 @@ public class Equipment {
         itemEquipedEvent?.Invoke(equipedType, equipedItem);
     }
 
-    protected virtual void ItemUnequiped(Type unequipedType, Equipable unequipedItem) {
+    protected virtual void ItemUnequiped(Type unequipedType, Equipable unequipedItem, ushort characterId) {
         character.GetPlayer().playerData.characterData.equipmentData.EquipableUnequiped();
-        itemUnequipedEvent?.Invoke(unequipedType, unequipedItem);
+        itemUnequipedEvent?.Invoke(unequipedType, unequipedItem, characterId);
     }
 }

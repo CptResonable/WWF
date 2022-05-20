@@ -21,21 +21,22 @@ public class EquipmentManagerL {
     private void GameManager_gameUpdateReceivedEvent(DrDatas.Game.GameUpdateData gameUpdateData) {
         EquipablesSpawnedUpdate(gameUpdateData.equipmentUpdateData);
         EquipablesEquipedUpdate(gameUpdateData.equipmentUpdateData);
+        EquipablesUnequipedUpdate(gameUpdateData.equipmentUpdateData);
     }
 
     private void PlayerManagerL_characterSpawnedEvent(DrDatas.Player.CharacterData characterData) {
         DrDatas.EquipmentDatas.CharacterEquipmentData equipmentData = characterData.equipmentData;
 
-        // // Spawn all items
-        // for (int i = 0; i < equipmentData.equipables.Length; i++) {
-        //     SpawnEquipable(equipmentData.equipables[i], characterData.clientId);
-        // }
+        // Spawn all items
+        for (int i = 0; i < equipmentData.equipables.Length; i++) {
+            SpawnEquipable(equipmentData.equipables[i], characterData.clientId);
+        }
 
-        // // Equip equiped item
-        // if (equipmentData.hasItemEquiped) {
-        //     DrDatas.EquipmentDatas.EquipableEquipedData equipedData = new DrDatas.EquipmentDatas.EquipableEquipedData(characterData.clientId, equipables[equipmentData.equipedEquipableId].equipableData);
-        //     ClientManagerL.i.playerManager.allPlayers[characterData.clientId].character.equipment.OnUpdate_equipableEquiped(equipedData);
-        // }
+        // Equip equiped item
+        if (equipmentData.hasItemEquiped) {
+            DrDatas.EquipmentDatas.EquipableEquipedData equipedData = new DrDatas.EquipmentDatas.EquipableEquipedData(characterData.clientId, equipables[equipmentData.equipedEquipableId].equipableData);
+            ClientManagerL.i.playerManager.allPlayers[characterData.clientId].character.equipment.OnUpdate_equipableEquiped(equipedData);
+        }
     }
 
     private void EquipablesSpawnedUpdate(DrDatas.EquipmentDatas.EquipmentUpdateData equipmentUpdateData) {
@@ -52,7 +53,13 @@ public class EquipmentManagerL {
         for (int i = 0; i < equipmentUpdateData.equipableEquipedDatas.Length; i++) {
             bool isLocalPlayer = (equipmentUpdateData.equipableEquipedDatas[i].clientId == ClientConnectionL.i.client.ID) ? true : false;
             ClientManagerL.i.playerManager.allPlayers[equipmentUpdateData.equipableEquipedDatas[i].clientId].character.equipment.OnUpdate_equipableEquiped(equipmentUpdateData.equipableEquipedDatas[i]);
-            //equipmentUpdateData.equipableEquipedDatas[i]
+        }
+    }
+
+    private void EquipablesUnequipedUpdate(DrDatas.EquipmentDatas.EquipmentUpdateData equipmentUpdateData) {
+        for (int i = 0; i < equipmentUpdateData.equipableUnequipedDatas.Length; i++) {
+            bool isLocalPlayer = (equipmentUpdateData.equipableEquipedDatas[i].clientId == ClientConnectionL.i.client.ID) ? true : false;
+            ClientManagerL.i.playerManager.allPlayers[equipmentUpdateData.equipableUnequipedDatas[i].clientId].character.equipment.OnUpdate_equipableUnequiped(equipmentUpdateData.equipableUnequipedDatas[i]);
         }
     }
 
@@ -61,6 +68,8 @@ public class EquipmentManagerL {
         Equipable equipable = goEquipable.GetComponent<Equipable>();
         equipable.Initialize(equipableData);
         equipables.Add(equipableData.equipableId, equipable);
+
+        Debug.Log("YOYOYOY ITEM SPAWNED 3!");
 
         ClientManagerL.i.playerManager.allPlayers[clientId].character.equipment.AddItem(equipable);
     }

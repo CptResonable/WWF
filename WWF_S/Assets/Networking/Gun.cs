@@ -26,9 +26,12 @@ public class Gun : Equipable {
     public static event ReloadDelegate reloadStartedEvent;
     public static event ReloadDelegate gunReloadFinishedEvent;
 
+    private Rigidbody rbGrip;
+
     public override void Initialize(DrDatas.EquipmentDatas.EquipableData equipableData) {
         base.Initialize(equipableData);
 
+        rbGrip = tGrip.GetComponent<Rigidbody>();
         bulletsInMagCount = specs.magSize;
     }
 
@@ -39,6 +42,25 @@ public class Gun : Equipable {
     public override void UnequipL() {
         base.UnequipL();
     }
+
+    public override void EquipN(CharacterN character) {
+        rb.isKinematic = true;
+        rb.interpolation = RigidbodyInterpolation.None;
+        rbGrip.isKinematic = true;
+        rbGrip.interpolation = RigidbodyInterpolation.None;
+
+        base.EquipN(character);
+    }
+
+    public override void UnequipN() {
+        rb.isKinematic = false;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rbGrip.isKinematic = false;
+        rbGrip.interpolation = RigidbodyInterpolation.Interpolate;
+
+        base.UnequipN();
+    }
+
 
     protected override void Character_fixedUpdateEvent() {
         base.Character_fixedUpdateEvent();
@@ -137,7 +159,7 @@ public class Gun : Equipable {
 
     private IEnumerator AutoFireCorutine() {
         bool interupted = false;
-        while (!interupted && character.input.attack_1.isTriggered) {
+        while (!interupted && characterLS.input.attack_1.isTriggered) {
             if (bulletsInMagCount <= 0) {
                 interupted = true;
                 continue;

@@ -24,7 +24,7 @@ public class ArmLeft : Arm {
         }
     }
 
-    protected override void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item) {
+    protected override void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item, ushort characterId) {
         GameObject.Destroy(handGrip);
     }
 

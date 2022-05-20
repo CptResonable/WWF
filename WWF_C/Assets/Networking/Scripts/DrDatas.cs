@@ -284,20 +284,24 @@ public class DrDatas {
         public struct EquipmentUpdateData : IDarkRiftSerializable {
             public EquipablesSpawnedDatas[] equipablesSpawnedDatas;
             public EquipableEquipedData[] equipableEquipedDatas;
+            public EquipableUnequipedData[] equipableUnequipedDatas;
 
-            public EquipmentUpdateData(EquipablesSpawnedDatas[] equipablesSpawnedDatas, EquipableEquipedData[] equipableEquipedDatas) {
+            public EquipmentUpdateData(EquipablesSpawnedDatas[] equipablesSpawnedDatas, EquipableEquipedData[] equipableEquipedDatas, EquipableUnequipedData[] equipableUnequipedDatas) {
                 this.equipablesSpawnedDatas = equipablesSpawnedDatas;
                 this.equipableEquipedDatas = equipableEquipedDatas;
+                this.equipableUnequipedDatas = equipableUnequipedDatas;
             }
 
             public void Deserialize(DeserializeEvent e) {
                 equipablesSpawnedDatas = e.Reader.ReadSerializables<EquipablesSpawnedDatas>();
                 equipableEquipedDatas = e.Reader.ReadSerializables<EquipableEquipedData>();
+                equipableUnequipedDatas = e.Reader.ReadSerializables<EquipableUnequipedData>();
             }
 
             public void Serialize(SerializeEvent e) {
                 e.Writer.Write(equipablesSpawnedDatas);
                 e.Writer.Write(equipableEquipedDatas);
+                e.Writer.Write(equipableUnequipedDatas);
             }
         }
 
@@ -345,6 +349,26 @@ public class DrDatas {
                 this.equipableData = equipableData;
             }
       
+            public void Deserialize(DeserializeEvent e) {
+                clientId = e.Reader.ReadUInt16();
+                equipableData = e.Reader.ReadSerializable<EquipableData>();
+            }
+
+            public void Serialize(SerializeEvent e) {
+                e.Writer.Write(clientId);
+                e.Writer.Write(equipableData);
+            }
+        }
+
+        public struct EquipableUnequipedData : IDarkRiftSerializable {
+            public ushort clientId;
+            public EquipableData equipableData;
+
+            public EquipableUnequipedData(ushort clientId, EquipableData equipableData) {
+                this.clientId = clientId;
+                this.equipableData = equipableData;
+            }
+
             public void Deserialize(DeserializeEvent e) {
                 clientId = e.Reader.ReadUInt16();
                 equipableData = e.Reader.ReadSerializable<EquipableData>();

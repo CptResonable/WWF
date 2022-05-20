@@ -22,19 +22,18 @@ public class EquipmentLS : Equipment {
 
     protected override void ItemEquiped(Type equipedType, Equipable equipedItem) {
         if (this.equipedType != Type.none)
-            ItemUnequiped(this.equipedType, this.equipedItem);
+            ItemUnequiped(this.equipedType, this.equipedItem, this.equipedItem.characterLS.GetClientID());
 
         this.equipedType = equipedType;
         this.equipedItem = equipedItem;
-        Debug.Log("CHAR: " + character.name);
-        Debug.Log("IT: " + equipedItem.name);
+
         equipedItem.EquipL(character);
 
         base.ItemEquiped(equipedItem.itemType, equipedItem);
     }
 
-    protected override void ItemUnequiped(Type unequipedType, Equipable unequipedItem) {
+    protected override void ItemUnequiped(Type unequipedType, Equipable unequipedItem, ushort characterId) {
         equipedItem.UnequipL();
-        base.ItemUnequiped(unequipedType, unequipedItem);
+        base.ItemUnequiped(unequipedType, unequipedItem, characterId);
     }
 }

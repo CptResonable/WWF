@@ -1,1 +1,2 @@
 ﻿* Decrease hand PID D component when turning for faster aiming
+* Create equipmentN

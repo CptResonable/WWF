@@ -37,7 +37,7 @@ public class Arm {
     protected virtual void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
     }
 
-    protected virtual void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item) {
+    protected virtual void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item, ushort characterId) {
     }
 
     protected IkTargetStruct InterpolateTargetStruct(IkTargetStruct lastStruct, IkTargetStruct newStruct, float t) {
