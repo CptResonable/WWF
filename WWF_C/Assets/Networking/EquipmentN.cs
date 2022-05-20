@@ -4,6 +4,15 @@ using UnityEngine;
 
 [System.Serializable]
 public class EquipmentN : Equipment {
+    protected new CharacterN character;
+
+    public override void Initialize(Character character) {
+        this.character = (CharacterN)character;
+        Debug.Log("this: " + this.character);
+        base.Initialize(this.character);
+        Debug.Log("base: " + base.character);
+    }
+
     public override void OnUpdate_equipableEquiped(DrDatas.EquipmentDatas.EquipableEquipedData equipableEquipedData) {
 
         Equipable item = null;

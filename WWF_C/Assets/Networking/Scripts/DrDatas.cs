@@ -191,7 +191,6 @@ public class DrDatas {
             public Quaternion rotation;
             public EquipmentDatas.CharacterEquipmentData equipmentData;
 
-
             public CharacterData(ushort clientId, Vector3 position, Quaternion rotation, EquipmentDatas.CharacterEquipmentData equipmentData) {
                 this.clientId = clientId;
                 this.position = position;

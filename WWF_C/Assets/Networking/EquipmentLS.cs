@@ -26,8 +26,7 @@ public class EquipmentLS : Equipment {
 
         this.equipedType = equipedType;
         this.equipedItem = equipedItem;
-        Debug.Log("CHAR: " + character.name);
-        Debug.Log("IT: " + equipedItem.name);
+
         equipedItem.EquipL(character);
 
         base.ItemEquiped(equipedItem.itemType, equipedItem);

@@ -10,7 +10,8 @@ public class Equipable : MonoBehaviour {
     public Rigidbody rb;
     public bool isEquiped = false;
     public Vector3 positionOffset;
-    [HideInInspector] public CharacterLS character;
+    [HideInInspector] public CharacterLS characterLS;
+    [HideInInspector] public CharacterN characterN;
 
     // public void Initialize(GameObjects.EquipablesEnums equipableEnum, ushort itemId) {
     //     this.equipableEnum = equipableEnum;
@@ -24,7 +25,7 @@ public class Equipable : MonoBehaviour {
     }
 
     public virtual void EquipL(CharacterLS character) {
-        this.character = character;
+        this.characterLS = character;
         gameObject.SetActive(true);
         isEquiped = true;
 
@@ -32,25 +33,32 @@ public class Equipable : MonoBehaviour {
         character.fixedUpdateEvent += Character_fixedUpdateEvent;
     }
 
-    public virtual void EquipN(CharacterN characterN) {
-        gameObject.SetActive(true);
-        isEquiped = true;
-        //characterN.fixedUpdateEvent += Character_fixedUpdateEvent;
-    }
-
     public virtual void UnequipL() {
         gameObject.SetActive(false);
         isEquiped = false;
 
-        character.input.attack_1.keyDownEvent -= Attack_1_keyDownEvent;
-        character.fixedUpdateEvent -= Character_fixedUpdateEvent;
+        characterLS.input.attack_1.keyDownEvent -= Attack_1_keyDownEvent;
+        characterLS.fixedUpdateEvent -= Character_fixedUpdateEvent;
 
-        this.character = null;
+        this.characterLS = null;
+        this.characterN = null;
+    }
+
+    public virtual void EquipN(CharacterN character) {
+        this.characterN = character;
+        gameObject.SetActive(true);
+        isEquiped = true;
+        transform.parent = characterN.bodyN.hand_R;
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
     }
 
     public virtual void UnequipN() {
         gameObject.SetActive(false);
         isEquiped = false;
+
+        this.characterLS = null;
+        this.characterN = null;
     }
 
     protected virtual void Character_fixedUpdateEvent() {

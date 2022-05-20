@@ -19,18 +19,6 @@ public class GameManagerL : MonoBehaviour {
         }
     }
 
-    // private void FixedUpdate() {
-    //     Debug.Log(ClientManagerL.i.playerManager.allPlayers.Count);
-
-    //     foreach (Player player in ClientManagerL.i.playerManager.allPlayers.Values){
-            
-    //     }
-        
-    //             Debug.Log("p: " + ClientManagerL.i.playerManager.allPlayers[equipmentUpdateData.equipablesSpawnedDatas[i].clientId]);
-    //             Debug.Log("c: " + ClientManagerL.i.playerManager.allPlayers[equipmentUpdateData.equipablesSpawnedDatas[i].clientId].character);
-    //             Debug.Log("e: " + ClientManagerL.i.playerManager.allPlayers[equipmentUpdateData.equipablesSpawnedDatas[i].clientId].character.equipment);
-    // }
-
     #region Messages recieved
     public void MessageRecieved(Message message, MessageReceivedEventArgs e) {
         switch (message.Tag) {

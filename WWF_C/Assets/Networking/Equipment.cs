@@ -4,7 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class Equipment {
-    [SerializeField] private Transform tEquipmentContainer;
+    protected Transform tEquipmentContainer;
     public List<Equipable> equipables;
 
     public enum Type { none, gun};
@@ -16,11 +16,13 @@ public class Equipment {
 
     protected Character character;
 
-    public virtual void Initialize(Character character) {
+    public virtual void Initialize(Character character) {   
         this.character = character;
+        tEquipmentContainer = character.transform.Find("EquipmentContainer");
     }
 
     public void AddItem(Equipable item) {
+        Debug.Log("Adding item");
         item.transform.parent = tEquipmentContainer;
         equipables.Add(item);
         item.gameObject.SetActive(false);

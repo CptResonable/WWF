@@ -112,10 +112,7 @@ public class PlayerManagerL {
     private void UpdateBodyDatas(DrDatas.Player.PlayerBodyData[] bodyDatas) {
         
         for (int i = 0; i < bodyDatas.Length; i++) {
-            Debug.Log("Update bd, id: " + i);
-            if (bodyDatas[i].clientId != ClientConnectionL.i.client.ID)
-            {
-                Debug.Log("Update bd, TEST");
+            if (bodyDatas[i].clientId != ClientConnectionL.i.client.ID) {
                 networkPlayers[bodyDatas[i].clientId].character.bodyN.CopyRigFromData(bodyDatas[i]);
             }
         }

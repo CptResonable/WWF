@@ -43,6 +43,7 @@ public class EquipmentManagerS {
 
     //TODO: FIX
     private void SpawnEquipment(CharacterS character, Loadout loadout) {
+
         DrDatas.EquipmentDatas.EquipableSpawnedData[] equipablesSpawnedDatasArray = new DrDatas.EquipmentDatas.EquipableSpawnedData[loadout.allItems.Count];
         for (int i = 0; i < loadout.allItems.Count; i++) {
             DrDatas.EquipmentDatas.EquipableData equipableData = new DrDatas.EquipmentDatas.EquipableData(loadout.allItems[i], equipableIdTicker);
@@ -87,7 +88,7 @@ public class EquipmentManagerS {
     //}
 
     private void OnItemEquiped(Equipment.Type type, Equipable item) {
-        DrDatas.EquipmentDatas.EquipableEquipedData equipedData = new DrDatas.EquipmentDatas.EquipableEquipedData(item.character.GetClientID(), item.equipableData);
+        DrDatas.EquipmentDatas.EquipableEquipedData equipedData = new DrDatas.EquipmentDatas.EquipableEquipedData(item.characterLS.GetClientID(), item.equipableData);
         equipableEquipedDataList.Add(equipedData);
         equipableEquipedEvent?.Invoke(equipedData);
         //ServerManagerS.i.gameManager.AddItemEquipData(new DarkRiftSerializables.EquipmentSerializables.EquipableEquipedData(item.character.GetClientID(), item.itemId));
