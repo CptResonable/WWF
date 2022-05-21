@@ -36,6 +36,12 @@ public class EquipmentN : Equipment {
 
     public override void OnUpdate_equipableUnequiped(DrDatas.EquipmentDatas.EquipableUnequipedData equipableUnequipedData) {
         Debug.Log("UNEQUIP!!!!");
+        //Type type = equipedType;
+        equipedItem.UnequipN();
+        //equipedItem = null;
+        equipedItem.transform.parent = tEquipmentContainer;
+
+        ItemUnequiped(equipedType, equipedItem, character.GetClientID());
         //Equipable item = null;
         //for (int i = 0; i < equipables.Count; i++) {
         //    if (equipables[i].equipableData.equipableId == equipableEquipedData.equipableData.equipableId) {
