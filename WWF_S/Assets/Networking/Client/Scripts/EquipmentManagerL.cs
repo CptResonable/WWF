@@ -20,8 +20,8 @@ public class EquipmentManagerL {
 
     private void GameManager_gameUpdateReceivedEvent(DrDatas.Game.GameUpdateData gameUpdateData) {
         EquipablesSpawnedUpdate(gameUpdateData.equipmentUpdateData);
-        EquipablesEquipedUpdate(gameUpdateData.equipmentUpdateData);
         EquipablesUnequipedUpdate(gameUpdateData.equipmentUpdateData);
+        EquipablesEquipedUpdate(gameUpdateData.equipmentUpdateData);
     }
 
     private void PlayerManagerL_characterSpawnedEvent(DrDatas.Player.CharacterData characterData) {

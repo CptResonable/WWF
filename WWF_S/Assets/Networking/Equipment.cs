@@ -46,6 +46,9 @@ public class Equipment {
     }
 
     protected virtual void ItemUnequiped(Type unequipedType, Equipable unequipedItem, ushort characterId) {
+        equipedItem = null;
+        equipedType = Type.none;
+
         character.GetPlayer().playerData.characterData.equipmentData.EquipableUnequiped();
         itemUnequipedEvent?.Invoke(unequipedType, unequipedItem, characterId);
     }
