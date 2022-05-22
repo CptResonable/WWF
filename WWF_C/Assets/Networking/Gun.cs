@@ -121,30 +121,22 @@ public class Gun : Equipable {
         // Calculate force vectors.
         float recoilMulitplier = specs.recoilMultiplierCurve.Evaluate(recoilMultiplyerIndex);
 
-        Vector2 noiseTorque = Vector2.zero;
-        noiseTorque.x = Mathf.PerlinNoise(specs.defaultNoiseOffset.x + noiseOffset, specs.defaultNoiseOffset.y + noiseOffset);
-        noiseTorque.y = Mathf.PerlinNoise(specs.defaultNoiseOffset.x * 5 + noiseOffset, specs.defaultNoiseOffset.x * 5 + noiseOffset);
+        Vector2 recoil = Vector2.zero;
+        recoil.x = Mathf.PerlinNoise(specs.defaultNoiseOffset.x + noiseOffset, specs.defaultNoiseOffset.y + noiseOffset);
+        recoil.y = Mathf.PerlinNoise(specs.defaultNoiseOffset.x * 5 + noiseOffset, specs.defaultNoiseOffset.x * 5 + noiseOffset) - 0.5f;
 
-        noiseTorque = new Vector2(noiseTorque.x - 0.5f, noiseTorque.y - 0.5f);
-        //noiseTorque *= 500;
-
-        Vector3 noiseForce = new Vector3(noiseTorque.x, 0, noiseTorque.y);
-        //Debug.Log(noiseTorque);
+        Vector3 recoilForce = new Vector3(recoil.x * specs.verticalRecoilAmount, 0, recoil.y * specs.horizontalRecoilAmount);
+        Vector3 recoilTorque = recoilForce * specs.torqueScale;
+        recoilForce *= specs.forceScale;
 
         // Apply recoil.
-        rb.AddForceAtPosition(transform.TransformVector((specs.recoilForce + noiseForce) * recoilMulitplier * 0.75f), tChaimber.position);
-        rb.AddRelativeTorque(new Vector3(specs.recoilTorque.x + noiseTorque.x, specs.recoilTorque.y, specs.recoilTorque.z + noiseTorque.y) * recoilMulitplier * 0.75f);
+        rb.AddForceAtPosition(transform.TransformVector(recoilForce), tChaimber.position);
+        rb.AddRelativeTorque(recoilTorque);
 
-        Debug.Log("f: " + transform.TransformVector((specs.recoilForce + noiseForce) * recoilMulitplier * 0.75f));
-        Debug.Log("t: " + new Vector3(specs.recoilTorque.x + noiseTorque.x, specs.recoilTorque.y, specs.recoilTorque.z + noiseTorque.y) * recoilMulitplier * 0.75f);
+        //if (characterLS.GetPlayer().playerType == Player.PlayerType.local)
+        //    characterLS.input.headPitchYaw += specs.recoilAngleHead * (recoilMulitplier * 0.5f);
 
-        //character.eyes.OnGunRecoil(specs.recoilAngleHead * recoilMulitplier);
-        //// Apply recoil to head.
-        //LPlayer lPlayer = player as LPlayer;
-        //lPlayer.head.Recoil(specs.recoilAngleHead * (recoilMulitplier * 0.5f));
-        if (characterLS.GetPlayer().playerType == Player.PlayerType.local)
-            characterLS.input.headPitchYaw += specs.recoilAngleHead * (recoilMulitplier * 0.5f);
-
+        Debug.Log("Noise offset: " + noiseOffset);
         // Recoil scaling stuff.
         noiseOffset += specs.recoilInceasePerBullet * 2f;
         recoilMultiplyerIndex += specs.recoilInceasePerBullet;
@@ -153,6 +145,44 @@ public class Gun : Equipable {
 
         timeSinceLastShot = 0;
     }
+
+
+    //private void Recoil() {
+    //    // Calculate force vectors.
+    //    float recoilMulitplier = specs.recoilMultiplierCurve.Evaluate(recoilMultiplyerIndex);
+
+    //    Vector2 noiseTorque = Vector2.zero;
+    //    noiseTorque.x = Mathf.PerlinNoise(specs.defaultNoiseOffset.x + noiseOffset, specs.defaultNoiseOffset.y + noiseOffset);
+    //    noiseTorque.y = Mathf.PerlinNoise(specs.defaultNoiseOffset.x * 5 + noiseOffset, specs.defaultNoiseOffset.x * 5 + noiseOffset);
+
+    //    noiseTorque = new Vector2(noiseTorque.x - 0.5f, noiseTorque.y - 0.5f);
+    //    //noiseTorque *= 500;
+
+    //    Vector3 noiseForce = new Vector3(noiseTorque.x, 0, noiseTorque.y);
+    //    //Debug.Log(noiseTorque);
+
+    //    // Apply recoil.
+    //    rb.AddForceAtPosition(transform.TransformVector((specs.recoilForce + noiseForce) * recoilMulitplier * 0.75f), tChaimber.position);
+    //    rb.AddRelativeTorque(new Vector3(specs.recoilTorque.x + noiseTorque.x, specs.recoilTorque.y, specs.recoilTorque.z + noiseTorque.y) * recoilMulitplier * 0.75f);
+
+    //    Debug.Log("f: " + transform.TransformVector((specs.recoilForce + noiseForce) * recoilMulitplier * 0.75f));
+    //    Debug.Log("t: " + new Vector3(specs.recoilTorque.x + noiseTorque.x, specs.recoilTorque.y, specs.recoilTorque.z + noiseTorque.y) * recoilMulitplier * 0.75f);
+
+    //    //character.eyes.OnGunRecoil(specs.recoilAngleHead * recoilMulitplier);
+    //    //// Apply recoil to head.
+    //    //LPlayer lPlayer = player as LPlayer;
+    //    //lPlayer.head.Recoil(specs.recoilAngleHead * (recoilMulitplier * 0.5f));
+    //    if (characterLS.GetPlayer().playerType == Player.PlayerType.local)
+    //        characterLS.input.headPitchYaw += specs.recoilAngleHead * (recoilMulitplier * 0.5f);
+
+    //    // Recoil scaling stuff.
+    //    noiseOffset += specs.recoilInceasePerBullet * 2f;
+    //    recoilMultiplyerIndex += specs.recoilInceasePerBullet;
+    //    if (recoilMultiplyerIndex > 1)
+    //        recoilMultiplyerIndex = 1;
+
+    //    timeSinceLastShot = 0;
+    //}
 
     public void FinishReload(int bulletsInMagCount) {
         Debug.Log("Reloaded!");
