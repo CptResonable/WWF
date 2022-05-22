@@ -32,7 +32,8 @@ public class PlayerInputL : PlayerInput {
     private void Character_updateEvent() {
         vecMoveXZ = playerControls.Land.Move.ReadValue<Vector2>();
         v3vecMoveXZ = new Vector3(vecMoveXZ.x, 0, vecMoveXZ.y);
-        Vector2 mouseDelta = playerControls.Land.MouseDelta.ReadValue<Vector2>() * Settings.mouseSensitivity;
+        mouseDelta = playerControls.Land.MouseDelta.ReadValue<Vector2>() * Settings.mouseSensitivity;
+        acumulativeMouseDelta += mouseDelta;
         headPitchYaw += new Vector2(-mouseDelta.y, mouseDelta.x);
     }
 
@@ -40,6 +41,7 @@ public class PlayerInputL : PlayerInput {
 
         // Send input data to server
         ClientManagerL.i.playerManager.SendMsg_updateInput(new DrDatas.Player.PlayerInputData(this));
+        acumulativeMouseDelta = Vector2.zero;
     }
 
     public void UpdateEyePitchYaw(float pitch, float yaw) {

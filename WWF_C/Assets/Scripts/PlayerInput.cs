@@ -7,6 +7,8 @@ public class PlayerInput {
     public Vector2 vecMoveXZ = Vector2.zero;
     public Vector3 v3vecMoveXZ = Vector3.zero;
     public Vector2 headPitchYaw = Vector2.zero;
+    public Vector2 mouseDelta = Vector2.zero;
+    public Vector2 acumulativeMouseDelta = Vector2.zero;
     public Action[] actions;
     public Action toggleAds;
     public Action attack_1;

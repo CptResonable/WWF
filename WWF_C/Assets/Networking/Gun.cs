@@ -142,6 +142,8 @@ public class Gun : Equipable {
         //// Apply recoil to head.
         //LPlayer lPlayer = player as LPlayer;
         //lPlayer.head.Recoil(specs.recoilAngleHead * (recoilMulitplier * 0.5f));
+        if (characterLS.GetPlayer().playerType == Player.PlayerType.local)
+            characterLS.input.headPitchYaw += specs.recoilAngleHead * (recoilMulitplier * 0.5f);
 
         // Recoil scaling stuff.
         noiseOffset += specs.recoilInceasePerBullet * 2f;

@@ -47,7 +47,12 @@ public class ArmRight : Arm {
 
         // Set hand target and ik target rotation
         bpHand.ikTarget.rotation = character.tCamera.rotation * Quaternion.Euler(-90, 0, -180);
-        bpHand.ikTarget.Rotate(new Vector3(0, character.telemetry.xzVelocityLocal.x * -5, 0), Space.Self);
+
+        // Tilt gun when turning and strafing
+        float tilt = character.rbMain.angularVelocity.y * -2; // Turn
+        tilt += character.telemetry.xzVelocityLocal.x * -5; // Strafe
+        bpHand.ikTarget.Rotate(new Vector3(0, tilt, 0), Space.Self);
+
         bpHand.target.rotation = bpHand.ikTarget.rotation;
 
         // Copy rotation from aim rig to target rig

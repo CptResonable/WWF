@@ -17,6 +17,28 @@ public class Head {
         bpHead = character.body.head;
     }
 
+    //public void CalculateHeadTargetRotation() {
+    //    if (character.GetPlayer().playerType != Player.PlayerType.local)
+    //        return;
+
+    //    pitchYaw += new Vector2(-character.input.mouseDelta.y, character.input.mouseDelta.x);
+    //    bpHead.ikTarget.rotation = Quaternion.Euler(new Vector3(pitchYaw.x, pitchYaw.y, 0));
+    //    tTargetYaw.rotation = Quaternion.Euler(new Vector3(0, pitchYaw.y, 0));
+    //}
+
+    //public void CalculateHeadTargetRotationServer(Vector2 mouseDelta) {
+    //    if (character.GetPlayer().playerType != Player.PlayerType.server)
+    //        return;
+
+    //    pitchYaw += new Vector2(-mouseDelta.y, mouseDelta.x);
+    //    bpHead.ikTarget.rotation = Quaternion.Euler(new Vector3(pitchYaw.x, pitchYaw.y, 0));
+    //    tTargetYaw.rotation = Quaternion.Euler(new Vector3(0, pitchYaw.y, 0));
+
+
+    //    AddAdsHeadTilt();
+    //    CalculateEyePositionAndRotation();
+    //}
+
     public void CalculateHeadTargetRotation() {
         bpHead.ikTarget.rotation = Quaternion.Euler(new Vector3(character.input.headPitchYaw.x, character.input.headPitchYaw.y, 0));   
         tTargetYaw.rotation = Quaternion.Euler(new Vector3(0, character.input.headPitchYaw.y, 0));

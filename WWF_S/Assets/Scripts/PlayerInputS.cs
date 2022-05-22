@@ -23,7 +23,9 @@ public class PlayerInputS : PlayerInput {
 
     public void OnMsg_updateInput(DrDatas.Player.PlayerInputData inputData) {
         vecMoveXZ = inputData.vecMoveXZ;
+        acumulativeMouseDelta = inputData.acumulativeMouseDelta;
         headPitchYaw = inputData.headPitchYaw;
+        //character.torso.head.CalculateHeadTargetRotationServer(acumulativeMouseDelta);
 
         for (int i = 0; i < actions.Length; i++) {
             actions[i].Set(inputData.actionStates[i]);

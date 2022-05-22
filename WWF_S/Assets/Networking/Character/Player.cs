@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
     public enum PlayerState { unspawned, spawned };
+    public enum PlayerType { local, network, server };
+    public PlayerType playerType;
     public DrDatas.Player.PlayerData playerData;
     public bool isInitialized = false;
     public event Delegates.EmptyDelegate characterSpawnedEvent;

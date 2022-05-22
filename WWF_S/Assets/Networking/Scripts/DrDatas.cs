@@ -214,11 +214,13 @@ public class DrDatas {
 
         public struct PlayerInputData : IDarkRiftSerializable {
             public Vector2 vecMoveXZ;
+            public Vector2 acumulativeMouseDelta;
             public Vector2 headPitchYaw;
             public bool[] actionStates;
 
             public PlayerInputData(PlayerInput playerInput) {
                 vecMoveXZ = playerInput.vecMoveXZ;
+                acumulativeMouseDelta = playerInput.acumulativeMouseDelta;
                 headPitchYaw = playerInput.headPitchYaw;
 
                 actionStates = new bool[playerInput.actions.Length];
@@ -229,6 +231,7 @@ public class DrDatas {
 
             public void Deserialize(DeserializeEvent e) {
                 vecMoveXZ = e.Reader.ReadVector2();
+                acumulativeMouseDelta = e.Reader.ReadVector2();
                 headPitchYaw = e.Reader.ReadVector2();
 
                 // Read action states
@@ -240,6 +243,7 @@ public class DrDatas {
 
             public void Serialize(SerializeEvent e) {
                 e.Writer.WriteVector2(vecMoveXZ);
+                e.Writer.WriteVector2(acumulativeMouseDelta);
                 e.Writer.WriteVector2(headPitchYaw);
 
                 // Write action states
