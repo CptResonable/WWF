@@ -125,10 +125,10 @@ public class Gun : Equipable {
 
         noiseOffset = recoilMultiplyerIndex * specs.noiseScale;
         Vector2 recoil = Vector2.zero;
-        recoil.x = Mathf.PerlinNoise(specs.defaultNoiseOffset.x + noiseOffset, specs.defaultNoiseOffset.y + noiseOffset);
-        recoil.y = Mathf.PerlinNoise(specs.defaultNoiseOffset.x * 5 + noiseOffset, specs.defaultNoiseOffset.x * 5 + noiseOffset) - 0.5f;
+        recoil.x = Mathf.PerlinNoise(specs.defaultNoiseOffset.x + noiseOffset, specs.defaultNoiseOffset.y + noiseOffset) * specs.verticalRecoilCurve.Evaluate(recoilMultiplyerIndex);
+        recoil.y = (Mathf.PerlinNoise(specs.defaultNoiseOffset.x * 5 + noiseOffset, specs.defaultNoiseOffset.x * 5 + noiseOffset) - 0.5f) * specs.horizontalRecoilCurve.Evaluate(recoilMultiplyerIndex); ;
 
-        Vector3 recoilForce = new Vector3(recoil.x * specs.verticalRecoilAmount * specs.verticalRecoilCurve.Evaluate(recoilMultiplyerIndex), -specs.recoilBackForce, (recoil.y + 0.1f) * specs.horizontalRecoilAmount * specs.horizontalRecoilCurve.Evaluate(recoilMultiplyerIndex));
+        Vector3 recoilForce = new Vector3(recoil.x * specs.verticalRecoilAmount, -specs.recoilBackForce, (recoil.y + 0.1f) * specs.horizontalRecoilAmount);
         Vector3 recoilTorque = recoilForce * specs.torqueScale;
         recoilForce *= specs.forceScale;
         recoilForce = specs.baseRecoil;
@@ -139,8 +139,10 @@ public class Gun : Equipable {
         rb.AddRelativeTorque(recoilTorque);
         rb.AddRelativeTorque(new Vector3(0, specs.rollCompensator, 0)); // Counteract roll
 
+        //if (characterLS.GetPlayer().playerType == Player.PlayerType.local)
+        //    characterLS.input.headPitchYaw += specs.recoilAngleHead * recoilMulitplier;
         if (characterLS.GetPlayer().playerType == Player.PlayerType.local)
-            characterLS.input.headPitchYaw += specs.recoilAngleHead * recoilMulitplier;
+            StartCoroutine(HeadRecoilCorutine2(0.1f, new Vector2(-recoil.x - specs.baseHeadRecoil, recoil.y) * 7));
 
         Debug.Log("Noise offset: " + recoilMultiplyerIndex);
         // Recoil scaling stuff.
@@ -151,6 +153,31 @@ public class Gun : Equipable {
         timeSinceLastShot = 0;
 
         StartCoroutine(RecoilResetDelayCorutine());
+    }
+
+    private IEnumerator HeadRecoilCorutine(float time, float amount) {
+        float t = 0;
+        while (t < 1) {
+            float d = Time.deltaTime / time;
+            t += d;
+            characterLS.input.headPitchYaw += new Vector2(amount * d, 0);
+            yield return new WaitForEndOfFrame();
+        }
+        yield return null;
+    }
+
+    private IEnumerator HeadRecoilCorutine2(float time, Vector2 amount) {
+        float t = 0;
+        while (t < 1) {
+
+            float newT = Mathf.Lerp(t, 1, Time.deltaTime * specs.headRecoilSpeed);
+            float d = newT - t;
+            //float d = Time.deltaTime / time;
+            t += d;
+            characterLS.input.headPitchYaw += amount * d;
+            yield return new WaitForEndOfFrame();
+        }
+        yield return null;
     }
 
 
