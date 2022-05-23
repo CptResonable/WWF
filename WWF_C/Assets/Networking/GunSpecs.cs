@@ -44,6 +44,7 @@ public class GunSpecs : ScriptableObject {
     public float rollCompensator;
 
     public float baseHeadRecoil;
+    public float headRecoilScale;
     public float headRecoilSpeed;
 
     private void OnEnable() {
