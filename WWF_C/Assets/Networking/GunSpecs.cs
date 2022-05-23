@@ -34,8 +34,14 @@ public class GunSpecs : ScriptableObject {
     public float horizontalRecoilAmount;
     public float verticalRecoilAmount;
 
+    public float noiseScale;
     public float forceScale;
     public float torqueScale;
+
+    public Vector3 baseRecoil;
+    public float recoilBackForce;
+    public float recoilRightForce;
+    public float rollCompensator;
 
     private void OnEnable() {
         minFireInterval = 1 / (rpm / 60);

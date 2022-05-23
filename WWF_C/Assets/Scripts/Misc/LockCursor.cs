@@ -4,13 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class LockCursor : MonoBehaviour {
-    private void Awake() {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-    void Update() {
-        Cursor.lockState = CursorLockMode.Locked;
+    private void Update() {
         if (Keyboard.current.bKey.wasPressedThisFrame) {
-            Debug.Log("LOG!!");
             if (Cursor.lockState == CursorLockMode.Locked)
                 Cursor.lockState = CursorLockMode.None;
             else

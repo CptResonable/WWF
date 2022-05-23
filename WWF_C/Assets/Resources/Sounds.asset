@@ -24,7 +24,7 @@ MonoBehaviour:
   gs_dyiAk:
     variations:
     - {fileID: 8300000, guid: bf5b6f88afa3fa1498e5c3ff73ec2324, type: 3}
-    volume: 0.21
+    volume: 0.04
   footstep_dirt:
     variations: []
     volume: 0
