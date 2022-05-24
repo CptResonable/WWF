@@ -19,11 +19,6 @@ public class GunSpecs : ScriptableObject {
     public float reloadTime;
     public bool hasSlideStop;
 
-    public Vector3 recoilForce;
-    public Vector3 recoilTorque;
-    public Vector2 recoilAngleHead;
-
-    public AnimationCurve recoilMultiplierCurve;
     public Vector2 defaultNoiseOffset;
     public float recoilInceasePerBullet;
     public float recoilResetSpeed;
@@ -39,9 +34,6 @@ public class GunSpecs : ScriptableObject {
     public float torqueScale;
 
     public Vector3 baseRecoil;
-    public float recoilBackForce;
-    public float recoilRightForce;
-    public float rollCompensator;
 
     public float baseHeadRecoil;
     public float headRecoilScale;
