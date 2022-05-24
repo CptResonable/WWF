@@ -41,7 +41,7 @@ public class Gun : Equipable {
     }
 
     private void Reload_keyDownEvent() {
-        throw new System.NotImplementedException();
+        StartReload();
     }
 
     public override void UnequipL() {

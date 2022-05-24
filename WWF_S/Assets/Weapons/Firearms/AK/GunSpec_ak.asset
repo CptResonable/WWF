@@ -16,12 +16,12 @@ MonoBehaviour:
   fireMode: 1
   muzzleVelocity: 715
   rpm: 600
-  magSize: 300
+  magSize: 30
   reloadTime: 1
   hasSlideStop: 0
   recoilForce: {x: 0, y: -1500, z: 0}
   recoilTorque: {x: 2000, y: 0, z: 800}
-  recoilAngleHead: {x: -2, y: 0}
+  recoilAngleHead: {x: -4, y: 0}
   recoilMultiplierCurve:
     serializedVersion: 2
     m_Curve:
@@ -46,6 +46,66 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  defaultNoiseOffset: {x: 360.32532, y: -5432.329}
-  recoilInceasePerBullet: 0.1
+  defaultNoiseOffset: {x: 6876, y: 4432}
+  recoilInceasePerBullet: 0.033333335
   recoilResetSpeed: 50
+  verticalRecoilCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.15
+      inSlope: -0.03038537
+      outSlope: -0.03038537
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.061843418
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.1878641
+      outSlope: 1.1878641
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.033760965
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  horizontalRecoilCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -0.0138004515
+      outSlope: -0.0138004515
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07842837
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.42338446
+      outSlope: 0.42338446
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.044564486
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  horizontalRecoilAmount: 6000
+  verticalRecoilAmount: 6000
+  noiseScale: 3
+  forceScale: 0
+  torqueScale: 1
+  baseRecoil: {x: 0, y: -800, z: 150}
+  recoilBackForce: 1000
+  recoilRightForce: 10000
+  rollCompensator: 0
+  baseHeadRecoil: 0.2
+  headRecoilScale: 10
+  headRecoilSpeed: 40

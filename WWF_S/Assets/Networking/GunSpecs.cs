@@ -19,14 +19,25 @@ public class GunSpecs : ScriptableObject {
     public float reloadTime;
     public bool hasSlideStop;
 
-    public Vector3 recoilForce;
-    public Vector3 recoilTorque;
-    public Vector2 recoilAngleHead;
-
-    public AnimationCurve recoilMultiplierCurve;
     public Vector2 defaultNoiseOffset;
     public float recoilInceasePerBullet;
     public float recoilResetSpeed;
+
+    public AnimationCurve verticalRecoilCurve;
+    public AnimationCurve horizontalRecoilCurve;
+
+    public float horizontalRecoilAmount;
+    public float verticalRecoilAmount;
+
+    public float noiseScale;
+    public float forceScale;
+    public float torqueScale;
+
+    public Vector3 baseRecoil;
+
+    public float baseHeadRecoil;
+    public float headRecoilScale;
+    public float headRecoilSpeed;
 
     private void OnEnable() {
         minFireInterval = 1 / (rpm / 60);
