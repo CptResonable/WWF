@@ -61,7 +61,6 @@ public class WeaponManagerL {
     }
 
     private void WeaponReloadFinishedUpdate(DrDatas.Guns.GunReloadFinishedData[] reloadFinishedDatas) {
-        Debug.Log("MSG IN RELOAD FINISHED");
         for (int i = 0; i < reloadFinishedDatas.Length; i++) {
             Gun gun = equipmentManager.equipables[reloadFinishedDatas[i].gunId] as Gun;
             gun.FinishReload(reloadFinishedDatas[i].bulletCount);

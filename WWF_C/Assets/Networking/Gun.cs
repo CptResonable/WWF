@@ -7,8 +7,6 @@ public class Gun : Equipable {
     public Transform tMuzzle;
     public Transform tGrip;
     public Transform tChaimber;
-    public Vector3 hipFirePosition;
-    public Vector3 adsPosition;
     public GunSpecs specs;
 
     public int bulletsInMagCount;
@@ -17,6 +15,8 @@ public class Gun : Equipable {
     private float noiseOffset = 0;
     private float recoilMultiplyerIndex = 0;
     private float timeSinceLastShot;
+    private bool fireOnCooldown = false;
+    private bool recoilIsReseting = true;
     private Coroutine reloadCorutine;
 
     public delegate void GunFiredDelegate(Gun gun, ProjectileLaunchParams lauchParams);
@@ -37,14 +37,13 @@ public class Gun : Equipable {
 
     public override void EquipL(CharacterLS character) {
         base.EquipL(character);
+        character.updateEvent += Character_updateEvent;
         character.input.reload.keyDownEvent += Reload_keyDownEvent; ;
     }
 
-    private void Reload_keyDownEvent() {
-        StartReload();
-    }
-
     public override void UnequipL() {
+        characterLS.updateEvent -= Character_updateEvent;
+        characterLS.input.reload.keyDownEvent -= Reload_keyDownEvent; ;
         base.UnequipL();
     }
 
@@ -66,6 +65,12 @@ public class Gun : Equipable {
         base.UnequipN();
     }
 
+    private void Character_updateEvent() {
+        if (characterLS.input.attack_1.isTriggered) {
+            if (!fireOnCooldown && bulletsInMagCount > 0)
+                Fire();
+        }
+    }
 
     protected override void Character_fixedUpdateEvent() {
         base.Character_fixedUpdateEvent();
@@ -84,13 +89,17 @@ public class Gun : Equipable {
 
     }
 
+    private void Reload_keyDownEvent() {
+        StartReload();
+    }
+
     protected override void Attack_1_keyDownEvent() {
         base.Attack_1_keyDownEvent();
 
-        if (specs.fireMode == GunSpecs.FireModes.semiAuto)
-            Fire();
-        else if (specs.fireMode == GunSpecs.FireModes.fullAuto)
-            StartCoroutine(AutoFireCorutine());
+        //if (specs.fireMode == GunSpecs.FireModes.semiAuto)
+        //    Fire();
+        //else if (specs.fireMode == GunSpecs.FireModes.fullAuto)
+        //    StartCoroutine(AutoFireCorutine());
     }
 
     public override void Attack() {
@@ -108,12 +117,14 @@ public class Gun : Equipable {
 
     private void Fire() {
         Debug.Log("FIRE!");
+        ProjectileLaunchParams launchParams = projectileLauncher.Launch(specs.muzzleVelocity, tMuzzle.position, tMuzzle.forward, equipableData.equipableId);
+        gunFiredEvent?.Invoke(this, launchParams);
+        Recoil();
+        bulletsInMagCount--;
+        StartCoroutine(FireCooldownCorutine());
 
-        if (bulletsInMagCount > 0) {
-            ProjectileLaunchParams launchParams = projectileLauncher.Launch(specs.muzzleVelocity, tMuzzle.position, tMuzzle.forward, equipableData.equipableId);
-            gunFiredEvent?.Invoke(this, launchParams);
-            Recoil();
-            bulletsInMagCount--;
+        if (bulletsInMagCount > 0 && !fireOnCooldown) {
+
         }
     }
 
@@ -154,6 +165,16 @@ public class Gun : Equipable {
         StartCoroutine(RecoilResetDelayCorutine());
     }
 
+    public void FinishReload(int bulletsInMagCount) {
+        this.bulletsInMagCount = bulletsInMagCount;
+    }
+
+    private IEnumerator FireCooldownCorutine() {
+        fireOnCooldown = true;
+        yield return new WaitForSeconds(specs.minFireInterval);
+        fireOnCooldown = false;
+    }
+
     private IEnumerator HeadRecoilCorutine(float time, Vector2 amount) {
         float t = 0;
         while (t < 1) {
@@ -167,12 +188,6 @@ public class Gun : Equipable {
         }
         yield return null;
     }
-    public void FinishReload(int bulletsInMagCount) {
-        Debug.Log("Reloaded!");
-        this.bulletsInMagCount = bulletsInMagCount;
-    }
-
-    private bool recoilIsReseting = true;
 
     private IEnumerator RecoilResetDelayCorutine() {
         recoilIsReseting = false;
@@ -191,6 +206,18 @@ public class Gun : Equipable {
             yield return new WaitForSeconds(specs.minFireInterval);
         }
     }
+
+    //private IEnumerator AutoFireCorutine() {
+    //    bool interupted = false;
+    //    while (!interupted && characterLS.input.attack_1.isTriggered) {
+    //        if (bulletsInMagCount <= 0) {
+    //            interupted = true;
+    //            continue;
+    //        }
+    //        Fire();
+    //        yield return new WaitForSeconds(specs.minFireInterval);
+    //    }
+    //}
 
     private IEnumerator ReloadCorutine() {
         yield return new WaitForSeconds(specs.reloadTime);

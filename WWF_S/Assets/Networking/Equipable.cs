@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Equipable : MonoBehaviour {
     //public GameObjects.EquipablesEnums equipableEnum;
+    public Vector3 hipFirePosition;
+    public Vector3 adsPosition;
     public Equipment.Type itemType;
     public DrDatas.EquipmentDatas.EquipableData equipableData;
     //public ushort itemId;
@@ -12,12 +14,6 @@ public class Equipable : MonoBehaviour {
     public Vector3 positionOffset;
     [HideInInspector] public CharacterLS characterLS;
     [HideInInspector] public CharacterN characterN;
-
-    // public void Initialize(GameObjects.EquipablesEnums equipableEnum, ushort itemId) {
-    //     this.equipableEnum = equipableEnum;
-    //     this.itemId = itemId;
-    //     rb = GetComponent<Rigidbody>();
-    // }
 
     public virtual void Initialize(DrDatas.EquipmentDatas.EquipableData equipableData) {
         this.equipableData = equipableData;

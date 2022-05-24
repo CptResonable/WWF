@@ -39,6 +39,9 @@ public class GunSpecs : ScriptableObject {
     public float headRecoilScale;
     public float headRecoilSpeed;
 
+    //public Vector3 hipFirePosition;
+    //public Vector3 adsPosition;
+
     private void OnEnable() {
         minFireInterval = 1 / (rpm / 60);
     }

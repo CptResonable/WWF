@@ -1990,7 +1990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1475377756880361194}
-  PidValues: {x: 800, y: 0, z: 0.2}
+  PidValues: {x: 1200, y: 0, z: 0.25}
   mode: 0
   strengthMod: 1
 --- !u!1 &3099147832751386029
@@ -5690,7 +5690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1475377756880361197}
-  PidValues: {x: 800, y: 0, z: 0.2}
+  PidValues: {x: 1200, y: 0, z: 0.25}
   mode: 0
   strengthMod: 1
 --- !u!1 &8220611327163793477

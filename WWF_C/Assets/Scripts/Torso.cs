@@ -18,8 +18,9 @@ public class Torso {
     private Bodypart bpPelvis, bpTorso1, bpTorso2, bpHead;
 
     [HideInInspector] public Vector3 aimOffset;
-    [SerializeField] private Vector3 hipFireOffset;
-    [SerializeField] private Vector3 adsOffset;
+    private Vector3 hipFireOffset;
+    private Vector3 adsOffset;
+
     [SerializeField] private Transform tOffset;
     [SerializeField] public Transform tLeanPivot;
 
@@ -73,6 +74,9 @@ public class Torso {
     }
 
     private void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
+        hipFireOffset = item.hipFirePosition;
+        adsOffset = item.adsPosition;
+
         if (type == Equipment.Type.gun) {
             SetState(State.hipFire);
         }
