@@ -25,10 +25,12 @@ public class ArmLeft : Arm {
         if (character.equipment.equipedType == Equipment.Type.gun) {
             //character.StartCoroutine(GrabGripCorutine(item));
         }
+        base.Equipment_itemEquipedEvent(type, item);
     }
 
     protected override void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item, ushort characterId) {
         LetGoGrip();
+        base.Equipment_itemUnequipedEvent(type, item, characterId);
     }
 
     protected override void Locomotion_sprintChangedEvent(bool isSprinting) {
@@ -40,8 +42,9 @@ public class ArmLeft : Arm {
     }
 
     protected override void HandTargetRunAimTransitionComplete() {
-        if (!character.locomotion.isSprinting)
+        if (!character.locomotion.isSprinting && character.equipment.equipedType == Equipment.Type.gun) {
             GrabGrip();
+        }
     }
 
     public override void CalculateArm() {
@@ -74,5 +77,6 @@ public class ArmLeft : Arm {
 
     public void LetGoGrip() {
         GameObject.Destroy(handGrip);
+        Debug.Log("GripDestroyed");
     }
 }

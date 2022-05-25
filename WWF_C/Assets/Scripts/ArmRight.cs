@@ -38,12 +38,16 @@ public class ArmRight : Arm {
         if (type == Equipment.Type.gun) {
             Gun gun = (Gun)item;
             tOffHandGripPosition.localPosition = gun.tGrip.localPosition;
-            character.torso.armL.GrabGrip();
-        }   
+            //character.torso.armL.GrabGrip();
+        }
+        
+        base.Equipment_itemEquipedEvent(type, item);
     }
 
     protected override void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item, ushort characterId) {
         GameObject.Destroy(handGrip);
+       
+        base.Equipment_itemUnequipedEvent(type, item, characterId);
     }
 
     public override void CalculateArm() {

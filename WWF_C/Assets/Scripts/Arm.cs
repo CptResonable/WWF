@@ -5,10 +5,13 @@ using VacuumBreather;
 
 [System.Serializable]
 public class Arm {
-    const float RUN_AIM_TRANSITION_SPEED = 5;
+    const float RUN_AIM_TRANSITION_SPEED = 5f;
 
     [SerializeField] protected Transform tCompensator;
     [SerializeField] protected Transform tOffHandGripPosition;
+
+    public enum ArmActionState { idle, aim }
+    public ArmActionState armActionState = ArmActionState.idle;
 
     public Enums.Side side;
     public Transform tGripPosition;
@@ -16,6 +19,7 @@ public class Arm {
 
     public float lerperTest;
     public TWrapper handTargetRunAimInterpolator = new TWrapper(0, 1, 0);
+    public Coroutine handTargetRunAimTransitionCorutine;
 
     protected CharacterLS character;
     protected Torso torso;
@@ -42,16 +46,48 @@ public class Arm {
     }
 
     protected virtual void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
+        DetermineArmActionState();
     }
 
     protected virtual void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item, ushort characterId) {
+        DetermineArmActionState();
     }
 
     protected virtual void Locomotion_sprintChangedEvent(bool isSprinting) {
 
-        // Transition smoothing from run animation to aim ik rig
-        float target = isSprinting? 0 : 1;
-        character.StartCoroutine(InterpolationUtils.i.SmoothStep(handTargetRunAimInterpolator.t, target, RUN_AIM_TRANSITION_SPEED, handTargetRunAimInterpolator, HandTargetRunAimTransitionComplete));
+        //// Transition smoothing from run animation to aim ik rig
+        //float target = isSprinting? 0 : 1;
+        //character.StartCoroutine(InterpolationUtils.i.SmoothStep(handTargetRunAimInterpolator.t, target, RUN_AIM_TRANSITION_SPEED, handTargetRunAimInterpolator, HandTargetRunAimTransitionComplete));
+        DetermineArmActionState();
+    }
+
+    public virtual void DetermineArmActionState() {
+        ArmActionState newArmActionState = ArmActionState.idle;
+
+        if (character.locomotion.isSprinting || character.equipment.equipedType == Equipment.Type.none) {
+            newArmActionState = ArmActionState.idle;
+        }
+        else {
+            if (character.equipment.equipedType == Equipment.Type.gun)
+                newArmActionState = ArmActionState.aim; // TODO, check for reload
+            else
+                newArmActionState = ArmActionState.idle;
+        }
+
+        if (newArmActionState != armActionState) {
+            float target = 0;
+            if (newArmActionState == ArmActionState.idle)
+                target = 0;
+            else
+                target = 1;
+
+            if (handTargetRunAimTransitionCorutine != null)
+                character.StopCoroutine(handTargetRunAimTransitionCorutine);
+
+            handTargetRunAimTransitionCorutine = character.StartCoroutine(InterpolationUtils.i.SmoothStep(handTargetRunAimInterpolator.t, target, RUN_AIM_TRANSITION_SPEED, handTargetRunAimInterpolator, HandTargetRunAimTransitionComplete));
+        }
+
+        armActionState = newArmActionState;
     }
 
     protected virtual void HandTargetRunAimTransitionComplete() {
