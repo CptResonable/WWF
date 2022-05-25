@@ -11,6 +11,9 @@ public class ArmRight : Arm {
         bpArm_1 = character.body.arm_1_R;
         bpArm_2 = character.body.arm_2_R;
         bpHand = character.body.hand_R;
+        tAimRig_arm1 = character.body.armAimRig.arm_1_R;
+        tAimRig_arm2 = character.body.armAimRig.arm_2_R;
+        tAimRig_hand = character.body.armAimRig.hand_R;
 
         base.Initialize(character);
     }
@@ -35,7 +38,7 @@ public class ArmRight : Arm {
         if (type == Equipment.Type.gun) {
             Gun gun = (Gun)item;
             tOffHandGripPosition.localPosition = gun.tGrip.localPosition;
-            character.torso.armL.UpperBodyController_stateTransitionCompleteEvent();
+            character.torso.armL.GrabGrip();
         }   
     }
 
@@ -55,15 +58,19 @@ public class ArmRight : Arm {
 
         bpHand.target.rotation = bpHand.ikTarget.rotation;
 
-        // Copy rotation from aim rig to target rig
-        bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
-        bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
+        //// Copy rotation from aim rig to target rig
+        //bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
+        //bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
 
         CalculateAimOrgin();
 
         // Set ik target position
         character.body.hand_R.ikTarget.position = tAimOrigin.position + bpHand.ikTarget.TransformVector(character.torso.aimOffset);
         //character.body.hand_R.ikTarget.position = tAimOrigin.position + character.tCamera.TransformVector(character.torso.aimOffset);
+    }
+
+    public override void SetArmRotations() {
+        base.SetArmRotations();
     }
 
     // Calculates position and rotation of aim origin

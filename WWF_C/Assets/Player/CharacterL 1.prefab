@@ -235,6 +235,7 @@ MonoBehaviour:
     tOffset: {fileID: 4458700297543866156}
     accelerationLeanAmount: 0.04
     lateralForceLimit: 500
+    isSprinting: 0
   legController:
     legState: 0
     legL:
@@ -824,17 +825,17 @@ MonoBehaviour:
       side: 0
       tGripPosition: {fileID: 3514534146301050873}
       handGrip: {fileID: 0}
+      lerperTest: 0
     armR:
       tCompensator: {fileID: 0}
       tOffHandGripPosition: {fileID: 3708232384817587465}
       side: 1
       tGripPosition: {fileID: 7879626062815264179}
       handGrip: {fileID: 0}
+      lerperTest: 0
       tAimOriginBase: {fileID: 8663603744550114550}
       tAimOrigin: {fileID: 2452679015169204278}
     aimOffset: {x: 0, y: 0, z: 0}
-    hipFireOffset: {x: -0.08, y: 0.23, z: -0.25}
-    adsOffset: {x: 0, y: 0.17, z: -0.152}
     tOffset: {fileID: 4458700297543866156}
     tLeanPivot: {fileID: 4458700297543866157}
     runYawOffset: 0
@@ -1070,9 +1071,17 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1936066294042882144, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3064361434902381056, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: 0.17202759
+      objectReference: {fileID: 0}
+    - target: {fileID: 3226286386328377769, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3441531967765671170, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1085,6 +1094,14 @@ PrefabInstance:
     - target: {fileID: 3441531967765671170, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 0.00000005355104
+      objectReference: {fileID: 0}
+    - target: {fileID: 3833403159120463732, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172380384282207072, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4273055191991435878, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_Antialiasing
@@ -1165,6 +1182,14 @@ PrefabInstance:
     - target: {fileID: 8040625432194355752, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 0.05203348
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320859620177204364, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834431687219953262, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8384622937095351794, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}

@@ -9,6 +9,9 @@ public class ArmLeft : Arm {
         bpArm_1 = character.body.arm_1_L;
         bpArm_2 = character.body.arm_2_L;
         bpHand = character.body.hand_L;
+        tAimRig_arm1 = character.body.armAimRig.arm_1_L;
+        tAimRig_arm2 = character.body.armAimRig.arm_2_L;
+        tAimRig_hand = character.body.armAimRig.hand_L;
 
         base.Initialize(character);
     }
@@ -25,7 +28,20 @@ public class ArmLeft : Arm {
     }
 
     protected override void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item, ushort characterId) {
-        GameObject.Destroy(handGrip);
+        LetGoGrip();
+    }
+
+    protected override void Locomotion_sprintChangedEvent(bool isSprinting) {
+        if (isSprinting) {
+            LetGoGrip();
+        }
+
+        base.Locomotion_sprintChangedEvent(isSprinting);
+    }
+
+    protected override void HandTargetRunAimTransitionComplete() {
+        if (!character.locomotion.isSprinting)
+            GrabGrip();
     }
 
     public override void CalculateArm() {
@@ -34,21 +50,29 @@ public class ArmLeft : Arm {
         bpHand.ikTarget.rotation = character.body.hand_R.ikTarget.rotation;
         bpHand.target.rotation = bpHand.ikTarget.rotation;
 
-        // Copy rotation from aim rig to target rig
-        bpArm_1.target.rotation = character.body.armAimRig.arm_1_L.rotation;
-        bpArm_2.target.rotation = character.body.armAimRig.arm_2_L.rotation;
+        //// Copy rotation from aim rig to target rig
+        //bpArm_1.target.rotation = character.body.armAimRig.arm_1_L.rotation;
+        //bpArm_2.target.rotation = character.body.armAimRig.arm_2_L.rotation;
 
         // Set ik target position
         if (character.equipment.equipedType == Equipment.Type.gun)
             bpHand.ikTarget.position = tOffHandGripPosition.position;
     }
 
-    public void UpperBodyController_stateTransitionCompleteEvent() {
+    public override void SetArmRotations() {
+        base.SetArmRotations();
+    }
+
+    public void GrabGrip() {
         Gun gun = (Gun)character.equipment.equipedItem;
 
         bpHand.ragdoll.position = gun.tGrip.position;
         bpHand.ragdoll.rotation = gun.tGrip.rotation;
         handGrip = bpHand.ragdoll.gameObject.AddComponent<FixedJoint>();
         handGrip.connectedBody = gun.tGrip.GetComponent<Rigidbody>();
+    }
+
+    public void LetGoGrip() {
+        GameObject.Destroy(handGrip);
     }
 }

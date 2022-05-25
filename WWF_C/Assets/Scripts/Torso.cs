@@ -56,6 +56,7 @@ public class Torso {
         character.lateUpdateEvent += Character_lateUpdateEvent;
         character.input.toggleAds.keyDownEvent += ToggleAds_keyDownEvent; ;
         character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent;
+        character.locomotion.sprintChangedEvent += Locomotion_sprintChangedEvent;
         stateChangedEvent += Torso_stateChangedEvent;
     }
 
@@ -82,6 +83,18 @@ public class Torso {
         }
     }
 
+    private void Locomotion_sprintChangedEvent(bool isSprinting) {
+
+        // Change ads state when starting and stopping sprint
+        if (isSprinting) {
+            SetState(State.hipFire);
+        }
+        else {
+            if (character.input.toggleAds.isTriggered)
+                SetState(State.ads);
+        }
+    }
+
     private void Torso_stateChangedEvent(State newState) {
     }
 
@@ -99,6 +112,8 @@ public class Torso {
         head.CalculateEyePositionAndRotation();
         armR.CalculateArm();
         armL.CalculateArm();
+        armR.SetArmRotations();
+        armL.SetArmRotations();
     }
 
     private void UpdateUpperBody_adsTorsoAngle() {

@@ -5,6 +5,8 @@ using VacuumBreather;
 
 [System.Serializable]
 public class Arm {
+    const float RUN_AIM_TRANSITION_SPEED = 5;
+
     [SerializeField] protected Transform tCompensator;
     [SerializeField] protected Transform tOffHandGripPosition;
 
@@ -12,9 +14,13 @@ public class Arm {
     public Transform tGripPosition;
     public FixedJoint handGrip;
 
+    public float lerperTest;
+    public TWrapper handTargetRunAimInterpolator = new TWrapper(0, 1, 0);
+
     protected CharacterLS character;
     protected Torso torso;
     protected Bodypart bpArm_1, bpArm_2, bpHand;
+    protected Transform tAimRig_arm1, tAimRig_arm2, tAimRig_hand;
 
     protected Vector3 error;
 
@@ -26,6 +32,7 @@ public class Arm {
         character.lateUpdateEvent += Character_lateUpdateEvent;
         character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent;
         character.equipment.itemUnequipedEvent += Equipment_itemUnequipedEvent;
+        character.locomotion.sprintChangedEvent += Locomotion_sprintChangedEvent;
     }
 
     protected virtual void Character_updateEvent() {
@@ -40,6 +47,16 @@ public class Arm {
     protected virtual void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item, ushort characterId) {
     }
 
+    protected virtual void Locomotion_sprintChangedEvent(bool isSprinting) {
+
+        // Transition smoothing from run animation to aim ik rig
+        float target = isSprinting? 0 : 1;
+        character.StartCoroutine(InterpolationUtils.i.SmoothStep(handTargetRunAimInterpolator.t, target, RUN_AIM_TRANSITION_SPEED, handTargetRunAimInterpolator, HandTargetRunAimTransitionComplete));
+    }
+
+    protected virtual void HandTargetRunAimTransitionComplete() {
+    }
+
     protected IkTargetStruct InterpolateTargetStruct(IkTargetStruct lastStruct, IkTargetStruct newStruct, float t) {
         IkTargetStruct targetStruct = new IkTargetStruct();
         targetStruct.targetPosition = Vector3.Lerp(lastStruct.targetPosition, newStruct.targetPosition, t);
@@ -51,6 +68,11 @@ public class Arm {
     public virtual void CalculateArm() {
     }
 
+    public virtual void SetArmRotations() {
+        bpArm_1.target.rotation = Quaternion.Slerp(bpArm_1.target.rotation, tAimRig_arm1.rotation, handTargetRunAimInterpolator.t);
+        bpArm_2.target.rotation = Quaternion.Slerp(bpArm_2.target.rotation, tAimRig_arm2.rotation, handTargetRunAimInterpolator.t);
+        bpHand.target.rotation = Quaternion.Slerp(bpHand.target.rotation, tAimRig_hand.rotation, handTargetRunAimInterpolator.t);
+    }
 
     //protected void Compensate() {
     //    Vector3 newError = VectorUtils.FromToVector(bpHand.ragdoll.position, bpHand.ikTarget.position);
