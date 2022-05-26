@@ -68,6 +68,9 @@ public class Torso {
     }
 
     private void ToggleAds_keyDownEvent() {
+        if (character.locomotion.isSprinting)
+            return;
+
         if (state == State.hipFire)
             SetState(State.ads);
         else if (state == State.ads)
@@ -112,8 +115,6 @@ public class Torso {
         head.CalculateEyePositionAndRotation();
         armR.CalculateArm();
         armL.CalculateArm();
-        armR.SetArmRotations();
-        armL.SetArmRotations();
     }
 
     private void UpdateUpperBody_adsTorsoAngle() {

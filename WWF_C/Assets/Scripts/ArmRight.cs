@@ -60,21 +60,16 @@ public class ArmRight : Arm {
         tilt += character.telemetry.xzVelocityLocal.x * -5; // Strafe
         bpHand.ikTarget.Rotate(new Vector3(0, tilt, 0), Space.Self);
 
-        bpHand.target.rotation = bpHand.ikTarget.rotation;
-
-        //// Copy rotation from aim rig to target rig
-        //bpArm_1.target.rotation = character.body.armAimRig.arm_1_R.rotation;
-        //bpArm_2.target.rotation = character.body.armAimRig.arm_2_R.rotation;
-
         CalculateAimOrgin();
 
         // Set ik target position
         character.body.hand_R.ikTarget.position = tAimOrigin.position + bpHand.ikTarget.TransformVector(character.torso.aimOffset);
-        //character.body.hand_R.ikTarget.position = tAimOrigin.position + character.tCamera.TransformVector(character.torso.aimOffset);
+
+        base.CalculateArm();
     }
 
-    public override void SetArmRotations() {
-        base.SetArmRotations();
+    protected override void InterpolateAimAndIdleRotations() {
+        base.InterpolateAimAndIdleRotations();
     }
 
     // Calculates position and rotation of aim origin

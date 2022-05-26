@@ -51,19 +51,16 @@ public class ArmLeft : Arm {
 
         // Set hand target and ik target rotation
         bpHand.ikTarget.rotation = character.body.hand_R.ikTarget.rotation;
-        bpHand.target.rotation = bpHand.ikTarget.rotation;
-
-        //// Copy rotation from aim rig to target rig
-        //bpArm_1.target.rotation = character.body.armAimRig.arm_1_L.rotation;
-        //bpArm_2.target.rotation = character.body.armAimRig.arm_2_L.rotation;
 
         // Set ik target position
         if (character.equipment.equipedType == Equipment.Type.gun)
             bpHand.ikTarget.position = tOffHandGripPosition.position;
+
+        base.CalculateArm();
     }
 
-    public override void SetArmRotations() {
-        base.SetArmRotations();
+    protected override void InterpolateAimAndIdleRotations() {
+        base.InterpolateAimAndIdleRotations();
     }
 
     public void GrabGrip() {

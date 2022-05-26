@@ -102,9 +102,10 @@ public class Arm {
     }
 
     public virtual void CalculateArm() {
+        InterpolateAimAndIdleRotations();
     }
 
-    public virtual void SetArmRotations() {
+    protected virtual void InterpolateAimAndIdleRotations() {
         bpArm_1.target.rotation = Quaternion.Slerp(bpArm_1.target.rotation, tAimRig_arm1.rotation, handTargetRunAimInterpolator.t);
         bpArm_2.target.rotation = Quaternion.Slerp(bpArm_2.target.rotation, tAimRig_arm2.rotation, handTargetRunAimInterpolator.t);
         bpHand.target.rotation = Quaternion.Slerp(bpHand.target.rotation, tAimRig_hand.rotation, handTargetRunAimInterpolator.t);
