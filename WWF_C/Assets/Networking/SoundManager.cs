@@ -8,7 +8,7 @@ public class SoundManager {
     [SerializeField] private Transform staticSoundContainer;
 
     public void Initialize() {
-        Gun.gunFiredEvent += Gun_gunFiredEvent;
+        Gun.GunFiredEvent += Gun_gunFiredEvent;
     }
 
     #region Event listeners

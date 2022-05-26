@@ -13,8 +13,8 @@ public class WeaponManagerS {
     public void Initialize(EquipmentManagerS equipmentManager) {
         this.equipmentManager = equipmentManager;
 
-        Gun.reloadStartedEvent += Gun_reloadStartedEvent;
-        Gun.gunReloadFinishedEvent += Gun_reloadFinishedEvent;
+        Gun.ReloadStartedEvent += Gun_reloadStartedEvent;
+        Gun.ReloadFinishedEvent += Gun_reloadFinishedEvent;
     }
 
     /// <summary> Get all weapon update datas that should be synced to clients </summary>

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Gun : Equipable {
-    public Transform tSight;
+    public Transform tSight_back;
+    public Transform tSight_front;
     public Transform tMuzzle;
     public Transform tGrip;
     public Transform tChaimber;
@@ -20,11 +21,13 @@ public class Gun : Equipable {
     private Coroutine reloadCorutine;
 
     public delegate void GunFiredDelegate(Gun gun, ProjectileLaunchParams lauchParams);
-    public static event GunFiredDelegate gunFiredEvent;
+    public static event GunFiredDelegate GunFiredEvent;
+    public event Delegates.EmptyDelegate gunFiredEvent;
 
     public delegate void ReloadDelegate(Gun gun);
-    public static event ReloadDelegate reloadStartedEvent;
-    public static event ReloadDelegate gunReloadFinishedEvent;
+    public static event ReloadDelegate ReloadStartedEvent;
+    public static event ReloadDelegate ReloadFinishedEvent;
+    public event Delegates.EmptyDelegate reloadFinishedEvent;
 
     private Rigidbody rbGrip;
 
@@ -118,7 +121,8 @@ public class Gun : Equipable {
     private void Fire() {
         Debug.Log("FIRE!");
         ProjectileLaunchParams launchParams = projectileLauncher.Launch(specs.muzzleVelocity, tMuzzle.position, tMuzzle.forward, equipableData.equipableId);
-        gunFiredEvent?.Invoke(this, launchParams);
+        GunFiredEvent?.Invoke(this, launchParams);
+        gunFiredEvent?.Invoke();
         Recoil();
         bulletsInMagCount--;
         StartCoroutine(FireCooldownCorutine());
@@ -131,7 +135,7 @@ public class Gun : Equipable {
     public override void StartReload() {
         base.StartReload();
 
-        reloadStartedEvent?.Invoke(this);
+        ReloadStartedEvent?.Invoke(this);
         reloadCorutine = StartCoroutine(ReloadCorutine()); // Start reload      
     }
 
@@ -167,6 +171,7 @@ public class Gun : Equipable {
 
     public void FinishReload(int bulletsInMagCount) {
         this.bulletsInMagCount = bulletsInMagCount;
+        reloadFinishedEvent?.Invoke();
     }
 
     private IEnumerator FireCooldownCorutine() {
@@ -221,6 +226,6 @@ public class Gun : Equipable {
 
     private IEnumerator ReloadCorutine() {
         yield return new WaitForSeconds(specs.reloadTime);
-        gunReloadFinishedEvent?.Invoke(this);
+        ReloadFinishedEvent?.Invoke(this);
     }
 }

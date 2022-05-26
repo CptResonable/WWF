@@ -6,6 +6,7 @@ using UnityEngine;
 public class ArmRight : Arm {
     [SerializeField] private Transform tAimOriginBase;
     [SerializeField] private Transform tAimOrigin;
+    [SerializeField] private Transform tAimOrigin2;
 
     public override void Initialize(CharacterLS character) {
         bpArm_1 = character.body.arm_1_R;
@@ -16,12 +17,20 @@ public class ArmRight : Arm {
         tAimRig_hand = character.body.armAimRig.hand_R;
 
         base.Initialize(character);
+
+        character.fixedUpdateEvent += Character_fixedUpdateEvent;
+    }
+
+    private void Character_fixedUpdateEvent() {
+        //AimAccuracyCorrection();
     }
 
     protected override void Character_updateEvent() {
+        //AimAccuracyCorrection();
     }
 
     protected override void Character_lateUpdateEvent() {
+        //AimAccuracyCorrection();
     }
 
     protected override void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
@@ -63,14 +72,32 @@ public class ArmRight : Arm {
         CalculateAimOrgin();
 
         // Set ik target position
-        character.body.hand_R.ikTarget.position = tAimOrigin.position + bpHand.ikTarget.TransformVector(character.torso.aimOffset);
+        character.body.hand_R.ikTarget.position = tAimOrigin2.position + bpHand.ikTarget.TransformVector(character.torso.aimOffset);
 
         base.CalculateArm();
+
+        //AimAccuracyCorrection();
     }
 
     protected override void InterpolateAimAndIdleRotations() {
         base.InterpolateAimAndIdleRotations();
     }
+
+    //// Calculates position and rotation of aim origin
+    //private void CalculateAimOrgin() {
+    //    tAimOriginBase.position = character.body.head.ragdoll.position;
+
+    //    float targetHeadTilt;
+    //    if (character.torso.state == Torso.State.hipFire)
+    //        targetHeadTilt = 0;
+    //    else
+    //        targetHeadTilt = torso.head.adsTilt;
+
+    //    tAimOriginBase.rotation = torso.head.iktEyes.rotation;
+    //    tAimOriginBase.Rotate(0, 0, targetHeadTilt, Space.Self);
+
+    //    tAimOrigin.rotation = torso.head.iktEyes.rotation;
+    //}
 
     // Calculates position and rotation of aim origin
     private void CalculateAimOrgin() {
@@ -84,17 +111,50 @@ public class ArmRight : Arm {
 
         tAimOriginBase.rotation = torso.head.iktEyes.rotation;
         tAimOriginBase.Rotate(0, 0, targetHeadTilt, Space.Self);
+
+        tAimOrigin.rotation = torso.head.iktEyes.rotation;
+
+        //Gun gun = (Gun)character.equipment.equipedItem;
+        //Vector3 pBack = Vector3.ProjectOnPlane(gun.tSight_back.position, torso.head.iktEyes.forward);
+        //Vector3 pFront = Vector3.ProjectOnPlane(gun.tSight_front.position, torso.head.iktEyes.forward);
+
+        //Vector3 localOffset = torso.head.iktEyes.InverseTransformPoint(pBack);
+        //tAimOrigin.position = pBack
     }
 
-    //private void WeaponPoint_hip() {
-    //    character.body.hand_R.ikTarget.position = character.tCamera.position + character.tCamera.TransformVector(character.torso.aimOffset);
+    private Quaternion accuracyCorrectionRotation;
+    [SerializeField] private Vector3 accuracyCorrectionPosition;
+    private void AimAccuracyCorrection() {
+        if (character.torso.state != Torso.State.ads) {
+            tAimOrigin2.localPosition = Vector3.zero;
+            return;
+        }
+
+        Gun gun = (Gun)character.equipment.equipedItem;
+        Vector3 camToSight = (gun.tSight_back.position - character.tCamera.position).normalized;
+        Debug.DrawLine(character.tCamera.position, gun.tSight_back.position + camToSight * 12, Color.cyan);
+        float yawError = Vector3.SignedAngle(character.tCamera.forward, camToSight, tAimOrigin.up);
+        float pitchError = Vector3.SignedAngle(character.tCamera.forward, camToSight, tAimOrigin.right);
+        tAimOrigin2.localPosition += new Vector3(-yawError * Time.deltaTime * 0.02f, pitchError * 0.02f * Time.deltaTime, 0) * character.torso.adsInterpolator.t / (1 + character.rbMain.angularVelocity.y);
+
+        tAimOrigin2.localPosition = Vector3.Lerp(tAimOrigin2.localPosition, Vector3.zero, character.rbMain.angularVelocity.y * Time.deltaTime);
+    }
+    //private void AimAccuracyCorrection() {
+    //    Gun gun = (Gun)character.equipment.equipedItem;
+    //    Vector3 pBack = Vector3.ProjectOnPlane(gun.tSight_back.position, torso.head.iktEyes.forward);
+    //    Vector3 pFront = Vector3.ProjectOnPlane(gun.tSight_front.position, torso.head.iktEyes.forward);
+
+    //    Vector3 localOffset = torso.head.iktEyes.InverseTransformPoint(pBack);
+    //    bpHand.ikTarget.position += torso.head.iktEyes.TransformVector(localOffset);
     //}
+    //private void AimAccuracyCorrection() {
+    //    Gun gun = (Gun)character.equipment.equipedItem;
+    //    Vector3 pBack = Vector3.ProjectOnPlane(gun.tSight_back.position, torso.head.iktEyes.forward);
+    //    Vector3 pFront = Vector3.ProjectOnPlane(gun.tSight_front.position, torso.head.iktEyes.forward);
 
+    //    Vector3 error = VectorUtils.FromToVector(pBack, pFront);
+    //    accuracyCorrectionPosition += error;
 
-    //private void WeaponPoint_hip() {
-    //    Vector3 aimOrigin = character.tCamera.position + character.tCamera.up * character.torso.aimOriginHeightOffset;
-    //    Vector3 rightHandTarget = aimOrigin + character.tCamera.forward * character.torso.aimForwardDistance;
-    //    character.body.hand_R.ikTarget.position = rightHandTarget;
+    //    bpHand.ikTarget.position -= bpHand.ikTarget.TransformVector(accuracyCorrectionPosition);
     //}
-
 }
