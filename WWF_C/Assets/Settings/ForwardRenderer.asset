@@ -29,16 +29,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    Event: 500
+    Event: 1000
     blitMaterial: {fileID: 2100000, guid: 7878da05fc685bf478e7437f3bb4fa7d, type: 2}
     blitMaterialPassIndex: 0
     setInverseViewMatrix: 0
     requireDepthNormals: 0
-    srcType: 0
-    srcTextureId: _CameraColorTexture
+    srcType: 1
+    srcTextureId: _AfterPostProcessTexture
     srcTextureObject: {fileID: 0}
-    dstType: 0
-    dstTextureId: _BlitPassTexture
+    dstType: 1
+    dstTextureId: _AfterPostProcessTexture
     dstTextureObject: {fileID: 0}
     overrideGraphicsFormat: 0
     graphicsFormat: 4

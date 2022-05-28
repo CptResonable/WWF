@@ -124,6 +124,8 @@ public class Gun : Equipable {
         GunFiredEvent?.Invoke(this, launchParams);
         gunFiredEvent?.Invoke();
         Recoil();
+        //VfxManager.i.PlayEffect(VisualEffects.VfxEnum.muzzleFlash, tMuzzle);
+        VfxManager.i.PlayEffect(VisualEffects.VfxEnum.muzzleFlash, tMuzzle, tMuzzle.position, tMuzzle.forward, true);
         bulletsInMagCount--;
         StartCoroutine(FireCooldownCorutine());
 

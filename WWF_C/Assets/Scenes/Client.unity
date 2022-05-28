@@ -776,6 +776,18 @@ MonoBehaviour:
     enableHardLimit: 0
     hardLimit: 10
     recycle: 0
+  - prefabTransform: {fileID: 638455987314716348, guid: 78b680f0f37a6d0479d39650b0200b83, type: 3}
+    instancesToPreload: 200
+    isPoolExpanded: 1
+    showDebugLog: 0
+    poolCanGrow: 1
+    cullDespawned: 0
+    cullAbove: 10
+    cullDelay: 2
+    cullAmount: 1
+    enableHardLimit: 0
+    hardLimit: 10
+    recycle: 0
   showDebugLog: 0
   isRootExpanded: 1
   autoAddMissingPrefabPool: 0
