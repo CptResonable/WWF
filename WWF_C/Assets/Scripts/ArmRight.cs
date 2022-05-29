@@ -74,9 +74,15 @@ public class ArmRight : Arm {
         // Set ik target position
         character.body.hand_R.ikTarget.position = tAimOrigin2.position + bpHand.ikTarget.TransformVector(character.torso.aimOffset);
 
+        InterpolateAimAndIdleRotations();
+
         base.CalculateArm();
 
         //AimAccuracyCorrection();
+    }
+
+    public override void ReloadStarted(float reloadTime) {
+        base.ReloadStarted(reloadTime);
     }
 
     protected override void InterpolateAimAndIdleRotations() {

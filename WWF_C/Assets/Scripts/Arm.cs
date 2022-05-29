@@ -10,7 +10,7 @@ public class Arm {
     [SerializeField] protected Transform tCompensator;
     [SerializeField] protected Transform tOffHandGripPosition;
 
-    public enum ArmActionState { idle, aim }
+    public enum ArmActionState { idle, aim, reload }
     public ArmActionState armActionState = ArmActionState.idle;
 
     public Enums.Side side;
@@ -93,6 +93,11 @@ public class Arm {
     protected virtual void HandTargetRunAimTransitionComplete() {
     }
 
+    public virtual void ReloadStarted(float reloadTime) {
+        Debug.Log("RELOAD HAS STRARETEWD!");
+        armActionState = ArmActionState.reload;
+    }
+
     protected IkTargetStruct InterpolateTargetStruct(IkTargetStruct lastStruct, IkTargetStruct newStruct, float t) {
         IkTargetStruct targetStruct = new IkTargetStruct();
         targetStruct.targetPosition = Vector3.Lerp(lastStruct.targetPosition, newStruct.targetPosition, t);
@@ -102,7 +107,6 @@ public class Arm {
     }
 
     public virtual void CalculateArm() {
-        InterpolateAimAndIdleRotations();
     }
 
     protected virtual void InterpolateAimAndIdleRotations() {

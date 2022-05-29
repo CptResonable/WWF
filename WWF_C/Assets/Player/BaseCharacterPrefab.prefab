@@ -164,7 +164,7 @@ Transform:
   m_Children:
   - {fileID: 6910201987147416563}
   m_Father: {fileID: 709262083956988741}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &4135076678115934899
 MonoBehaviour:
@@ -3526,7 +3526,7 @@ Transform:
   m_Children:
   - {fileID: 1475377756880361099}
   m_Father: {fileID: 709262083956988741}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!1 &5661723016089263397
 GameObject:
@@ -4295,7 +4295,7 @@ Transform:
   - {fileID: 1475377756880361188}
   - {fileID: 3554124179014034001}
   m_Father: {fileID: 709262083956988741}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6732348483166986722
 GameObject:
@@ -4456,6 +4456,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 6259279546282398308}
   - {fileID: 2753495883844602633}
   - {fileID: 1475377756880361156}
   - {fileID: 1475377756880361189}
@@ -4507,6 +4508,36 @@ MonoBehaviour:
   PidValues: {x: 150, y: 0, z: 0.15}
   mode: 0
   strengthMod: 1
+--- !u!1 &6904612586797712512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6259279546282398308}
+  m_Layer: 6
+  m_Name: AmmoPouch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6259279546282398308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6904612586797712512}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.2, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 709262083956988741}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6941995397718017374
 GameObject:
   m_ObjectHideFlags: 0

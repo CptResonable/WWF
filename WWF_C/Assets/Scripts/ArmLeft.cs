@@ -49,18 +49,32 @@ public class ArmLeft : Arm {
 
     public override void CalculateArm() {
 
-        // Set hand target and ik target rotation
-        bpHand.ikTarget.rotation = character.body.hand_R.ikTarget.rotation;
+        if (armActionState == ArmActionState.reload) {
+            State_reload();
+        }
+        else { // Idle and aim, these are on the same
 
-        // Set ik target position
-        if (character.equipment.equipedType == Equipment.Type.gun)
-            bpHand.ikTarget.position = tOffHandGripPosition.position;
+            // Set hand target and ik target rotation
+            bpHand.ikTarget.rotation = character.body.hand_R.ikTarget.rotation;
+
+            // Set ik target position
+            if (character.equipment.equipedType == Equipment.Type.gun)
+                bpHand.ikTarget.position = tOffHandGripPosition.position;
+
+            InterpolateAimAndIdleRotations();
+        }
 
         base.CalculateArm();
     }
 
     protected override void InterpolateAimAndIdleRotations() {
         base.InterpolateAimAndIdleRotations();
+    }
+
+    public override void ReloadStarted(float reloadTime) {
+        base.ReloadStarted(reloadTime);
+
+        LetGoGrip();
     }
 
     public void GrabGrip() {
@@ -75,5 +89,15 @@ public class ArmLeft : Arm {
     public void LetGoGrip() {
         GameObject.Destroy(handGrip);
         Debug.Log("GripDestroyed");
+    }
+
+    private void State_reload() {
+        // Set hand target and ik target rotation
+        bpHand.ikTarget.rotation = character.body.hand_R.ikTarget.rotation;
+
+        Gun gun = (Gun)character.equipment.equipedItem;
+        // Set ik target position
+
+        bpHand.ikTarget.position = Vector3.Lerp(tOffHandGripPosition.position, character.equipment.tAmmoPouch.position, gun.reloadProgress);
     }
 }
