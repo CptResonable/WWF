@@ -6,6 +6,7 @@ using UnityEngine;
 public class Equipment {
     protected Transform tEquipmentContainer;
     public List<Equipable> equipables;
+    public Transform tAmmoPouch;
 
     public enum Type { none, gun};
     public Type equipedType = Type.none;

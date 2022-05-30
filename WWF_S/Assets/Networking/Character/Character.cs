@@ -6,7 +6,7 @@ public abstract class Character : MonoBehaviour {
     protected Player player;
     public Health health;
     public LayerMask layerMask;
-    public Equipment equipment;
+    [HideInInspector] public Equipment equipment;
     public DrDatas.Player.PlayerBodyData bodyData; // Add thus to character data
     
     public event Delegates.EmptyDelegate updateEvent;

@@ -56,6 +56,7 @@ public class Torso {
         character.lateUpdateEvent += Character_lateUpdateEvent;
         character.input.toggleAds.keyDownEvent += ToggleAds_keyDownEvent; ;
         character.equipment.itemEquipedEvent += Equipment_itemEquipedEvent;
+        character.locomotion.sprintChangedEvent += Locomotion_sprintChangedEvent;
         stateChangedEvent += Torso_stateChangedEvent;
     }
 
@@ -67,6 +68,9 @@ public class Torso {
     }
 
     private void ToggleAds_keyDownEvent() {
+        if (character.locomotion.isSprinting)
+            return;
+
         if (state == State.hipFire)
             SetState(State.ads);
         else if (state == State.ads)
@@ -79,6 +83,18 @@ public class Torso {
 
         if (type == Equipment.Type.gun) {
             SetState(State.hipFire);
+        }
+    }
+
+    private void Locomotion_sprintChangedEvent(bool isSprinting) {
+
+        // Change ads state when starting and stopping sprint
+        if (isSprinting) {
+            SetState(State.hipFire);
+        }
+        else {
+            if (character.input.toggleAds.isTriggered)
+                SetState(State.ads);
         }
     }
 

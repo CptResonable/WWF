@@ -12,7 +12,6 @@ public class Locomotion {
     private const float JOG_SPEED = 5;
     private const float SPRINT_SPEED = 6.5f;
 
-
     private CharacterLS character;
 
     [SerializeField] private Vector3 pidValues_move;
@@ -24,7 +23,11 @@ public class Locomotion {
     [SerializeField] private float accelerationLeanAmount;
     [SerializeField] private float lateralForceLimit;
 
+    public bool isSprinting;
+
     private Vector3 targetMoveVector;
+
+    public event Delegates.BoolDelegate sprintChangedEvent;
 
     public void Initialize(CharacterLS character) {
         this.character = character;
@@ -50,11 +53,17 @@ public class Locomotion {
     }
 
     private void Sprint_keyDownEvent() {
+        isSprinting = true;
         moveSpeed = SPRINT_SPEED;
+
+        sprintChangedEvent?.Invoke(isSprinting);
     }
 
     private void Sprint_keyUpEvent() {
+        isSprinting = false;
         moveSpeed = JOG_SPEED;
+
+        sprintChangedEvent?.Invoke(isSprinting);
     }
 
     private void Torso_stateChangedEvent(Torso.State newState) {
@@ -95,7 +104,6 @@ public class Locomotion {
             character.rbMain.AddForce(normalUpForce + normalXZForce);
         }
     }
-
 
     private void Move() {
 

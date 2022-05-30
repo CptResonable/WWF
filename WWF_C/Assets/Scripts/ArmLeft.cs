@@ -51,6 +51,7 @@ public class ArmLeft : Arm {
 
         if (armActionState == ArmActionState.reload) {
             State_reload();
+            InterpolateAimAndIdleRotations();
         }
         else { // Idle and aim, these are on the same
 
@@ -77,6 +78,15 @@ public class ArmLeft : Arm {
         LetGoGrip();
     }
 
+    protected override void Gun_reloadFinishedEvent() {
+        base.Gun_reloadFinishedEvent();
+
+        DetermineArmActionState();
+
+        //if (armActionState == ArmActionState.aim)
+        //    GrabGrip();
+    }
+
     public void GrabGrip() {
         Gun gun = (Gun)character.equipment.equipedItem;
 
@@ -98,6 +108,9 @@ public class ArmLeft : Arm {
         Gun gun = (Gun)character.equipment.equipedItem;
         // Set ik target position
 
-        bpHand.ikTarget.position = Vector3.Lerp(tOffHandGripPosition.position, character.equipment.tAmmoPouch.position, gun.reloadProgress);
+        //bpHand.ikTarget.position = character.equipment.tAmmoPouch.position;
+        float t = 1 - Mathf.Abs((gun.reloadProgress - 0.5f) * 2);
+        t = InterpolationUtils.LinearToSmoothStep(t);
+        bpHand.ikTarget.position = Vector3.Lerp(tOffHandGripPosition.position, character.equipment.tAmmoPouch.position, t);
     }
 }

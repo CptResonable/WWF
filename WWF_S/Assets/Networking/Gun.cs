@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Gun : Equipable {
-    public Transform tSight;
+    public Transform tSight_back;
+    public Transform tSight_front;
     public Transform tMuzzle;
     public Transform tGrip;
     public Transform tChaimber;
     public GunSpecs specs;
 
     public int bulletsInMagCount;
+    [HideInInspector] public bool isReloading = false;
+    public float reloadProgress;
 
     [SerializeField] private ProjectileLauncher projectileLauncher;
     private float noiseOffset = 0;
@@ -20,11 +23,13 @@ public class Gun : Equipable {
     private Coroutine reloadCorutine;
 
     public delegate void GunFiredDelegate(Gun gun, ProjectileLaunchParams lauchParams);
-    public static event GunFiredDelegate gunFiredEvent;
+    public static event GunFiredDelegate GunFiredEvent;
+    public event Delegates.EmptyDelegate gunFiredEvent;
 
     public delegate void ReloadDelegate(Gun gun);
-    public static event ReloadDelegate reloadStartedEvent;
-    public static event ReloadDelegate gunReloadFinishedEvent;
+    public static event ReloadDelegate ReloadStartedEvent;
+    public static event ReloadDelegate ReloadFinishedEvent;
+    public event Delegates.EmptyDelegate reloadFinishedEvent;
 
     private Rigidbody rbGrip;
 
@@ -33,6 +38,28 @@ public class Gun : Equipable {
 
         rbGrip = tGrip.GetComponent<Rigidbody>();
         bulletsInMagCount = specs.magSize;
+    }
+
+    protected override void Character_fixedUpdateEvent() {
+        base.Character_fixedUpdateEvent();
+
+        timeSinceLastShot += Time.deltaTime;
+
+        if (recoilIsReseting) {
+            recoilMultiplyerIndex -= specs.recoilResetSpeed * timeSinceLastShot * timeSinceLastShot * Time.deltaTime;
+            if (recoilMultiplyerIndex < 0)
+                recoilMultiplyerIndex = 0;
+        }
+
+        if (isReloading) {
+            reloadProgress += Time.deltaTime / specs.reloadTime;
+            if (reloadProgress > 1)
+                reloadProgress = 1;
+        }
+        //noiseOffset -= specs.recoilResetSpeed * 2 * timeSinceLastShot * timeSinceLastShot * Time.deltaTime;
+        //if (noiseOffset < 0)
+        //    noiseOffset = 0;
+
     }
 
     public override void EquipL(CharacterLS character) {
@@ -70,23 +97,12 @@ public class Gun : Equipable {
             if (!fireOnCooldown && bulletsInMagCount > 0)
                 Fire();
         }
-    }
 
-    protected override void Character_fixedUpdateEvent() {
-        base.Character_fixedUpdateEvent();
-
-        timeSinceLastShot += Time.deltaTime;
-
-        if (recoilIsReseting) {
-            recoilMultiplyerIndex -= specs.recoilResetSpeed * timeSinceLastShot * timeSinceLastShot * Time.deltaTime;
-            if (recoilMultiplyerIndex < 0)
-                recoilMultiplyerIndex = 0;
+        if (isReloading) {
+            reloadProgress += Time.deltaTime / specs.reloadTime;
+            if (reloadProgress > 1)
+                reloadProgress = 1;
         }
-
-        //noiseOffset -= specs.recoilResetSpeed * 2 * timeSinceLastShot * timeSinceLastShot * Time.deltaTime;
-        //if (noiseOffset < 0)
-        //    noiseOffset = 0;
-
     }
 
     private void Reload_keyDownEvent() {
@@ -118,21 +134,17 @@ public class Gun : Equipable {
     private void Fire() {
         Debug.Log("FIRE!");
         ProjectileLaunchParams launchParams = projectileLauncher.Launch(specs.muzzleVelocity, tMuzzle.position, tMuzzle.forward, equipableData.equipableId);
-        gunFiredEvent?.Invoke(this, launchParams);
+        GunFiredEvent?.Invoke(this, launchParams);
+        gunFiredEvent?.Invoke();
         Recoil();
+        //VfxManager.i.PlayEffect(VisualEffects.VfxEnum.muzzleFlash, tMuzzle);
+        VfxManager.i.PlayEffect(VisualEffects.VfxEnum.muzzleFlash, tMuzzle, tMuzzle.position, tMuzzle.forward, true);
         bulletsInMagCount--;
         StartCoroutine(FireCooldownCorutine());
 
         if (bulletsInMagCount > 0 && !fireOnCooldown) {
 
         }
-    }
-
-    public override void StartReload() {
-        base.StartReload();
-
-        reloadStartedEvent?.Invoke(this);
-        reloadCorutine = StartCoroutine(ReloadCorutine()); // Start reload      
     }
 
     private void Recoil() {
@@ -165,8 +177,21 @@ public class Gun : Equipable {
         StartCoroutine(RecoilResetDelayCorutine());
     }
 
+    public override void StartReload() {
+        base.StartReload();
+
+        isReloading = true;
+        reloadProgress = 0;
+        ReloadStartedEvent?.Invoke(this);
+        characterLS.torso.armL.ReloadStarted(specs.reloadTime);
+        reloadCorutine = StartCoroutine(ReloadCorutine()); // Start reload      
+    }
+
     public void FinishReload(int bulletsInMagCount) {
+        isReloading = false;
+
         this.bulletsInMagCount = bulletsInMagCount;
+        reloadFinishedEvent?.Invoke();
     }
 
     private IEnumerator FireCooldownCorutine() {
@@ -221,6 +246,6 @@ public class Gun : Equipable {
 
     private IEnumerator ReloadCorutine() {
         yield return new WaitForSeconds(specs.reloadTime);
-        gunReloadFinishedEvent?.Invoke(this);
+        ReloadFinishedEvent?.Invoke(this);
     }
 }

@@ -47,10 +47,20 @@ public class Arm {
 
     protected virtual void Equipment_itemEquipedEvent(Equipment.Type type, Equipable item) {
         DetermineArmActionState();
+
+        if (item.itemType == Equipment.Type.gun) {
+            Gun gun = (Gun)item;
+            gun.reloadFinishedEvent += Gun_reloadFinishedEvent;
+        }
     }
 
     protected virtual void Equipment_itemUnequipedEvent(Equipment.Type type, Equipable item, ushort characterId) {
         DetermineArmActionState();
+
+        if (item.itemType == Equipment.Type.gun) {
+            Gun gun = (Gun)item;
+            gun.reloadFinishedEvent -= Gun_reloadFinishedEvent;
+        }
     }
 
     protected virtual void Locomotion_sprintChangedEvent(bool isSprinting) {
@@ -96,6 +106,9 @@ public class Arm {
     public virtual void ReloadStarted(float reloadTime) {
         Debug.Log("RELOAD HAS STRARETEWD!");
         armActionState = ArmActionState.reload;
+    }
+
+    protected virtual void Gun_reloadFinishedEvent() {
     }
 
     protected IkTargetStruct InterpolateTargetStruct(IkTargetStruct lastStruct, IkTargetStruct newStruct, float t) {

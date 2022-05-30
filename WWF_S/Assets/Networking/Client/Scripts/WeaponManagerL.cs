@@ -12,7 +12,7 @@ public class WeaponManagerL {
         this.equipmentManager = equipmentManager;
 
         GameManagerL.gameManagerLLoadedEvent += GameManagerL_gameManagerLLoadedEvent;
-        Gun.gunFiredEvent += Gun_gunFiredEvent;
+        Gun.GunFiredEvent += Gun_gunFiredEvent;
     }
 
     private void GameManagerL_gameManagerLLoadedEvent(GameManagerL gameManagerL) {
