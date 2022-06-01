@@ -63,6 +63,8 @@ public class Arm {
             gun.reloadStartedEvent -= Gun_reloadStartedEvent;
             gun.reloadFinishedEvent -= Gun_reloadFinishedEvent;
         }
+
+        DetermineArmActionState();
     }
 
     protected virtual void Locomotion_sprintChangedEvent(bool isSprinting) {

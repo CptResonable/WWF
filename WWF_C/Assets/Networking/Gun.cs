@@ -21,6 +21,7 @@ public class Gun : Equipable {
     private bool fireOnCooldown = false;
     private bool recoilIsReseting = true;
     private Coroutine reloadCorutine;
+    private Coroutine fireCooldownCorutine;
 
     public delegate void GunFiredDelegate(Gun gun, ProjectileLaunchParams lauchParams);
     public static event GunFiredDelegate GunFiredEvent;
@@ -67,12 +68,21 @@ public class Gun : Equipable {
     public override void EquipL(CharacterLS character) {
         base.EquipL(character);
         character.updateEvent += Character_updateEvent;
-        character.input.reload.keyDownEvent += Reload_keyDownEvent; ;
+        character.input.reload.keyDownEvent += Reload_keyDownEvent;
     }
 
     public override void UnequipL() {
         characterLS.updateEvent -= Character_updateEvent;
-        characterLS.input.reload.keyDownEvent -= Reload_keyDownEvent; ;
+        characterLS.input.reload.keyDownEvent -= Reload_keyDownEvent;
+
+        if (fireCooldownCorutine != null)
+            StopCoroutine(fireCooldownCorutine);
+
+        fireCooldownCorutine = StartCoroutine(FireCooldownCorutine());
+
+        if (isReloading)
+            CancelReload();
+
         base.UnequipL();
     }
 
@@ -86,7 +96,6 @@ public class Gun : Equipable {
     }
 
     public override void UnequipN() {
-        if (isReloading)
         rb.isKinematic = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rbGrip.isKinematic = false;
@@ -143,7 +152,7 @@ public class Gun : Equipable {
         //VfxManager.i.PlayEffect(VisualEffects.VfxEnum.muzzleFlash, tMuzzle);
         VfxManager.i.PlayEffect(VisualEffects.VfxEnum.muzzleFlash, tMuzzle, tMuzzle.position, tMuzzle.forward, true);
         bulletsInMagCount--;
-        StartCoroutine(FireCooldownCorutine());
+        fireCooldownCorutine = StartCoroutine(FireCooldownCorutine());
 
         if (bulletsInMagCount > 0 && !fireOnCooldown) {
 
@@ -195,11 +204,11 @@ public class Gun : Equipable {
 
 
     private void CancelReload() {
+        isReloading = false;
 
-        //isReloading = false;
-        //reloadProgress = 0;
-        //reloadCanceledEvent?.Invoke();
-        //reloadCorutine = StartCoroutine(ReloadCorutine()); // Start reload      
+        StopCoroutine(reloadCorutine);
+        //ReloadCanceledEvent?.Invoke(this);
+        reloadCanceledEvent?.Invoke();
     }
 
     public void FinishReload(int bulletsInMagCount) {
