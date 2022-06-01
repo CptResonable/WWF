@@ -56,7 +56,8 @@ public class WeaponManagerL {
 
     private void WeaponReloadStartedUpdate(DrDatas.Guns.GunReloadStartedData[] reloadStartedDatas) {
         for (int i = 0; i < reloadStartedDatas.Length; i++) {
-            equipmentManager.equipables[reloadStartedDatas[i].gunId].StartReload();
+            Gun gun = (Gun)equipmentManager.equipables[reloadStartedDatas[i].gunId];
+            gun.StartReload();
         }
     }
 

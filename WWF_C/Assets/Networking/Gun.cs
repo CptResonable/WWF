@@ -180,15 +180,19 @@ public class Gun : Equipable {
         StartCoroutine(RecoilResetDelayCorutine());
     }
 
-    public override void StartReload() {
-        base.StartReload();
+    public void StartReload() {
+        if (isReloading)
+            return;
 
+        Debug.Log("START RELOAD!");
+            
         isReloading = true;
         reloadProgress = 0;
         ReloadStartedEvent?.Invoke(this);
         reloadStartedEvent?.Invoke(specs.reloadTime);
         reloadCorutine = StartCoroutine(ReloadCorutine()); // Start reload      
     }
+
 
     private void CancelReload() {
 
@@ -200,9 +204,16 @@ public class Gun : Equipable {
 
     public void FinishReload(int bulletsInMagCount) {
         isReloading = false;
+        Debug.Log("FINISH RELOAD!");
 
         this.bulletsInMagCount = bulletsInMagCount;
+        ReloadFinishedEvent?.Invoke(this);
         reloadFinishedEvent?.Invoke();
+    }
+
+    private IEnumerator ReloadCorutine() {
+        yield return new WaitForSeconds(specs.reloadTime);
+        FinishReload(specs.magSize);
     }
 
     private IEnumerator FireCooldownCorutine() {
@@ -254,9 +265,4 @@ public class Gun : Equipable {
     //        yield return new WaitForSeconds(specs.minFireInterval);
     //    }
     //}
-
-    private IEnumerator ReloadCorutine() {
-        yield return new WaitForSeconds(specs.reloadTime);
-        ReloadFinishedEvent?.Invoke(this);
-    }
 }

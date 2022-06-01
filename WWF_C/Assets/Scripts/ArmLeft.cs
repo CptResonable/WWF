@@ -106,6 +106,10 @@ public class ArmLeft : Arm {
     }
 
     public void GrabGrip() {
+        Debug.Log("GRAB GRIP!");
+        if (handGrip != null)
+            LetGoGrip();
+
         Gun gun = (Gun)character.equipment.equipedItem;
 
         bpHand.ragdoll.position = gun.tGrip.position;
@@ -116,19 +120,5 @@ public class ArmLeft : Arm {
 
     public void LetGoGrip() {
         GameObject.Destroy(handGrip);
-        Debug.Log("GripDestroyed");
-    }
-
-    private void State_reload() {
-        // Set hand target and ik target rotation
-        bpHand.ikTarget.rotation = character.body.hand_R.ikTarget.rotation;
-
-        Gun gun = (Gun)character.equipment.equipedItem;
-        // Set ik target position
-
-        //bpHand.ikTarget.position = character.equipment.tAmmoPouch.position;
-        float t = 1 - Mathf.Abs((gun.reloadProgress - 0.5f) * 2);
-        t = InterpolationUtils.LinearToSmoothStep(t);
-        bpHand.ikTarget.position = Vector3.Lerp(tOffHandGripPosition.position, character.equipment.tAmmoPouch.position, t);
     }
 }

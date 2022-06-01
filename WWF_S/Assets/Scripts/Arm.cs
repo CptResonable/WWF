@@ -50,6 +50,7 @@ public class Arm {
 
         if (item.itemType == Equipment.Type.gun) {
             Gun gun = (Gun)item;
+            gun.reloadStartedEvent += Gun_reloadStartedEvent;
             gun.reloadFinishedEvent += Gun_reloadFinishedEvent;
         }
     }
@@ -58,7 +59,8 @@ public class Arm {
         DetermineArmActionState();
 
         if (item.itemType == Equipment.Type.gun) {
-            Gun gun = (Gun)item;
+            Gun gun = (Gun)item; 
+            gun.reloadStartedEvent -= Gun_reloadStartedEvent;
             gun.reloadFinishedEvent -= Gun_reloadFinishedEvent;
         }
     }
@@ -94,7 +96,10 @@ public class Arm {
             if (handTargetRunAimTransitionCorutine != null)
                 character.StopCoroutine(handTargetRunAimTransitionCorutine);
 
-            handTargetRunAimTransitionCorutine = character.StartCoroutine(InterpolationUtils.i.SmoothStep(handTargetRunAimInterpolator.t, target, RUN_AIM_TRANSITION_SPEED, handTargetRunAimInterpolator, HandTargetRunAimTransitionComplete));
+            if (handTargetRunAimInterpolator.t == target)
+                HandTargetRunAimTransitionComplete();
+            else
+                handTargetRunAimTransitionCorutine = character.StartCoroutine(InterpolationUtils.i.SmoothStep(handTargetRunAimInterpolator.t, target, RUN_AIM_TRANSITION_SPEED, handTargetRunAimInterpolator, HandTargetRunAimTransitionComplete));
         }
 
         armActionState = newArmActionState;
@@ -103,12 +108,12 @@ public class Arm {
     protected virtual void HandTargetRunAimTransitionComplete() {
     }
 
-    public virtual void ReloadStarted(float reloadTime) {
-        Debug.Log("RELOAD HAS STRARETEWD!");
+    protected virtual void Gun_reloadStartedEvent(float reloadTime) {
         armActionState = ArmActionState.reload;
     }
 
     protected virtual void Gun_reloadFinishedEvent() {
+        DetermineArmActionState();
     }
 
     protected IkTargetStruct InterpolateTargetStruct(IkTargetStruct lastStruct, IkTargetStruct newStruct, float t) {
@@ -119,7 +124,25 @@ public class Arm {
         return targetStruct;
     }
 
-    public virtual void CalculateArm() {
+    public void CalculateArm() {
+        switch (armActionState) {
+            case ArmActionState.idle:
+                UpdateState_idle();
+                break;
+            case ArmActionState.aim:
+                UpdateState_aim();
+                break;
+            case ArmActionState.reload:
+                UpdateState_reload();
+                break;
+        }
+    }
+
+    public virtual void UpdateState_idle() {
+    }
+    public virtual void UpdateState_aim() {
+    }
+    public virtual void UpdateState_reload() { 
     }
 
     protected virtual void InterpolateAimAndIdleRotations() {

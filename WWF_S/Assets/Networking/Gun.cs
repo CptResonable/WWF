@@ -29,6 +29,8 @@ public class Gun : Equipable {
     public delegate void ReloadDelegate(Gun gun);
     public static event ReloadDelegate ReloadStartedEvent;
     public static event ReloadDelegate ReloadFinishedEvent;
+    public event Delegates.FloatDelegate reloadStartedEvent;
+    public event Delegates.EmptyDelegate reloadCanceledEvent;
     public event Delegates.EmptyDelegate reloadFinishedEvent;
 
     private Rigidbody rbGrip;
@@ -84,6 +86,7 @@ public class Gun : Equipable {
     }
 
     public override void UnequipN() {
+        if (isReloading)
         rb.isKinematic = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rbGrip.isKinematic = false;
@@ -177,21 +180,40 @@ public class Gun : Equipable {
         StartCoroutine(RecoilResetDelayCorutine());
     }
 
-    public override void StartReload() {
-        base.StartReload();
+    public void StartReload() {
+        if (isReloading)
+            return;
 
+        Debug.Log("START RELOAD!");
+            
         isReloading = true;
         reloadProgress = 0;
         ReloadStartedEvent?.Invoke(this);
-        characterLS.torso.armL.ReloadStarted(specs.reloadTime);
+        reloadStartedEvent?.Invoke(specs.reloadTime);
         reloadCorutine = StartCoroutine(ReloadCorutine()); // Start reload      
+    }
+
+
+    private void CancelReload() {
+
+        //isReloading = false;
+        //reloadProgress = 0;
+        //reloadCanceledEvent?.Invoke();
+        //reloadCorutine = StartCoroutine(ReloadCorutine()); // Start reload      
     }
 
     public void FinishReload(int bulletsInMagCount) {
         isReloading = false;
+        Debug.Log("FINISH RELOAD!");
 
         this.bulletsInMagCount = bulletsInMagCount;
+        ReloadFinishedEvent?.Invoke(this);
         reloadFinishedEvent?.Invoke();
+    }
+
+    private IEnumerator ReloadCorutine() {
+        yield return new WaitForSeconds(specs.reloadTime);
+        FinishReload(specs.magSize);
     }
 
     private IEnumerator FireCooldownCorutine() {
@@ -243,9 +265,4 @@ public class Gun : Equipable {
     //        yield return new WaitForSeconds(specs.minFireInterval);
     //    }
     //}
-
-    private IEnumerator ReloadCorutine() {
-        yield return new WaitForSeconds(specs.reloadTime);
-        ReloadFinishedEvent?.Invoke(this);
-    }
 }

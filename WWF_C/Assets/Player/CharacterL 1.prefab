@@ -839,7 +839,7 @@ MonoBehaviour:
       tAimOriginBase: {fileID: 8663603744550114550}
       tAimOrigin: {fileID: 2452679015169204278}
       tAimOrigin2: {fileID: 1447654777452682051}
-      reloadEulerOffsetTEST: {x: 30, y: 0, z: 30}
+      reloadEulerOffsetTEST: {x: 20, y: -30, z: -50}
       reloadPositionOffsetTEST: {x: 0, y: 0, z: 0}
       accuracyCorrectionPosition: {x: 0, y: 0, z: 0}
     aimOffset: {x: 0, y: 0, z: 0}

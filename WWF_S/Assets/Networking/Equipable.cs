@@ -64,6 +64,4 @@ public class Equipable : MonoBehaviour {
     }
     public virtual void Attack() {        
     }
-    public virtual void StartReload() {
-    }
 }

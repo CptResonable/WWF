@@ -106,10 +106,6 @@ public class ArmRight : Arm {
         bpHand.ikTarget.rotation = character.tCamera.rotation * Quaternion.Euler(-90, 0, -180);
         //bpHand.ikTarget.rotation = character.tCamera.rotation * Quaternion.Euler(-90 + reloadEulerOffsetTEST.x, 0 + reloadEulerOffsetTEST.y, -180 + reloadEulerOffsetTEST.z);
 
-        // Tilt gun when turning and strafing
-        float tilt = character.rbMain.angularVelocity.y * -2; // Turn
-        tilt += character.telemetry.xzVelocityLocal.x * -5; // Strafe
-        
         CalculateAimOrgin();
 
         // Set ik target position

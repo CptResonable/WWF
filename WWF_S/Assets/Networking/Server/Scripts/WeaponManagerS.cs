@@ -66,8 +66,6 @@ public class WeaponManagerS {
     private void Gun_reloadFinishedEvent(Gun gun) {
          // TODO: Make sure bullets loaded are not more than the avalible
 
-        gun.FinishReload(gun.specs.magSize);
-
         DrDatas.Guns.GunReloadFinishedData reloadStartedData = new DrDatas.Guns.GunReloadFinishedData(gun.equipableData.equipableId, (ushort)gun.specs.magSize);
         gunReloadFinishedDataList.Add(reloadStartedData);
     }

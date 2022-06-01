@@ -60,7 +60,7 @@ public class Arm {
 
         if (item.itemType == Equipment.Type.gun) {
             Gun gun = (Gun)item; 
-            gun.reloadStartedEvent += Gun_reloadStartedEvent;
+            gun.reloadStartedEvent -= Gun_reloadStartedEvent;
             gun.reloadFinishedEvent -= Gun_reloadFinishedEvent;
         }
     }
@@ -96,7 +96,10 @@ public class Arm {
             if (handTargetRunAimTransitionCorutine != null)
                 character.StopCoroutine(handTargetRunAimTransitionCorutine);
 
-            handTargetRunAimTransitionCorutine = character.StartCoroutine(InterpolationUtils.i.SmoothStep(handTargetRunAimInterpolator.t, target, RUN_AIM_TRANSITION_SPEED, handTargetRunAimInterpolator, HandTargetRunAimTransitionComplete));
+            if (handTargetRunAimInterpolator.t == target)
+                HandTargetRunAimTransitionComplete();
+            else
+                handTargetRunAimTransitionCorutine = character.StartCoroutine(InterpolationUtils.i.SmoothStep(handTargetRunAimInterpolator.t, target, RUN_AIM_TRANSITION_SPEED, handTargetRunAimInterpolator, HandTargetRunAimTransitionComplete));
         }
 
         armActionState = newArmActionState;
