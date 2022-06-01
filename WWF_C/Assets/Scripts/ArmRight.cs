@@ -59,7 +59,7 @@ public class ArmRight : Arm {
         base.Equipment_itemUnequipedEvent(type, item, characterId);
     }
 
-    public override void CalculateArm() {
+    public override void UpdateState_idle() {
 
         // Set hand target and ik target rotation
         bpHand.ikTarget.rotation = character.tCamera.rotation * Quaternion.Euler(-90, 0, -180);
@@ -76,13 +76,49 @@ public class ArmRight : Arm {
 
         InterpolateAimAndIdleRotations();
 
-        base.CalculateArm();
+        base.UpdateState_idle();
+    }
+    public override void UpdateState_aim() {
 
-        //AimAccuracyCorrection();
+        // Set hand target and ik target rotation
+        bpHand.ikTarget.rotation = character.tCamera.rotation * Quaternion.Euler(-90, 0, -180);
+
+        // Tilt gun when turning and strafing
+        float tilt = character.rbMain.angularVelocity.y * -2; // Turn
+        tilt += character.telemetry.xzVelocityLocal.x * -5; // Strafe
+        bpHand.ikTarget.Rotate(new Vector3(0, tilt, 0), Space.Self);
+
+        CalculateAimOrgin();
+
+        // Set ik target position
+        character.body.hand_R.ikTarget.position = tAimOrigin2.position + bpHand.ikTarget.TransformVector(character.torso.aimOffset);
+
+        InterpolateAimAndIdleRotations();
+
+        base.UpdateState_aim();
     }
 
-    public override void ReloadStarted(float reloadTime) {
-        base.ReloadStarted(reloadTime);
+    public Vector3 reloadEulerOffsetTEST;
+    public Vector3 reloadPositionOffsetTEST;
+    public override void UpdateState_reload() {
+
+        // Set hand target and ik target rotation
+        bpHand.ikTarget.rotation = character.tCamera.rotation * Quaternion.Euler(-90, 0, -180);
+        //bpHand.ikTarget.rotation = character.tCamera.rotation * Quaternion.Euler(-90 + reloadEulerOffsetTEST.x, 0 + reloadEulerOffsetTEST.y, -180 + reloadEulerOffsetTEST.z);
+
+        // Tilt gun when turning and strafing
+        float tilt = character.rbMain.angularVelocity.y * -2; // Turn
+        tilt += character.telemetry.xzVelocityLocal.x * -5; // Strafe
+        
+        CalculateAimOrgin();
+
+        // Set ik target position
+        character.body.hand_R.ikTarget.position = tAimOrigin2.position + bpHand.ikTarget.TransformVector(character.torso.aimOffset);
+
+        bpHand.ikTarget.Rotate(reloadEulerOffsetTEST, Space.Self);
+
+        InterpolateAimAndIdleRotations();
+        base.UpdateState_reload();
     }
 
     protected override void InterpolateAimAndIdleRotations() {
