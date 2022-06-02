@@ -24,20 +24,23 @@ public class Equipable : MonoBehaviour {
         this.characterLS = character;
         gameObject.SetActive(true);
         isEquiped = true;
+        rb.isKinematic = false;
 
         character.input.attack_1.keyDownEvent += Attack_1_keyDownEvent;
         character.fixedUpdateEvent += Character_fixedUpdateEvent;
     }
 
     public virtual void UnequipL() {
-        gameObject.SetActive(false);
         isEquiped = false;
+        rb.isKinematic = true;
 
         characterLS.input.attack_1.keyDownEvent -= Attack_1_keyDownEvent;
         characterLS.fixedUpdateEvent -= Character_fixedUpdateEvent;
 
         this.characterLS = null;
         this.characterN = null;
+
+        //gameObject.SetActive(false);
     }
 
     public virtual void EquipN(CharacterN character) {

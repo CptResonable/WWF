@@ -75,10 +75,10 @@ public class Gun : Equipable {
         characterLS.updateEvent -= Character_updateEvent;
         characterLS.input.reload.keyDownEvent -= Reload_keyDownEvent;
 
-        if (fireCooldownCorutine != null)
-            StopCoroutine(fireCooldownCorutine);
+        //if (fireCooldownCorutine != null)
+        //    StopCoroutine(fireCooldownCorutine);
 
-        fireCooldownCorutine = StartCoroutine(FireCooldownCorutine());
+        //fireCooldownCorutine = StartCoroutine(FireCooldownCorutine());
 
         if (isReloading)
             CancelReload();
