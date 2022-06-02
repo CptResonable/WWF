@@ -133,12 +133,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dcca67204db1cb418655ca195716fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipmentSlot: 0
   hipFirePosition: {x: -0.08, y: 0.23, z: -0.25}
   adsPosition: {x: 0, y: 0.17, z: -0.152}
   itemType: 1
   rb: {fileID: 408202206650809445}
   isEquiped: 0
   positionOffset: {x: 0, y: 0, z: 0}
+  attachmentOffset: {x: 0.01, y: -0.276, z: 0.165}
+  attachmentRotationOffset: {x: -40, y: 0, z: 7.3}
   characterLS: {fileID: 0}
   characterN: {fileID: 0}
   tSight_back: {fileID: 408202207133077785}
@@ -148,6 +151,8 @@ MonoBehaviour:
   tChaimber: {fileID: 281973118441686220}
   specs: {fileID: 11400000, guid: cd56bce742590aa4c98dd9dabba356cf, type: 2}
   bulletsInMagCount: 120
+  isReloading: 0
+  reloadProgress: 0
   projectileLauncher:
     projectileType: 0
 --- !u!54 &408202206650809445

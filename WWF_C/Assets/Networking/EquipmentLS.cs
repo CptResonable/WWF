@@ -34,6 +34,7 @@ public class EquipmentLS : Equipment {
 
     protected override void ItemUnequiped(Type unequipedType, Equipable unequipedItem, ushort characterId) {
         equipedItem.UnequipL();
+
         base.ItemUnequiped(unequipedType, unequipedItem, characterId);
     }
 }

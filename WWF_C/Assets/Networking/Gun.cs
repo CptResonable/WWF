@@ -67,8 +67,15 @@ public class Gun : Equipable {
 
     public override void EquipL(CharacterLS character) {
         base.EquipL(character);
+        //tGrip.gameObject.SetActive(true);
+
         character.updateEvent += Character_updateEvent;
         character.input.reload.keyDownEvent += Reload_keyDownEvent;
+
+        rb.isKinematic = false;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rbGrip.isKinematic = false;
+        rbGrip.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
     public override void UnequipL() {
@@ -82,6 +89,12 @@ public class Gun : Equipable {
 
         if (isReloading)
             CancelReload();
+
+        rb.isKinematic = true;
+        rb.interpolation = RigidbodyInterpolation.None;
+        rbGrip.isKinematic = true;
+        rbGrip.interpolation = RigidbodyInterpolation.None;
+        //tGrip.gameObject.SetActive(false);
 
         base.UnequipL();
     }
