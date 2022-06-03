@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Equipable : MonoBehaviour {
-    //public GameObjects.EquipablesEnums equipableEnum;
+
+    public EquipmentSlotEnum equipmentSlot;
     public Vector3 hipFirePosition;
     public Vector3 adsPosition;
     public Equipment.Type itemType;
     public DrDatas.EquipmentDatas.EquipableData equipableData;
-    //public ushort itemId;
     public Rigidbody rb;
     public bool isEquiped = false;
     public Vector3 positionOffset;
+    public Vector3 attachmentOffset;
+    public Vector3 attachmentRotationOffset;
+
     [HideInInspector] public CharacterLS characterLS;
     [HideInInspector] public CharacterN characterN;
 
@@ -65,6 +68,7 @@ public class Equipable : MonoBehaviour {
 
     protected virtual void Attack_1_keyDownEvent() {
     }
+
     public virtual void Attack() {        
     }
 }

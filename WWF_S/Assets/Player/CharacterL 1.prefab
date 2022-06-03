@@ -207,6 +207,9 @@ MonoBehaviour:
   equipment:
     equipables: []
     tAmmoPouch: {fileID: 9170606033425257388}
+    tEquipmentSlot_back: {fileID: 0}
+    tEquipmentSlot_hipRight: {fileID: 0}
+    tEquipmentSlot_hipLeft: {fileID: 0}
     equipedType: 0
     equipedItem: {fileID: 0}
   tTargetYaw: {fileID: 4458700297543866162}
@@ -852,6 +855,9 @@ MonoBehaviour:
   equipment:
     equipables: []
     tAmmoPouch: {fileID: 9170606033425257388}
+    tEquipmentSlot_back: {fileID: 317074025464617816}
+    tEquipmentSlot_hipRight: {fileID: 6692236900624125748}
+    tEquipmentSlot_hipLeft: {fileID: 1883584758854066529}
     equipedType: 0
     equipedItem: {fileID: 0}
 --- !u!114 &8116053030807321622
@@ -1343,6 +1349,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7610775451697717167, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &317074025464617816 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3314540652469443216, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_PrefabInstance: {fileID: 2997677771063951816}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4458700297543866127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361159, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
@@ -1411,6 +1422,16 @@ Transform:
 --- !u!4 &4458700297543866175 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361207, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_PrefabInstance: {fileID: 2997677771063951816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6692236900624125748 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8450580349018984188, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_PrefabInstance: {fileID: 2997677771063951816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1883584758854066529 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3727346991392104617, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2997677771063951816}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7861584677517227434 stripped

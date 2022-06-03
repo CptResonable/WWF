@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EquipmentSlotEnum { back, hipRight, hipLeft }
+
 [System.Serializable]
 public class Equipment {
     protected Transform tEquipmentContainer;
     public List<Equipable> equipables;
     public Transform tAmmoPouch;
+    public Transform tEquipmentSlot_back, tEquipmentSlot_hipRight, tEquipmentSlot_hipLeft;
 
     public enum Type { none, gun};
     public Type equipedType = Type.none;
@@ -52,5 +55,20 @@ public class Equipment {
 
         character.GetPlayer().playerData.characterData.equipmentData.EquipableUnequiped();
         itemUnequipedEvent?.Invoke(unequipedType, unequipedItem, characterId);
+
+        switch (unequipedItem.equipmentSlot) {
+            case EquipmentSlotEnum.back:
+                unequipedItem.transform.parent = tEquipmentSlot_back;
+                break;
+            case EquipmentSlotEnum.hipRight:
+                unequipedItem.transform.parent = tEquipmentSlot_hipRight;
+                break;
+            case EquipmentSlotEnum.hipLeft:
+                unequipedItem.transform.parent = tEquipmentSlot_hipLeft;
+                break;
+        }
+
+        unequipedItem.transform.localPosition = unequipedItem.attachmentOffset;
+        unequipedItem.transform.localRotation = Quaternion.Euler(unequipedItem.attachmentRotationOffset);
     }
 }

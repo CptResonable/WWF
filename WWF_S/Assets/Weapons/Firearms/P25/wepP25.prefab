@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dcca67204db1cb418655ca195716fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipmentSlot: 1
   hipFirePosition: {x: -0.08, y: 0.23, z: -0.25}
   adsPosition: {x: 0, y: 0.17, z: -0.136}
   itemType: 1
@@ -134,6 +135,8 @@ MonoBehaviour:
   tChaimber: {fileID: 281973118441686220}
   specs: {fileID: 11400000, guid: 9341e1c158bea1249b6ab2f65cc9104e, type: 2}
   bulletsInMagCount: 120
+  isReloading: 0
+  reloadProgress: 0
   projectileLauncher:
     projectileType: 0
 --- !u!54 &408202206650809445

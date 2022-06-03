@@ -121,11 +121,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipmentSlot: 1
   hipFirePosition: {x: -0.08, y: 0.23, z: -0.25}
-  adsPosition: {x: 0, y: 0.17, z: -0.136}
+  adsPosition: {x: 0, y: 0.27, z: -0.136}
   itemType: 1
   rb: {fileID: 408202206650809445}
   isEquiped: 0
   positionOffset: {x: 0, y: 0, z: 0}
+  attachmentOffset: {x: 0, y: 0, z: 0}
+  attachmentRotationOffset: {x: 0, y: 0, z: 0}
   characterLS: {fileID: 0}
   characterN: {fileID: 0}
   tSight_back: {fileID: 408202207133077785}

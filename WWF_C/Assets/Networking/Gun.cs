@@ -82,11 +82,6 @@ public class Gun : Equipable {
         characterLS.updateEvent -= Character_updateEvent;
         characterLS.input.reload.keyDownEvent -= Reload_keyDownEvent;
 
-        //if (fireCooldownCorutine != null)
-        //    StopCoroutine(fireCooldownCorutine);
-
-        //fireCooldownCorutine = StartCoroutine(FireCooldownCorutine());
-
         if (isReloading)
             CancelReload();
 
@@ -94,7 +89,6 @@ public class Gun : Equipable {
         rb.interpolation = RigidbodyInterpolation.None;
         rbGrip.isKinematic = true;
         rbGrip.interpolation = RigidbodyInterpolation.None;
-        //tGrip.gameObject.SetActive(false);
 
         base.UnequipL();
     }
@@ -206,10 +200,9 @@ public class Gun : Equipable {
         if (isReloading)
             return;
 
-        Debug.Log("START RELOAD!");
-            
         isReloading = true;
         reloadProgress = 0;
+        bulletsInMagCount = 0;
         ReloadStartedEvent?.Invoke(this);
         reloadStartedEvent?.Invoke(specs.reloadTime);
         reloadCorutine = StartCoroutine(ReloadCorutine()); // Start reload      
