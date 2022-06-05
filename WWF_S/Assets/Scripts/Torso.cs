@@ -108,7 +108,9 @@ public class Torso {
         ApplyVelocityAndAccelerationLean();
         keyframedAnimationUpdater.Update();
         head.CalculateHeadTargetRotation();
-        UpdateUpperBody_adsTorsoAngle();
+
+        if (!character.locomotion.isSprinting)
+            UpdateUpperBody_adsTorsoAngle();
         UpdateUpperBody_turnTowardsHead();
         head.AddAdsHeadTilt();
         bpHead.target.rotation = bpHead.ikTarget.rotation;

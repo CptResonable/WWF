@@ -18,10 +18,8 @@ public class LegController {
     [HideInInspector] public Enums.Side lastStepSide;
     [HideInInspector] public Enums.Side forwardFootSide;
 
-
     [Header("Object references")]
     [SerializeField] public Transform tPathContainer;
-
 
     [Header("Step constants")]
     [SerializeField] private float startWalkSpeed; // 
@@ -32,19 +30,16 @@ public class LegController {
     [SerializeField] private float forwardFootPosOffset;
     [HideInInspector] public float footPosOffset;
 
-
     [Header("Pelvis step rotation")]
     [SerializeField] private AnimationCurve strafePelvisRotationVelocityCurve;
     [SerializeField] private float strafePelvisRotationAmount;
     [SerializeField] private float pelvisRotationAmount;
-
 
     [Header("Step paths")]
     [SerializeField] private StepPath toIdlePath;
     [SerializeField] private StepPath slowWalkPath;
     [SerializeField] private StepPath walkPath;
     [SerializeField] private StepPath runPath;
-
 
     [Header("Bounce")]
     [SerializeField] private float bounceYTarget;
@@ -136,6 +131,10 @@ public class LegController {
         idleTarget.SetIdleTarget(forwardFootSide, character);
     }
 
+    private void LateUpdate() {
+        character.body.pelvis.target.rotation *= Quaternion.Euler(0, -pelvisAngle, 0);
+    }
+
     public void StepStarted(Enums.Side side) {
         lastStepSide = side;
         stepStartedEvent?.Invoke();
@@ -203,10 +202,6 @@ public class LegController {
 
         // Apply roation
         character.body.pelvis.ikTarget.localRotation = Quaternion.Euler(180, pelvisAngle, 0);
-    }
-
-    private void LateUpdate() {
-        character.body.pelvis.target.rotation *= Quaternion.Euler(0, -pelvisAngle, 0);
     }
 
     private StepPath InterpolateStepPaths(StepPath pathA, StepPath pathB, float t) {

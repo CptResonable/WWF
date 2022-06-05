@@ -524,7 +524,7 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 0.2
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -532,7 +532,16 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 4
+        time: 3
+        value: 0.2
+        inSlope: -0.0016196355
+        outSlope: -0.0016196355
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.019446284
+      - serializedVersion: 3
+        time: 5
         value: 1
         inSlope: 0
         outSlope: 0
@@ -552,7 +561,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    bounceHeight: -0.1
+    bounceHeight: -0.2
   body:
     bodyparts: []
     rigidbodies: []
@@ -1038,6 +1047,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7610775451697717167, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &856213544399722471 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3314540652469443216, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_PrefabInstance: {fileID: 2746769742774308215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3632123171765181360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361159, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
@@ -1081,11 +1095,6 @@ Transform:
 --- !u!4 &1559458026460982750 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3727346991392104617, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
-  m_PrefabInstance: {fileID: 2746769742774308215}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &856213544399722471 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3314540652469443216, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7106237208957417749 stripped
