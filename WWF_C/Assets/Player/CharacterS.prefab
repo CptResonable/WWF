@@ -185,6 +185,49 @@ MonoBehaviour:
       rightBackwardLocal: {x: 0.17, y: -0.65, z: -0.15}
     lastStepSide: 0
     forwardFootSide: 0
+    hooverHeight: 0.7
+    velocityToHooverHeight:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.7
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 3
+        value: 0.7
+        inSlope: -0.000012024095
+        outSlope: -0.000012024095
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.20324111
+        outWeight: 0.019446284
+      - serializedVersion: 3
+        time: 6.5
+        value: 0.6
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 20
+        value: 0.6
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     tPathContainer: {fileID: 0}
     startWalkSpeed: 1.75
     startRunSpeed: 2.5
@@ -484,8 +527,8 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    bounceYTarget: 0
-    bounceLerpSpeed: 20
+    bouncePeakOffset: {x: 0, y: 0.3, z: 0}
+    bounceLerpSpeed: 13
     bounceCurve:
       serializedVersion: 2
       m_Curve:
@@ -541,7 +584,7 @@ MonoBehaviour:
         inWeight: 0.33333334
         outWeight: 0.019446284
       - serializedVersion: 3
-        time: 5
+        time: 6.5
         value: 1
         inSlope: 0
         outSlope: 0
@@ -735,8 +778,9 @@ MonoBehaviour:
       reloadPositionOffsetTEST: {x: 0, y: 0, z: 0}
       accuracyCorrectionPosition: {x: 0, y: 0, z: 0}
     aimOffset: {x: 0, y: 0, z: 0}
-    tOffset: {fileID: 3632123171765181331}
     tLeanPivot: {fileID: 3632123171765181330}
+    tTargetRigBase: {fileID: 2279115845171283633}
+    tOffset: {fileID: 3632123171765181331}
     runYawOffset: 0
     positionOffset: {x: 0, y: 0, z: 0}
     accelerationLeanAmount: 2
@@ -1182,14 +1226,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361189, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &3883618747363077574 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1439777678227218609, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_PrefabInstance: {fileID: 2746769742774308215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3632123171765181331 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361188, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &3883618747363077574 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1439777678227218609, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+--- !u!95 &9051573300538131119 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6594353365351059416, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &3632123171765181361 stripped
@@ -1232,14 +1281,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361171, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &3632123171765181437 stripped
+--- !u!4 &2279115845171283633 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1475377756880361098, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4161175758086900678, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &9051573300538131119 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6594353365351059416, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+--- !u!4 &3632123171765181345 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1475377756880361174, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &3632123171765181347 stripped
@@ -1287,8 +1336,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1475377756880361214, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &3632123171765181345 stripped
+--- !u!4 &3632123171765181437 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1475377756880361174, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1475377756880361098, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
   m_PrefabInstance: {fileID: 2746769742774308215}
   m_PrefabAsset: {fileID: 0}

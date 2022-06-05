@@ -18,6 +18,9 @@ public class LegController {
     [HideInInspector] public Enums.Side lastStepSide;
     [HideInInspector] public Enums.Side forwardFootSide;
 
+    public float hooverHeight = 0.7f;
+    [SerializeField] public AnimationCurve velocityToHooverHeight;
+
     [Header("Object references")]
     [SerializeField] public Transform tPathContainer;
 
@@ -42,12 +45,15 @@ public class LegController {
     [SerializeField] private StepPath runPath;
 
     [Header("Bounce")]
-    [SerializeField] private float bounceYTarget;
+    [SerializeField] private Vector3 bouncePeakOffset;
     [SerializeField] private float bounceLerpSpeed;
     [SerializeField] public AnimationCurve bounceCurve;
     [SerializeField] private AnimationCurve bounceVelocityCurve;
     [SerializeField] private float bounceHeight;
+    private float bounceYTarget;
     private float bounceY;
+    private Vector3 bounceV3Target;
+    private Vector3 bounceV3;
 
 
     public void Initialize(CharacterLS character) {
@@ -63,6 +69,7 @@ public class LegController {
 
     private void Update() {   
         moveSpeed = character.telemetry.xzVelocity.magnitude;
+        hooverHeight = velocityToHooverHeight.Evaluate(moveSpeed);
 
         StepPath stepPath;
         if (moveSpeed < startWalkSpeed) {
@@ -140,26 +147,6 @@ public class LegController {
         stepStartedEvent?.Invoke();
     }
 
-    public void SetBounce(float t) {
-        float curveValue;
-
-        if (moveSpeed < startWalkSpeed) {
-            curveValue = slowWalkPath.bounceCurve.Evaluate(t);
-        }
-        else if (moveSpeed < startRunSpeed) {
-            float t2 = Mathf.InverseLerp(startWalkSpeed, startRunSpeed, t);
-            curveValue = Mathf.Lerp(slowWalkPath.bounceCurve.Evaluate(t), walkPath.bounceCurve.Evaluate(t), t2);
-        }
-        else if (moveSpeed < maximumRunSpeed) {
-            float t2 = Mathf.InverseLerp(startRunSpeed, maximumRunSpeed, t);
-            curveValue = Mathf.Lerp(walkPath.bounceCurve.Evaluate(t), runPath.bounceCurve.Evaluate(t), t2);
-        }
-        else {
-            curveValue = runPath.bounceCurve.Evaluate(t);
-        }
-        bounceYTarget = curveValue * bounceVelocityCurve.Evaluate(character.telemetry.xzVelocity.magnitude) * bounceHeight;
-    }
-
     public float EvaluateFootMoveSpeed(float t) {
         float speed;
         if (moveSpeed < startWalkSpeed) {
@@ -180,9 +167,57 @@ public class LegController {
         return speed;
     }
 
+
+    public void SetBounce(float t) {
+        float curveValue;
+
+        if (moveSpeed < startWalkSpeed) {
+            curveValue = slowWalkPath.bounceCurve.Evaluate(t);
+        }
+        else if (moveSpeed < startRunSpeed) {
+            float t2 = Mathf.InverseLerp(startWalkSpeed, startRunSpeed, t);
+            curveValue = Mathf.Lerp(slowWalkPath.bounceCurve.Evaluate(t), walkPath.bounceCurve.Evaluate(t), t2);
+        }
+        else if (moveSpeed < maximumRunSpeed) {
+            float t2 = Mathf.InverseLerp(startRunSpeed, maximumRunSpeed, t);
+            curveValue = Mathf.Lerp(walkPath.bounceCurve.Evaluate(t), runPath.bounceCurve.Evaluate(t), t2);
+        }
+        else {
+            curveValue = runPath.bounceCurve.Evaluate(t);
+        }
+
+        curveValue = bounceCurve.Evaluate(t);
+        bounceV3Target = curveValue * bounceVelocityCurve.Evaluate(character.telemetry.xzVelocity.magnitude) * bouncePeakOffset;
+    }
+
+    //public void SetBounce(float t) {
+    //    float curveValue;
+
+    //    if (moveSpeed < startWalkSpeed) {
+    //        curveValue = slowWalkPath.bounceCurve.Evaluate(t);
+    //    }
+    //    else if (moveSpeed < startRunSpeed) {
+    //        float t2 = Mathf.InverseLerp(startWalkSpeed, startRunSpeed, t);
+    //        curveValue = Mathf.Lerp(slowWalkPath.bounceCurve.Evaluate(t), walkPath.bounceCurve.Evaluate(t), t2);
+    //    }
+    //    else if (moveSpeed < maximumRunSpeed) {
+    //        float t2 = Mathf.InverseLerp(startRunSpeed, maximumRunSpeed, t);
+    //        curveValue = Mathf.Lerp(walkPath.bounceCurve.Evaluate(t), runPath.bounceCurve.Evaluate(t), t2);
+    //    }
+    //    else {
+    //        curveValue = runPath.bounceCurve.Evaluate(t);
+    //    }
+    //    bounceYTarget = curveValue * bounceVelocityCurve.Evaluate(character.telemetry.xzVelocity.magnitude) * bounceHeight;
+    //}
+
+    //private void PelvisOffset() {
+    //    bounceY = Mathf.Lerp(bounceY, bounceYTarget, Time.deltaTime * bounceLerpSpeed);
+    //    character.torso.positionOffset = new Vector3(0, -bounceY, 0);
+    //}
+
     private void PelvisOffset() {
-        bounceY = Mathf.Lerp(bounceY, bounceYTarget, Time.deltaTime * bounceLerpSpeed);
-        character.torso.positionOffset = new Vector3(0, -bounceY, 0);
+        bounceV3 = Vector3.Lerp(bounceV3, bounceV3Target, Time.deltaTime * bounceLerpSpeed);
+        character.torso.positionOffset = bounceV3;
     }
 
     private float pelvisAngle;

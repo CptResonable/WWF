@@ -21,8 +21,9 @@ public class Torso {
     private Vector3 hipFireOffset;
     private Vector3 adsOffset;
 
-    [SerializeField] private Transform tOffset;
     [SerializeField] public Transform tLeanPivot;
+    [SerializeField] private Transform tTargetRigBase;
+    [SerializeField] private Transform tOffset;
 
     [HideInInspector] public float runYawOffset;
 
@@ -64,6 +65,7 @@ public class Torso {
     }
 
     private void Character_lateUpdateEvent() {
+        tTargetRigBase.localPosition = Vector3.up * character.legController.hooverHeight;
         UpdateUpperBody();
     }
 
@@ -103,7 +105,8 @@ public class Torso {
 
     /// <summary> Calculate rotation targets of upper body, all is called from here in order to execute functions in the right order </summary>
     private void UpdateUpperBody() {
-        tOffset.localPosition = basePosition + positionOffset; // Bounce n' stuff
+        //tOffset.localPosition = basePosition + positionOffset; // Bounce n' stuff
+        tOffset.localPosition = positionOffset; // Bounce n' stuff
 
         ApplyVelocityAndAccelerationLean();
         keyframedAnimationUpdater.Update();
