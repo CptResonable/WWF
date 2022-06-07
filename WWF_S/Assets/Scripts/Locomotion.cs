@@ -22,6 +22,7 @@ public class Locomotion {
     [SerializeField] private Transform tOffset;
     [SerializeField] private float accelerationLeanAmount;
     [SerializeField] private float lateralForceLimit;
+    [SerializeField] private ImpactForceReceiver[] impactForceReceivers;
 
     public bool isSprinting;
 
@@ -37,6 +38,10 @@ public class Locomotion {
         character.torso.stateChangedEvent += Torso_stateChangedEvent;
         character.input.sprint.keyDownEvent += Sprint_keyDownEvent;
         character.input.sprint.keyUpEvent += Sprint_keyUpEvent;
+
+        foreach (ImpactForceReceiver impactForceReceiver in impactForceReceivers) {
+            impactForceReceiver.impactForceReceivedEvent += ImpactForceReceiver_impactForceReceivedEvent;
+        }
     }
 
     private void Update() {
@@ -76,6 +81,10 @@ public class Locomotion {
         else if (newState == Torso.State.ads) {
             moveSpeed = WALK_SPEED;
         }
+    }
+
+    private void ImpactForceReceiver_impactForceReceivedEvent(ImpactForceReceiver impactForceReceiver, Vector3 force, Vector3 position) {
+        //character.rbMain.AddForce(force);
     }
 
     private void Hoover() {

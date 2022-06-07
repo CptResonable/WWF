@@ -2743,6 +2743,10 @@ MonoBehaviour:
     m_Bits: 55
   equipment:
     equipables: []
+    tAmmoPouch: {fileID: 0}
+    tEquipmentSlot_back: {fileID: 0}
+    tEquipmentSlot_hipRight: {fileID: 0}
+    tEquipmentSlot_hipLeft: {fileID: 0}
     equipedType: 0
     equipedItem: {fileID: 0}
   tTargetYaw: {fileID: 2138741822590219471}
@@ -2838,6 +2842,13 @@ MonoBehaviour:
       rightBackwardLocal: {x: 0.17, y: -0.65, z: -0.15}
     lastStepSide: 0
     forwardFootSide: 0
+    hooverHeight: 0.7
+    velocityToHooverHeight:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     tPathContainer: {fileID: 136012077}
     startWalkSpeed: 1.75
     startRunSpeed: 2.5
@@ -3137,7 +3148,7 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    bounceYTarget: 0
+    bouncePeakOffset: {x: 0, y: 0, z: 0}
     bounceLerpSpeed: 20
     bounceCurve:
       serializedVersion: 2
@@ -3375,16 +3386,23 @@ MonoBehaviour:
       tAimOriginBase: {fileID: 0}
       tAimOrigin: {fileID: 0}
       tAimOrigin2: {fileID: 0}
+      reloadEulerOffsetTEST: {x: 0, y: 0, z: 0}
+      reloadPositionOffsetTEST: {x: 0, y: 0, z: 0}
       accuracyCorrectionPosition: {x: 0, y: 0, z: 0}
     aimOffset: {x: 0, y: 0, z: 0}
-    tOffset: {fileID: 0}
     tLeanPivot: {fileID: 0}
+    tTargetRigBase: {fileID: 0}
+    tOffset: {fileID: 0}
     runYawOffset: 0
     positionOffset: {x: 0, y: 0, z: 0}
     accelerationLeanAmount: 0
     velocityLeanAmount: 0
   equipment:
     equipables: []
+    tAmmoPouch: {fileID: 0}
+    tEquipmentSlot_back: {fileID: 0}
+    tEquipmentSlot_hipRight: {fileID: 0}
+    tEquipmentSlot_hipLeft: {fileID: 0}
     equipedType: 0
     equipedItem: {fileID: 0}
 --- !u!4 &2138741822590219454
