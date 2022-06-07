@@ -18,7 +18,8 @@ public class Health {
     public static event HpSetStaticDelegate hpSetStaticEvent;
     public event HpSetDelegate hpSetEvent;
     public delegate void StateChangedDelegate(Character character, State state);
-    public static event StateChangedDelegate stateChangedEvent;
+    public static event StateChangedDelegate StateChangedEvent;
+    public event StateChangedDelegate stateChangedEvent;
 
     public void Initialize(Character character) {
         this.character = character;
@@ -67,9 +68,11 @@ public class Health {
         }
 
         stateChangedEvent?.Invoke(character, state);
+        StateChangedEvent?.Invoke(character, state);
     }
 
     private void GetKnocked() {
+        Debug.Log("Player knocked!");
         state = State.knocked;
 
         // Debug.Log(character.name + " knocked");

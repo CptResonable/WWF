@@ -9,7 +9,7 @@ public class HealthManagerS {
 
     public void Initialize() {
         Health.hpSetStaticEvent += Health_hpChangedEvent;
-        Health.stateChangedEvent += Health_stateChangedEvent;
+        Health.StateChangedEvent += Health_stateChangedEvent;
     }
 
     #region Events

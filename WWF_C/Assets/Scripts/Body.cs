@@ -30,11 +30,11 @@ public class Body {
 
     public ArmAimRig armAimRig;
 
-    //private Character character;
+    private CharacterLS character;
 
     // public void Initialize(Character character) {
-    public void Initialize() {
-        //this.character = character;
+    public void Initialize(CharacterLS character) {
+        this.character = character;
 
         bodyparts = new Bodypart[16] {
             pelvis, leg_1_L, leg_2_L, foot_L, leg_1_R, leg_2_R, foot_R,
@@ -51,25 +51,15 @@ public class Body {
         }
 
         rigidbodies = rbList.ToArray();
-        //CharacterColliderSetup.SetupIgnores(this);
+
+        character.health.stateChangedEvent += Health_stateChangedEvent;
     }
 
-    // public void CopyRigFromData(DrDatas.Player.PlayerBodyData bodyData) {
-    //     this.bodyData = bodyData;
-
-    //     for (int i = 0; i < bodyparts.Length; i++) {
-    //         armature.ragdoll.position = bodyData.rootPosition;
-    //         bodyparts[i].ragdoll.rotation = bodyData.rotations[i];
-    //     }
-    // }
-
-    // public void SetAllStrengthMods(float value) {
-    //     //value = Mathf.Clamp01(value);
-
-    //     for (int i = 0; i < bodyparts.Length; i++) {
-    //         bodyparts[i].SetStrengthMod(value);
-    //     }
-    // }
+    private void Health_stateChangedEvent(Character character, Health.State state) {
+        foreach (Bodypart bodypart in bodyparts) {
+            bodypart.SetStrengthMod(0); 
+        }
+    }
 }
 
 [Serializable]
@@ -114,16 +104,37 @@ public class Bodypart {
     }
 
     public void SetStrengthMod(float value) {
+        if (joint != null)
+            SetJointStrength(value);
+
         if (rotCopy == null)
             return;
 
         strengthMod = value;
         rotCopy.strengthMod = value;
     }
+
+    private void SetJointStrength(float value) {
+        JointDrive drive = new JointDrive();
+        Debug.Log("SET JOINT STRNGTH!");
+        drive.positionSpring = 0;
+
+        if (joint.rotationDriveMode == RotationDriveMode.XYAndZ) {
+            joint.angularXDrive = drive;
+            joint.angularYZDrive = drive;
+        }
+        else {
+            joint.slerpDrive = drive;
+        }      
+    }
 }
 
 [System.Serializable]
 public class ArmAimRig {
     public Transform arm_1_L, arm_2_L, hand_L, arm_1_R, arm_2_R, hand_R;
+}
+
+public struct ConfigurableJointValues {
+
 }
 

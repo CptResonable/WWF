@@ -23,7 +23,7 @@ public abstract class CharacterLS : Character {
         base.Awake();
         base.equipment = equipment;
 
-        body.Initialize();
+        body.Initialize(this);
         //CharacterColliderSetup.SetupIgnores(body);
         telemetry = new Telemetry(this);
         locomotion.Initialize(this);
