@@ -29,6 +29,13 @@ public class Telemetry {
         this.character = character;
         lastPosition = character.tMain.position;
 
+        character.StartCoroutine(DelayedInitialization());
+    }
+
+    // This is just a workaround for server character spazzing out on spawn, could not find the reason for that happening
+    private IEnumerator DelayedInitialization() {
+        yield return new WaitForSeconds(0.1f);
+        lastPosition = character.tMain.position;
         character.fixedUpdateEvent += Player_fixedUpdateEvent;
     }
 

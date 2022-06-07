@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  impactForce: 2
+  impactForce: 0.5
   projectileId: 0
   equipableId: 0
   clientId: 0
