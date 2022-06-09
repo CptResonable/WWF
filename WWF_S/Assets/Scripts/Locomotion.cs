@@ -27,6 +27,7 @@ public class Locomotion {
     public bool isSprinting;
 
     private Vector3 targetMoveVector;
+    private float forceScaler = 1;
 
     public event Delegates.BoolDelegate sprintChangedEvent;
 
@@ -38,6 +39,7 @@ public class Locomotion {
         character.torso.stateChangedEvent += Torso_stateChangedEvent;
         character.input.sprint.keyDownEvent += Sprint_keyDownEvent;
         character.input.sprint.keyUpEvent += Sprint_keyUpEvent;
+        character.health.stateChangedEvent += Health_stateChangedEvent;
 
         foreach (ImpactForceReceiver impactForceReceiver in impactForceReceivers) {
             impactForceReceiver.impactForceReceivedEvent += ImpactForceReceiver_impactForceReceivedEvent;
@@ -83,6 +85,14 @@ public class Locomotion {
         }
     }
 
+    private void Health_stateChangedEvent(Character character, Health.State state) {
+        if (state == Health.State.knocked) {
+            forceScaler = 0;
+            this.character.tMain.GetComponent<PhysicallyCopyRotation>().strengthMod = forceScaler;
+        }
+    }
+
+
     private void ImpactForceReceiver_impactForceReceivedEvent(ImpactForceReceiver impactForceReceiver, Vector3 force, Vector3 position) {
         //character.rbMain.AddForce(force);
     }
@@ -110,7 +120,7 @@ public class Locomotion {
             if (character.input.vecMoveXZ.magnitude < 0.1f && normalXZForce.magnitude < lateralForceLimit)
                 normalXZForce = Vector3.zero;
 
-            character.rbMain.AddForce(normalUpForce + normalXZForce);
+            character.rbMain.AddForce((normalUpForce + normalXZForce) * forceScaler);
         }
     }
 
@@ -132,7 +142,7 @@ public class Locomotion {
         moveForce.x = pid_x.ComputeOutput(error.x, character.telemetry.acceleration.x, Time.deltaTime);
         moveForce.z = pid_z.ComputeOutput(error.z, character.telemetry.acceleration.z, Time.deltaTime);
 
-        character.rbMain.AddForce(moveForce);
+        character.rbMain.AddForce(moveForce * forceScaler);
     }
 
 

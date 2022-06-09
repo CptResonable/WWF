@@ -8,7 +8,6 @@ public class PhysicallyCopyRotation : MonoBehaviour {
     [SerializeField] private Vector3 PidValues;
     [SerializeField] private Mode mode;
 
-
     public float strengthMod = 1;
     private float lastError = 0; // Used to calculate delta error, only used in y and xz mode
 

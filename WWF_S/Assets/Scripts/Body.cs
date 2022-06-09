@@ -7,6 +7,8 @@ using UnityEngine;
 public class Body {
     //public float inertiaTensorMod = 0;
 
+    public Rigidbody rbArmature;
+
     public Bodypart[] bodyparts;
     public Rigidbody[] rigidbodies;
     //public DrDatas.Player.PlayerBodyData bodyData;
@@ -56,9 +58,27 @@ public class Body {
     }
 
     private void Health_stateChangedEvent(Character character, Health.State state) {
-        foreach (Bodypart bodypart in bodyparts) {
-            bodypart.SetStrengthMod(0); 
+        if (state == Health.State.knocked) {
+            foreach (Bodypart bodypart in bodyparts) {
+                bodypart.SetStrengthMod(0);
+            }
+
+            RagdollifyLegs();
         }
+    }
+    
+    private void RagdollifyLegs() {
+        pelvis.Ragdollify(rbArmature);
+        leg_1_L.Ragdollify(pelvis.rb);
+        leg_2_L.Ragdollify(leg_1_L.rb);
+        leg_1_R.Ragdollify(pelvis.rb);
+        leg_2_R.Ragdollify(leg_1_R.rb);
+
+        pelvis.ragdoll.GetComponent<CopyRotation>().enabled = false;
+        leg_1_L.ragdoll.GetComponent<LerpRotation>().enabled = false;
+        leg_2_L.ragdoll.GetComponent<LerpRotation>().enabled = false;
+        leg_1_R.ragdoll.GetComponent<LerpRotation>().enabled = false;
+        leg_2_R.ragdoll.GetComponent<LerpRotation>().enabled = false;
     }
 }
 
@@ -101,6 +121,12 @@ public class Bodypart {
             //    pid = rotCopy.p
             //}
         }
+    }
+
+    public void Ragdollify(Rigidbody connectedBody) {
+        joint.connectedBody = connectedBody;
+        rb.isKinematic = false;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
     public void SetStrengthMod(float value) {
