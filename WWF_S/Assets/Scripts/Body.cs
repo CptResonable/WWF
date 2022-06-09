@@ -54,6 +54,12 @@ public class Body {
 
         rigidbodies = rbList.ToArray();
 
+        pelvis.Deragdollify();
+        leg_1_L.Deragdollify();
+        leg_2_L.Deragdollify();
+        leg_1_R.Deragdollify();
+        leg_2_R.Deragdollify();
+
         character.health.stateChangedEvent += Health_stateChangedEvent;
     }
 
@@ -122,11 +128,18 @@ public class Bodypart {
             //}
         }
     }
+    public void Deragdollify() {
+        joint.connectedBody = null;
+        rb.isKinematic = true;
+        rb.interpolation = RigidbodyInterpolation.None;
+        ragdoll.GetComponent<Collider>().enabled = false;
+    }
 
     public void Ragdollify(Rigidbody connectedBody) {
         joint.connectedBody = connectedBody;
         rb.isKinematic = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
+        ragdoll.GetComponent<Collider>().enabled = true;
     }
 
     public void SetStrengthMod(float value) {
