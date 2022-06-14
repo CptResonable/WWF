@@ -40,14 +40,22 @@ public class Projectile : MonoBehaviour {
 
     private void HitDetection() {
         if (Physics.Linecast(lastPoint, transform.position, out hit)) {
+
+            bool targetDestroyed = false;
+
             DamageReceiver damageReceiver;
             if (hit.transform.gameObject.TryGetComponent<DamageReceiver>(out damageReceiver)) {
-                damageReceiver.ReceiveDamage(damage);
+                targetDestroyed = damageReceiver.ReceiveDamage(damage);
             }
 
             ImpactForceReceiver forceReceiver;
             if (hit.transform.gameObject.TryGetComponent<ImpactForceReceiver>(out forceReceiver)) {
-                forceReceiver.ReceiveForce(impactForce * rb.velocity, hit.point);
+
+                Vector3 force = impactForce * rb.velocity;
+                if (targetDestroyed)
+                    force *= 10;
+
+                forceReceiver.ReceiveForce(force, hit.point);
             }
 
             rb.velocity = Vector3.zero;

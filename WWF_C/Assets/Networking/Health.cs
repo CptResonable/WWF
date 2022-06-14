@@ -27,6 +27,7 @@ public class Health {
         // Subscribe to damage received events from all damage receivers
         for (int i = 0; i < damageReceivers.Length; i++) {
             damageReceivers[i].damageReceivedEvent += DamageReceiver_damageReceivedEvent;
+            damageReceivers[i].health = this;
         }
 
         character.updateEvent += Update;

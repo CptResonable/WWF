@@ -487,6 +487,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMultiplier: 1
+  health:
+    state: 0
+    maxHP: 100
+    HP: 100
+    damageReceivers: []
 --- !u!114 &1889259720515286229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1079,6 +1084,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMultiplier: 1
+  health:
+    state: 0
+    maxHP: 100
+    HP: 100
+    damageReceivers: []
 --- !u!114 &7603401345520013858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1936,7 +1946,7 @@ GameObject:
   - component: {fileID: 6581076450329735537}
   - component: {fileID: 6992171031478281618}
   - component: {fileID: 4878260133355276921}
-  - component: {fileID: 5881286277027415631}
+  - component: {fileID: 906985383888542837}
   m_Layer: 6
   m_Name: Pelvis_p
   m_TagString: Untagged
@@ -2091,8 +2101,8 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!135 &5881286277027415631
-SphereCollider:
+--- !u!136 &906985383888542837
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2101,8 +2111,9 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.1
+  m_Height: 0.37
+  m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2823300521779098516
 GameObject:
@@ -2568,6 +2579,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMultiplier: 1
+  health:
+    state: 0
+    maxHP: 100
+    HP: 100
+    damageReceivers: []
 --- !u!114 &7951529179818344395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2993,6 +3009,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMultiplier: 1
+  health:
+    state: 0
+    maxHP: 100
+    HP: 100
+    damageReceivers: []
 --- !u!114 &3998302008329610545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4877,9 +4898,10 @@ GameObject:
   m_Component:
   - component: {fileID: 709262083956988741}
   - component: {fileID: 709262083956988742}
-  - component: {fileID: 3828108458356811817}
   - component: {fileID: 3240096362640290728}
   - component: {fileID: 4003669375021178308}
+  - component: {fileID: 2924623888064924369}
+  - component: {fileID: 6609502862668102699}
   m_Layer: 6
   m_Name: RB
   m_TagString: Untagged
@@ -4921,19 +4943,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &3828108458356811817
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6800888214475607018}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.29
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3240096362640290728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4963,6 +4972,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joint: {fileID: 8040625432194355752}
+--- !u!114 &2924623888064924369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6800888214475607018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c11ac5fb42e5d14eb4ac46626c33272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inertiaTensor: {x: 2, y: 2, z: 2}
+  execute: 0
+--- !u!136 &6609502862668102699
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6800888214475607018}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.1
+  m_Height: 0.37
+  m_Direction: 0
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6904612586797712512
 GameObject:
   m_ObjectHideFlags: 0
@@ -5922,6 +5959,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMultiplier: 1
+  health:
+    state: 0
+    maxHP: 100
+    HP: 100
+    damageReceivers: []
 --- !u!114 &2992480942842137532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6961,6 +7003,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMultiplier: 1
+  health:
+    state: 0
+    maxHP: 100
+    HP: 100
+    damageReceivers: []
 --- !u!114 &1809602932289416557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7273,6 +7320,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageMultiplier: 1
+  health:
+    state: 0
+    maxHP: 100
+    HP: 100
+    damageReceivers: []
 --- !u!114 &3865136733631457590
 MonoBehaviour:
   m_ObjectHideFlags: 0
