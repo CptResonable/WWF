@@ -23,6 +23,7 @@ public class ImpactEffectManager : MonoBehaviour {
                 case SurfaceTag.wood:
                     break;
                 case SurfaceTag.dirt:
+                    VfxManager.i.PlayEffect(VisualEffects.VfxEnum.impact_dirt, hit.transform, hit.point, hit.normal, true);
                     SoundManager.i.PlaySoundStatic(Sounds.i.impact_dirt, hit.point);
                     break;
                 default:

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 638455987314716290}
   - component: {fileID: 8208150419960062043}
   m_Layer: 0
-  m_Name: muzzleFlash
+  m_Name: vfxDirtKickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d993a7b46703136458d23596edf72f8f, type: 2}
+  - {fileID: 2100000, guid: dca73ce59017f0a48b287684f4bcbc34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,4 +95,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd76f6210856e52438c81ca70e703adc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 0.15
+  lifetime: 0.5
