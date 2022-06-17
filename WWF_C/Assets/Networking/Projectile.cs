@@ -15,6 +15,10 @@ public class Projectile : MonoBehaviour {
     private Rigidbody rb;
 
     private Vector3 lastPoint;
+
+    public delegate void ProjectileHitDelegate(Projectile projectile, RaycastHit hit);
+    public static event ProjectileHitDelegate ProjectileHitEvent;
+
     public void Initialize(ProjectileLaunchParams launchParams, ushort projectileId, ushort equipableId, ushort clientId, bool isVerified) {
         this.projectileId = projectileId;
         this.equipableId = equipableId;
@@ -57,6 +61,8 @@ public class Projectile : MonoBehaviour {
 
                 forceReceiver.ReceiveForce(force, hit.point);
             }
+
+            ProjectileHitEvent.Invoke(this, hit);
 
             rb.velocity = Vector3.zero;
             rb.position = hit.point;

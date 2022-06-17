@@ -763,34 +763,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1701af0df6c96fa45bfa3662b319541b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabPoolOptions:
-  - prefabTransform: {fileID: 2442518021316643548, guid: 4b2d10f16e7fb824b8e2f33bb3ae7ef9, type: 3}
-    instancesToPreload: 200
-    isPoolExpanded: 1
-    showDebugLog: 0
-    poolCanGrow: 1
-    cullDespawned: 0
-    cullAbove: 10
-    cullDelay: 2
-    cullAmount: 1
-    enableHardLimit: 0
-    hardLimit: 10
-    recycle: 0
-  - prefabTransform: {fileID: 638455987314716348, guid: 78b680f0f37a6d0479d39650b0200b83, type: 3}
-    instancesToPreload: 200
-    isPoolExpanded: 1
-    showDebugLog: 0
-    poolCanGrow: 1
-    cullDespawned: 0
-    cullAbove: 10
-    cullDelay: 2
-    cullAmount: 1
-    enableHardLimit: 0
-    hardLimit: 10
-    recycle: 0
+  prefabPoolOptions: []
   showDebugLog: 0
-  isRootExpanded: 1
-  autoAddMissingPrefabPool: 0
+  isRootExpanded: 0
+  autoAddMissingPrefabPool: 1
   usePoolManager: 1
 --- !u!224 &3977843114052078024
 RectTransform:
