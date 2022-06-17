@@ -13,11 +13,17 @@ public class Projectile : MonoBehaviour {
     public bool hasHitSomething;
     private RaycastHit hit;
     private Rigidbody rb;
-
+    private MeshRenderer meshRenderer;
     private Vector3 lastPoint;
+    private Coroutine autoDespawnCorutine;
 
     public delegate void ProjectileHitDelegate(Projectile projectile, RaycastHit hit);
     public static event ProjectileHitDelegate ProjectileHitEvent;
+
+    private void Awake() {
+        meshRenderer = GetComponent<MeshRenderer>();
+        rb = GetComponent<Rigidbody>();
+    }
 
     public void Initialize(ProjectileLaunchParams launchParams, ushort projectileId, ushort equipableId, ushort clientId, bool isVerified) {
         this.projectileId = projectileId;
@@ -25,11 +31,13 @@ public class Projectile : MonoBehaviour {
         this.clientId = clientId;
         this.isVerified = isVerified;
 
-        rb = GetComponent<Rigidbody>();
-
+        meshRenderer.enabled = true;
+        hasHitSomething = false;
         transform.position = launchParams.position;
         rb.velocity = launchParams.direction * launchParams.muzzleVelocity;
         lastPoint = transform.position;
+
+        autoDespawnCorutine = StartCoroutine(AutoDespawnCorutine());
     }
 
     private void FixedUpdate() {
@@ -66,12 +74,23 @@ public class Projectile : MonoBehaviour {
 
             rb.velocity = Vector3.zero;
             rb.position = hit.point;
-            //Destroy(rb);
             transform.position = hit.point;
+            meshRenderer.enabled = false;
             hasHitSomething = true;
 
-            EZ_Pooling.EZ_PoolManager.Despawn(transform);
+            StopCoroutine(autoDespawnCorutine);
+            StartCoroutine(DespawnDelayCorutine());
         }
         lastPoint = transform.position;
+    }
+
+    private IEnumerator DespawnDelayCorutine() {
+        yield return new WaitForSeconds(0.5f);
+        EZ_Pooling.EZ_PoolManager.Despawn(transform);
+    }
+
+    private IEnumerator AutoDespawnCorutine() {
+        yield return new WaitForSeconds(60);
+        EZ_Pooling.EZ_PoolManager.Despawn(transform);
     }
 }

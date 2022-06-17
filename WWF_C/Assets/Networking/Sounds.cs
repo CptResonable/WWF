@@ -21,6 +21,7 @@ public class Sounds : ScriptableObject {
     public SFX gs_dyiAk;
     public SFX footstep_dirt;
     public SFX impact_flesh;
+    public SFX impact_dirt;
 }
 
 

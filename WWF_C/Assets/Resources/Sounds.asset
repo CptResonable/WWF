@@ -40,4 +40,15 @@ MonoBehaviour:
     - {fileID: 8300000, guid: ed51735a15aabd043ad69365fa2c6ec8, type: 3}
     - {fileID: 8300000, guid: af75347e5158d9d4ca154eb312d437f5, type: 3}
     - {fileID: 8300000, guid: a805fceaf4a56f143b60ef6c27bd9ce3, type: 3}
-    volume: 0.228
+    volume: 0.1
+  impact_dirt:
+    variations:
+    - {fileID: 8300000, guid: b5656aeaeb878aa47904fb65358cba3f, type: 3}
+    - {fileID: 8300000, guid: f2f2ce393b14f7641a157bde3b74ed5b, type: 3}
+    - {fileID: 8300000, guid: 7439c1bd495f82046a315460bb14ffb7, type: 3}
+    - {fileID: 8300000, guid: a114571bd07125740a67d798b0599182, type: 3}
+    - {fileID: 8300000, guid: 23e94a8670e1f7a4e9a2b05f368ea0a7, type: 3}
+    - {fileID: 8300000, guid: 91e016e9a3fd4174f90adebabe8dcc00, type: 3}
+    - {fileID: 8300000, guid: 9a6bffa3f699f18448b8c97003367bed, type: 3}
+    - {fileID: 8300000, guid: 029c95f5ff0e033408532015591ae678, type: 3}
+    volume: 0.05

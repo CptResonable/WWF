@@ -69,8 +69,6 @@ public class EquipmentManagerL {
         equipable.Initialize(equipableData);
         equipables.Add(equipableData.equipableId, equipable);
 
-        Debug.Log("YOYOYOY ITEM SPAWNED 3!");
-
         ClientManagerL.i.playerManager.allPlayers[clientId].character.equipment.AddItem(equipable);
     }
 }

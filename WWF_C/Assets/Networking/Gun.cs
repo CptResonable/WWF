@@ -184,8 +184,6 @@ public class Gun : Equipable {
         if (characterLS.GetPlayer().playerType == Player.PlayerType.local)
             StartCoroutine(HeadRecoilCorutine(0.1f, new Vector2(-recoil.x - specs.baseHeadRecoil, recoil.y) * specs.headRecoilScale));
 
-        Debug.Log("Noise offset: " + recoilMultiplyerIndex);
-
         // Recoil scaling stuff.
         recoilMultiplyerIndex += specs.recoilInceasePerBullet;
         if (recoilMultiplyerIndex > 1)
