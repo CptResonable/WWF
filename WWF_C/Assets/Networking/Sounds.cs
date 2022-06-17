@@ -20,6 +20,7 @@ public class Sounds : ScriptableObject {
     public SFX gs_m1911;
     public SFX gs_dyiAk;
     public SFX footstep_dirt;
+    public SFX impact_flesh;
 }
 
 

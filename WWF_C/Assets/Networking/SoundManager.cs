@@ -5,9 +5,11 @@ using EZ_Pooling;
 
 [System.Serializable]
 public class SoundManager {
+    public static SoundManager i;
     [SerializeField] private Transform staticSoundContainer;
 
     public void Initialize() {
+        i = this;
         Gun.GunFiredEvent += Gun_gunFiredEvent;
     }
 
@@ -18,7 +20,7 @@ public class SoundManager {
     #endregion
 
     /// <summary> Plays a non moving sound effect  </summary>
-    private void PlaySoundStatic(SFX sfx, Vector3 position) {
+    public void PlaySoundStatic(SFX sfx, Vector3 position) {
 
         // Create SFX gameObject.
         GameObject sfxGameObject = EZ_PoolManager.Spawn(GameObjects.i.SFX_base.transform, position, Quaternion.identity).gameObject;
@@ -34,7 +36,7 @@ public class SoundManager {
     }
 
     /// <summary> Plays a moving sound effect  </summary>
-    private void PlaySound(SFX sfx, Vector3 position, Transform parent ) {
+    public void PlaySound(SFX sfx, Vector3 position, Transform parent ) {
 
         // Create SFX gameObject.
         GameObject sfxGameObject = EZ_PoolManager.Spawn(GameObjects.i.SFX_base.transform, position, Quaternion.identity).gameObject;

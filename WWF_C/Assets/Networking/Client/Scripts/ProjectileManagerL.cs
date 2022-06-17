@@ -16,7 +16,7 @@ public class ProjectileManagerL {
     
     /// <summary> Launch a projectile that is not yet verified by the server, returns a temporary id </summary>
     public ushort LaunchUnverifiedProjectile(ProjectileLaunchParams launchParams, ushort equipableId) {
-        GameObject goProjectile = GameObjects.Instantiate(GameObjects.i.projectiles[launchParams.projectileType], tProjectileContainer);
+        GameObject goProjectile = EZ_Pooling.EZ_PoolManager.Spawn(GameObjects.i.projectiles[launchParams.projectileType].transform, launchParams.position, Quaternion.identity).gameObject;
         Projectile projectile = goProjectile.GetComponent<Projectile>();
         projectile.Initialize(launchParams, tmpProjectileIdTicker, equipableId, ClientManagerL.i.localClient.ID, false);
         unverifiedProjectiles.Add(tmpProjectileIdTicker, projectile);
@@ -37,7 +37,9 @@ public class ProjectileManagerL {
 
     /// <summary> Launch projectile fired by networkplayer </summary>
     public void ProjectileLaunched(DrDatas.Guns.GunFiredData firedData) {
-        GameObject goProjectile = GameObjects.Instantiate(GameObjects.i.projectiles[firedData.launchParams.projectileType], tProjectileContainer);
+        Debug.Log("Launch enemy projectile!");
+        GameObject goProjectile = EZ_Pooling.EZ_PoolManager.Spawn(GameObjects.i.projectiles[firedData.launchParams.projectileType].transform, firedData.launchParams.position, Quaternion.identity).gameObject;
+        Debug.Log("proj name: " + goProjectile.name);
         Projectile projectile = goProjectile.GetComponent<Projectile>();
         projectile.Initialize(firedData.launchParams, tmpProjectileIdTicker, firedData.gunId, firedData.clientId, true);
         tmpProjectileIdTicker++;

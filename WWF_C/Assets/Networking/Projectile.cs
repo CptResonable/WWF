@@ -62,14 +62,15 @@ public class Projectile : MonoBehaviour {
                 forceReceiver.ReceiveForce(force, hit.point);
             }
 
-            ProjectileHitEvent.Invoke(this, hit);
+            ProjectileHitEvent?.Invoke(this, hit);
 
             rb.velocity = Vector3.zero;
             rb.position = hit.point;
-            Destroy(rb);
+            //Destroy(rb);
             transform.position = hit.point;
-            //transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             hasHitSomething = true;
+
+            EZ_Pooling.EZ_PoolManager.Despawn(transform);
         }
         lastPoint = transform.position;
     }

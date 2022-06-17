@@ -15,7 +15,7 @@ public class ProjectileManagerS {
     
     /// <summary> Launch a projectile </summary>
     public ushort LaunchProjectile(ProjectileLaunchParams launchParams, ushort equipableId, ushort clientId) {
-        GameObject goProjectile = GameObjects.Instantiate(GameObjects.i.projectiles[launchParams.projectileType], tProjectileContainer);
+        GameObject goProjectile = EZ_Pooling.EZ_PoolManager.Spawn(GameObjects.i.projectiles[launchParams.projectileType].transform, launchParams.position, Quaternion.identity).gameObject;
         Projectile projectile = goProjectile.GetComponent<Projectile>();
         projectile.Initialize(launchParams, tmpProjectileIdTicker, equipableId, clientId, true);
         tmpProjectileIdTicker++;
