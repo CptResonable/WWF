@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviour {
     private RaycastHit hit;
     private Rigidbody rb;
     private MeshRenderer meshRenderer;
+    private TrailRenderer trailRenderer;
     private Vector3 lastPoint;
     private Coroutine autoDespawnCorutine;
 
@@ -22,6 +23,7 @@ public class Projectile : MonoBehaviour {
 
     private void Awake() {
         meshRenderer = GetComponent<MeshRenderer>();
+        trailRenderer = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -36,6 +38,11 @@ public class Projectile : MonoBehaviour {
         transform.position = launchParams.position;
         rb.velocity = launchParams.direction * launchParams.muzzleVelocity;
         lastPoint = transform.position;
+
+        // Reset trail renderer
+        for (int i = 0; i < trailRenderer.positionCount; i++) {
+            trailRenderer.SetPosition(i, transform.position);
+        }
 
         autoDespawnCorutine = StartCoroutine(AutoDespawnCorutine());
     }

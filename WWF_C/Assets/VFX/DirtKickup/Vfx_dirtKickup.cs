@@ -14,7 +14,6 @@ public class Vfx_dirtKickup : VFX {
 
     IEnumerator DelayCorutine() {
         yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
         Color color = ColorReader.i.ReadColor();
         meshRenderer.material.SetFloat("_InitTime", Time.time);
         meshRenderer.material.SetFloat("_Lifetime", lifetime);
