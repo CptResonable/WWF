@@ -346,7 +346,7 @@ MonoBehaviour:
     recycle: 0
   showDebugLog: 0
   isRootExpanded: 1
-  autoAddMissingPrefabPool: 0
+  autoAddMissingPrefabPool: 1
   usePoolManager: 1
 --- !u!1 &1874768603
 GameObject:

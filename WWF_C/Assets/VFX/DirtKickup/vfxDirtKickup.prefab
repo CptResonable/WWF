@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 638455987314716348}
   - component: {fileID: 638455987314716349}
   - component: {fileID: 638455987314716290}
-  - component: {fileID: 8208150419960062043}
+  - component: {fileID: 1278246785286794566}
   m_Layer: 0
   m_Name: vfxDirtKickup
   m_TagString: Untagged
@@ -83,7 +83,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8208150419960062043
+--- !u!114 &1278246785286794566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 638455987314716288}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd76f6210856e52438c81ca70e703adc, type: 3}
+  m_Script: {fileID: 11500000, guid: af25e337251b881458e934c29292a1d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 0.5
