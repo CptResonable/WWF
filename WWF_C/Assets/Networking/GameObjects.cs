@@ -27,7 +27,7 @@ public class GameObjects : ScriptableObject {
     public Dictionary<EquipablesEnums, GameObject> equipables = new Dictionary<EquipablesEnums, GameObject>();
 
     // Projectiles
-    [Header("Equipables")]
+    [Header("Projectiles")]
     public GameObject bullet_45;
     public enum ProjectileEnums { bullet_45 }
     public Dictionary<ProjectileEnums, GameObject> projectiles = new Dictionary<ProjectileEnums, GameObject>();

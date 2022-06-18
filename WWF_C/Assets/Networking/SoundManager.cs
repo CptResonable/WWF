@@ -15,7 +15,8 @@ public class SoundManager {
 
     #region Event listeners
     private void Gun_gunFiredEvent(Gun gun, ProjectileLaunchParams lauchParams) {
-        PlaySoundStatic(Sounds.i.gs_dyiAk, lauchParams.position);
+        //PlaySoundStatic(Sounds.i.gs_dyiAk, lauchParams.position);
+        PlaySoundStatic(Sounds.i.gunshotSfxs[gun.specs.sfx], lauchParams.position);
     }
     #endregion
 

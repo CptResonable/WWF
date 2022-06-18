@@ -112,10 +112,12 @@ public class Gun : Equipable {
     }
 
     private void Character_updateEvent() {
-        if (characterLS.input.attack_1.isTriggered) {
-            if (!fireOnCooldown && bulletsInMagCount > 0)
-                Fire();
-        }
+
+        if (specs.fireMode == GunSpecs.FireModes.fullAuto)
+            if (characterLS.input.attack_1.isTriggered) {
+                if (!fireOnCooldown && bulletsInMagCount > 0)
+                    Fire();
+            }
 
         if (isReloading) {
             reloadProgress += Time.deltaTime / specs.reloadTime;
@@ -131,6 +133,9 @@ public class Gun : Equipable {
     protected override void Attack_1_keyDownEvent() {
         base.Attack_1_keyDownEvent();
 
+        if (specs.fireMode == GunSpecs.FireModes.semiAuto)
+            if (!fireOnCooldown && bulletsInMagCount > 0)
+                Fire();
         //if (specs.fireMode == GunSpecs.FireModes.semiAuto)
         //    Fire();
         //else if (specs.fireMode == GunSpecs.FireModes.fullAuto)
@@ -254,28 +259,4 @@ public class Gun : Equipable {
         yield return new WaitForSeconds(specs.minFireInterval);
         recoilIsReseting = true;
     }
-
-    private IEnumerator AutoFireCorutine() {
-        bool interupted = false;
-        while (!interupted && characterLS.input.attack_1.isTriggered) {
-            if (bulletsInMagCount <= 0) {
-                interupted = true;
-                continue;
-            }
-            Fire();
-            yield return new WaitForSeconds(specs.minFireInterval);
-        }
-    }
-
-    //private IEnumerator AutoFireCorutine() {
-    //    bool interupted = false;
-    //    while (!interupted && characterLS.input.attack_1.isTriggered) {
-    //        if (bulletsInMagCount <= 0) {
-    //            interupted = true;
-    //            continue;
-    //        }
-    //        Fire();
-    //        yield return new WaitForSeconds(specs.minFireInterval);
-    //    }
-    //}
 }
