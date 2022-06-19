@@ -15,7 +15,8 @@ public class SoundManager {
 
     #region Event listeners
     private void Gun_gunFiredEvent(Gun gun, ProjectileLaunchParams lauchParams) {
-        PlaySoundStatic(Sounds.i.gs_dyiAk, lauchParams.position);
+        //PlaySoundStatic(Sounds.i.gs_dyiAk, lauchParams.position);
+        PlaySoundStatic(Sounds.i.gunshotSfxs[gun.specs.sfx], lauchParams.position);
     }
     #endregion
 
@@ -28,9 +29,15 @@ public class SoundManager {
 
         // Get random variation and play it.
         AudioSource audioSource = sfxGameObject.GetComponent<AudioSource>();
+
+        float pitch = sfx.pitchMod + Random.Range(-1f, 1f) * sfx.pitchVariance;
+        if (sfx == Sounds.i.gs_dyiAk)
+            Debug.Log("PITCH! " + pitch);
+
         audioSource.clip = sfx.GetRandomVariation();
         audioSource.volume = sfx.volume;
-        audioSource.pitch = 1;
+        audioSource.pitch = pitch;
+        audioSource.spatialBlend = 1;
         audioSource.Play();
         sfxGameObject.GetComponent<Despawner>().DelayedDespawn(audioSource.clip.length);
     }
@@ -46,7 +53,7 @@ public class SoundManager {
         AudioSource audioSource = sfxGameObject.GetComponent<AudioSource>();
         audioSource.clip = sfx.GetRandomVariation();
         audioSource.volume = sfx.volume;
-        audioSource.pitch = 1;
+        audioSource.pitch = sfx.pitchMod;
         audioSource.Play();
         sfxGameObject.GetComponent<Despawner>().DelayedDespawn(audioSource.clip.length);
     }

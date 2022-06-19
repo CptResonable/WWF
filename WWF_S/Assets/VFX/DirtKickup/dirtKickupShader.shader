@@ -1,12 +1,13 @@
 // Made with Amplify Shader Editor
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "muzzleFlashShader"
+Shader "dirtKickupShader"
 {
 	Properties
 	{
 		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		[ASEBegin]_NoiseOffset("NoiseOffset", Vector) = (0,0,0,0)
+		_Color0("Color 0", Color) = (0.4056604,0.3153234,0.1817818,0)
 		_InitTime("InitTime", Float) = 0
 		_Lifetime("Lifetime", Float) = 0
 		[ASEEnd]_Size("Size", Float) = 0.02
@@ -166,6 +167,7 @@ Shader "muzzleFlashShader"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define _RECEIVE_SHADOWS_OFF 1
 			#define _EMISSION
 			#define ASE_SRP_VERSION 110000
 
@@ -261,11 +263,12 @@ Shader "muzzleFlashShader"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			UNITY_INSTANCING_BUFFER_START(muzzleFlashShader)
+			UNITY_INSTANCING_BUFFER_START(dirtKickupShader)
+				UNITY_DEFINE_INSTANCED_PROP(float4, _Color0)
 				UNITY_DEFINE_INSTANCED_PROP(float3, _NoiseOffset)
-				UNITY_DEFINE_INSTANCED_PROP(float, _InitTime)
 				UNITY_DEFINE_INSTANCED_PROP(float, _Lifetime)
-			UNITY_INSTANCING_BUFFER_END(muzzleFlashShader)
+				UNITY_DEFINE_INSTANCED_PROP(float, _InitTime)
+			UNITY_INSTANCING_BUFFER_END(dirtKickupShader)
 
 
 			float3 mod3D289( float3 x ) { return x - floor( x / 289.0 ) * 289.0; }
@@ -324,24 +327,24 @@ Shader "muzzleFlashShader"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				float3 _Vector0 = float3(0,0,1);
-				float dotResult14 = dot( _Vector0 , v.ase_normal );
-				float clampResult16 = clamp( dotResult14 , 0.0 , 1.0 );
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float temp_output_100_0 = ( 1.0 + temp_output_97_0 );
-				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_NoiseOffset);
-				float simplePerlin3D6 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
-				simplePerlin3D6 = simplePerlin3D6*0.5 + 0.5;
-				float3 lerpResult18 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
-				float3 lerpResult29 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
+				float dotResult18 = dot( _Vector0 , v.ase_normal );
+				float clampResult26 = clamp( dotResult18 , 0.0 , 1.0 );
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float temp_output_25_0 = ( 1.0 + temp_output_21_0 );
+				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_NoiseOffset);
+				float simplePerlin3D28 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
+				simplePerlin3D28 = simplePerlin3D28*0.5 + 0.5;
+				float3 lerpResult41 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
+				float3 lerpResult42 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult16 , 3.0 ) * ( 15.0 * temp_output_100_0 ) * pow( simplePerlin3D6 , 1.25 ) ) * lerpResult18 ) + ( lerpResult29 * ( pow( simplePerlin3D6 , 1.5 ) * ( 6.0 * temp_output_100_0 ) * pow( ( 1.0 - abs( dotResult14 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
+				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult26 , 3.0 ) * ( 15.0 * temp_output_25_0 ) * pow( simplePerlin3D28 , 1.25 ) ) * lerpResult41 ) + ( lerpResult42 * ( pow( simplePerlin3D28 , 1.5 ) * ( 6.0 * temp_output_25_0 ) * pow( ( 1.0 - abs( dotResult18 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -521,29 +524,29 @@ Shader "muzzleFlashShader"
 	
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
-				float4 color32 = IsGammaSpace() ? float4(1,0.8874891,0,0) : float4(1,0.762882,0,0);
+				float4 _Color0_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Color0);
 				
-				float3 worldToObj72 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
-				float2 appendResult82 = (float2(worldToObj72.x , worldToObj72.y));
-				float simplePerlin3D86 = snoise( ( worldToObj72 / _Size )*0.25 );
-				simplePerlin3D86 = simplePerlin3D86*0.5 + 0.5;
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float ifLocalVar74 = 0;
-				if( ( length( appendResult82 ) * simplePerlin3D86 ) >= ( pow( temp_output_97_0 , 3.0 ) * ( _Size * 15.0 ) ) )
-				ifLocalVar74 = 1.0;
+				float3 worldToObj40 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
+				float2 appendResult45 = (float2(worldToObj40.x , worldToObj40.y));
+				float simplePerlin3D48 = snoise( ( worldToObj40 / _Size )*0.25 );
+				simplePerlin3D48 = simplePerlin3D48*0.5 + 0.5;
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float ifLocalVar64 = 0;
+				if( ( length( appendResult45 ) * simplePerlin3D48 ) >= ( pow( temp_output_21_0 , 3.0 ) * ( _Size * 15.0 ) ) )
+				ifLocalVar64 = 1.0;
 				else
-				ifLocalVar74 = 0.0;
+				ifLocalVar64 = 0.0;
 				
-				float3 Albedo = color32.rgb;
+				float3 Albedo = _Color0_Instance.rgb;
 				float3 Normal = float3(0, 0, 1);
-				float3 Emission = ( color32 * 2.0 ).rgb;
+				float3 Emission = ( _Color0_Instance * 2.0 ).rgb;
 				float3 Specular = 0.5;
-				float Metallic = 0;
-				float Smoothness = 0.5;
+				float Metallic = 0.0;
+				float Smoothness = 0.0;
 				float Occlusion = 1;
-				float Alpha = ifLocalVar74;
+				float Alpha = ifLocalVar64;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -714,6 +717,7 @@ Shader "muzzleFlashShader"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define _RECEIVE_SHADOWS_OFF 1
 			#define _EMISSION
 			#define ASE_SRP_VERSION 110000
 
@@ -778,11 +782,11 @@ Shader "muzzleFlashShader"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			UNITY_INSTANCING_BUFFER_START(muzzleFlashShader)
+			UNITY_INSTANCING_BUFFER_START(dirtKickupShader)
 				UNITY_DEFINE_INSTANCED_PROP(float3, _NoiseOffset)
 				UNITY_DEFINE_INSTANCED_PROP(float, _InitTime)
 				UNITY_DEFINE_INSTANCED_PROP(float, _Lifetime)
-			UNITY_INSTANCING_BUFFER_END(muzzleFlashShader)
+			UNITY_INSTANCING_BUFFER_END(dirtKickupShader)
 
 
 			float3 mod3D289( float3 x ) { return x - floor( x / 289.0 ) * 289.0; }
@@ -841,24 +845,24 @@ Shader "muzzleFlashShader"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				float3 _Vector0 = float3(0,0,1);
-				float dotResult14 = dot( _Vector0 , v.ase_normal );
-				float clampResult16 = clamp( dotResult14 , 0.0 , 1.0 );
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float temp_output_100_0 = ( 1.0 + temp_output_97_0 );
-				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_NoiseOffset);
-				float simplePerlin3D6 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
-				simplePerlin3D6 = simplePerlin3D6*0.5 + 0.5;
-				float3 lerpResult18 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
-				float3 lerpResult29 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
+				float dotResult18 = dot( _Vector0 , v.ase_normal );
+				float clampResult26 = clamp( dotResult18 , 0.0 , 1.0 );
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float temp_output_25_0 = ( 1.0 + temp_output_21_0 );
+				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_NoiseOffset);
+				float simplePerlin3D28 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
+				simplePerlin3D28 = simplePerlin3D28*0.5 + 0.5;
+				float3 lerpResult41 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
+				float3 lerpResult42 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult16 , 3.0 ) * ( 15.0 * temp_output_100_0 ) * pow( simplePerlin3D6 , 1.25 ) ) * lerpResult18 ) + ( lerpResult29 * ( pow( simplePerlin3D6 , 1.5 ) * ( 6.0 * temp_output_100_0 ) * pow( ( 1.0 - abs( dotResult14 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
+				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult26 , 3.0 ) * ( 15.0 * temp_output_25_0 ) * pow( simplePerlin3D28 , 1.25 ) ) * lerpResult41 ) + ( lerpResult42 * ( pow( simplePerlin3D28 , 1.5 ) * ( 6.0 * temp_output_25_0 ) * pow( ( 1.0 - abs( dotResult18 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -989,20 +993,20 @@ Shader "muzzleFlashShader"
 					#endif
 				#endif
 
-				float3 worldToObj72 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
-				float2 appendResult82 = (float2(worldToObj72.x , worldToObj72.y));
-				float simplePerlin3D86 = snoise( ( worldToObj72 / _Size )*0.25 );
-				simplePerlin3D86 = simplePerlin3D86*0.5 + 0.5;
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float ifLocalVar74 = 0;
-				if( ( length( appendResult82 ) * simplePerlin3D86 ) >= ( pow( temp_output_97_0 , 3.0 ) * ( _Size * 15.0 ) ) )
-				ifLocalVar74 = 1.0;
+				float3 worldToObj40 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
+				float2 appendResult45 = (float2(worldToObj40.x , worldToObj40.y));
+				float simplePerlin3D48 = snoise( ( worldToObj40 / _Size )*0.25 );
+				simplePerlin3D48 = simplePerlin3D48*0.5 + 0.5;
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float ifLocalVar64 = 0;
+				if( ( length( appendResult45 ) * simplePerlin3D48 ) >= ( pow( temp_output_21_0 , 3.0 ) * ( _Size * 15.0 ) ) )
+				ifLocalVar64 = 1.0;
 				else
-				ifLocalVar74 = 0.0;
+				ifLocalVar64 = 0.0;
 				
-				float Alpha = ifLocalVar74;
+				float Alpha = ifLocalVar64;
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 				float DepthValue = 0;
@@ -1039,6 +1043,7 @@ Shader "muzzleFlashShader"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define _RECEIVE_SHADOWS_OFF 1
 			#define _EMISSION
 			#define ASE_SRP_VERSION 110000
 
@@ -1107,11 +1112,12 @@ Shader "muzzleFlashShader"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			UNITY_INSTANCING_BUFFER_START(muzzleFlashShader)
+			UNITY_INSTANCING_BUFFER_START(dirtKickupShader)
+				UNITY_DEFINE_INSTANCED_PROP(float4, _Color0)
 				UNITY_DEFINE_INSTANCED_PROP(float3, _NoiseOffset)
-				UNITY_DEFINE_INSTANCED_PROP(float, _InitTime)
 				UNITY_DEFINE_INSTANCED_PROP(float, _Lifetime)
-			UNITY_INSTANCING_BUFFER_END(muzzleFlashShader)
+				UNITY_DEFINE_INSTANCED_PROP(float, _InitTime)
+			UNITY_INSTANCING_BUFFER_END(dirtKickupShader)
 
 
 			float3 mod3D289( float3 x ) { return x - floor( x / 289.0 ) * 289.0; }
@@ -1170,17 +1176,17 @@ Shader "muzzleFlashShader"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				float3 _Vector0 = float3(0,0,1);
-				float dotResult14 = dot( _Vector0 , v.ase_normal );
-				float clampResult16 = clamp( dotResult14 , 0.0 , 1.0 );
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float temp_output_100_0 = ( 1.0 + temp_output_97_0 );
-				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_NoiseOffset);
-				float simplePerlin3D6 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
-				simplePerlin3D6 = simplePerlin3D6*0.5 + 0.5;
-				float3 lerpResult18 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
-				float3 lerpResult29 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
+				float dotResult18 = dot( _Vector0 , v.ase_normal );
+				float clampResult26 = clamp( dotResult18 , 0.0 , 1.0 );
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float temp_output_25_0 = ( 1.0 + temp_output_21_0 );
+				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_NoiseOffset);
+				float simplePerlin3D28 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
+				simplePerlin3D28 = simplePerlin3D28*0.5 + 0.5;
+				float3 lerpResult41 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
+				float3 lerpResult42 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
 				
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -1188,7 +1194,7 @@ Shader "muzzleFlashShader"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult16 , 3.0 ) * ( 15.0 * temp_output_100_0 ) * pow( simplePerlin3D6 , 1.25 ) ) * lerpResult18 ) + ( lerpResult29 * ( pow( simplePerlin3D6 , 1.5 ) * ( 6.0 * temp_output_100_0 ) * pow( ( 1.0 - abs( dotResult14 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
+				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult26 , 3.0 ) * ( 15.0 * temp_output_25_0 ) * pow( simplePerlin3D28 , 1.25 ) ) * lerpResult41 ) + ( lerpResult42 * ( pow( simplePerlin3D28 , 1.5 ) * ( 6.0 * temp_output_25_0 ) * pow( ( 1.0 - abs( dotResult18 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1315,25 +1321,25 @@ Shader "muzzleFlashShader"
 					#endif
 				#endif
 
-				float4 color32 = IsGammaSpace() ? float4(1,0.8874891,0,0) : float4(1,0.762882,0,0);
+				float4 _Color0_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Color0);
 				
-				float3 worldToObj72 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
-				float2 appendResult82 = (float2(worldToObj72.x , worldToObj72.y));
-				float simplePerlin3D86 = snoise( ( worldToObj72 / _Size )*0.25 );
-				simplePerlin3D86 = simplePerlin3D86*0.5 + 0.5;
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float ifLocalVar74 = 0;
-				if( ( length( appendResult82 ) * simplePerlin3D86 ) >= ( pow( temp_output_97_0 , 3.0 ) * ( _Size * 15.0 ) ) )
-				ifLocalVar74 = 1.0;
+				float3 worldToObj40 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
+				float2 appendResult45 = (float2(worldToObj40.x , worldToObj40.y));
+				float simplePerlin3D48 = snoise( ( worldToObj40 / _Size )*0.25 );
+				simplePerlin3D48 = simplePerlin3D48*0.5 + 0.5;
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float ifLocalVar64 = 0;
+				if( ( length( appendResult45 ) * simplePerlin3D48 ) >= ( pow( temp_output_21_0 , 3.0 ) * ( _Size * 15.0 ) ) )
+				ifLocalVar64 = 1.0;
 				else
-				ifLocalVar74 = 0.0;
+				ifLocalVar64 = 0.0;
 				
 				
-				float3 Albedo = color32.rgb;
-				float3 Emission = ( color32 * 2.0 ).rgb;
-				float Alpha = ifLocalVar74;
+				float3 Albedo = _Color0_Instance.rgb;
+				float3 Emission = ( _Color0_Instance * 2.0 ).rgb;
+				float Alpha = ifLocalVar64;
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1368,6 +1374,7 @@ Shader "muzzleFlashShader"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define _RECEIVE_SHADOWS_OFF 1
 			#define _EMISSION
 			#define ASE_SRP_VERSION 110000
 
@@ -1435,11 +1442,12 @@ Shader "muzzleFlashShader"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			UNITY_INSTANCING_BUFFER_START(muzzleFlashShader)
+			UNITY_INSTANCING_BUFFER_START(dirtKickupShader)
+				UNITY_DEFINE_INSTANCED_PROP(float4, _Color0)
 				UNITY_DEFINE_INSTANCED_PROP(float3, _NoiseOffset)
-				UNITY_DEFINE_INSTANCED_PROP(float, _InitTime)
 				UNITY_DEFINE_INSTANCED_PROP(float, _Lifetime)
-			UNITY_INSTANCING_BUFFER_END(muzzleFlashShader)
+				UNITY_DEFINE_INSTANCED_PROP(float, _InitTime)
+			UNITY_INSTANCING_BUFFER_END(dirtKickupShader)
 
 
 			float3 mod3D289( float3 x ) { return x - floor( x / 289.0 ) * 289.0; }
@@ -1498,17 +1506,17 @@ Shader "muzzleFlashShader"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
 				float3 _Vector0 = float3(0,0,1);
-				float dotResult14 = dot( _Vector0 , v.ase_normal );
-				float clampResult16 = clamp( dotResult14 , 0.0 , 1.0 );
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float temp_output_100_0 = ( 1.0 + temp_output_97_0 );
-				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_NoiseOffset);
-				float simplePerlin3D6 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
-				simplePerlin3D6 = simplePerlin3D6*0.5 + 0.5;
-				float3 lerpResult18 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
-				float3 lerpResult29 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
+				float dotResult18 = dot( _Vector0 , v.ase_normal );
+				float clampResult26 = clamp( dotResult18 , 0.0 , 1.0 );
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float temp_output_25_0 = ( 1.0 + temp_output_21_0 );
+				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_NoiseOffset);
+				float simplePerlin3D28 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
+				simplePerlin3D28 = simplePerlin3D28*0.5 + 0.5;
+				float3 lerpResult41 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
+				float3 lerpResult42 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
 				
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -1516,7 +1524,7 @@ Shader "muzzleFlashShader"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult16 , 3.0 ) * ( 15.0 * temp_output_100_0 ) * pow( simplePerlin3D6 , 1.25 ) ) * lerpResult18 ) + ( lerpResult29 * ( pow( simplePerlin3D6 , 1.5 ) * ( 6.0 * temp_output_100_0 ) * pow( ( 1.0 - abs( dotResult14 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
+				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult26 , 3.0 ) * ( 15.0 * temp_output_25_0 ) * pow( simplePerlin3D28 , 1.25 ) ) * lerpResult41 ) + ( lerpResult42 * ( pow( simplePerlin3D28 , 1.5 ) * ( 6.0 * temp_output_25_0 ) * pow( ( 1.0 - abs( dotResult18 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1640,24 +1648,24 @@ Shader "muzzleFlashShader"
 					#endif
 				#endif
 
-				float4 color32 = IsGammaSpace() ? float4(1,0.8874891,0,0) : float4(1,0.762882,0,0);
+				float4 _Color0_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Color0);
 				
-				float3 worldToObj72 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
-				float2 appendResult82 = (float2(worldToObj72.x , worldToObj72.y));
-				float simplePerlin3D86 = snoise( ( worldToObj72 / _Size )*0.25 );
-				simplePerlin3D86 = simplePerlin3D86*0.5 + 0.5;
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float ifLocalVar74 = 0;
-				if( ( length( appendResult82 ) * simplePerlin3D86 ) >= ( pow( temp_output_97_0 , 3.0 ) * ( _Size * 15.0 ) ) )
-				ifLocalVar74 = 1.0;
+				float3 worldToObj40 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
+				float2 appendResult45 = (float2(worldToObj40.x , worldToObj40.y));
+				float simplePerlin3D48 = snoise( ( worldToObj40 / _Size )*0.25 );
+				simplePerlin3D48 = simplePerlin3D48*0.5 + 0.5;
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float ifLocalVar64 = 0;
+				if( ( length( appendResult45 ) * simplePerlin3D48 ) >= ( pow( temp_output_21_0 , 3.0 ) * ( _Size * 15.0 ) ) )
+				ifLocalVar64 = 1.0;
 				else
-				ifLocalVar74 = 0.0;
+				ifLocalVar64 = 0.0;
 				
 				
-				float3 Albedo = color32.rgb;
-				float Alpha = ifLocalVar74;
+				float3 Albedo = _Color0_Instance.rgb;
+				float Alpha = ifLocalVar64;
 				float AlphaClipThreshold = 0.5;
 
 				half4 color = half4( Albedo, Alpha );
@@ -1689,6 +1697,7 @@ Shader "muzzleFlashShader"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define _RECEIVE_SHADOWS_OFF 1
 			#define _EMISSION
 			#define ASE_SRP_VERSION 110000
 
@@ -1754,11 +1763,11 @@ Shader "muzzleFlashShader"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			UNITY_INSTANCING_BUFFER_START(muzzleFlashShader)
+			UNITY_INSTANCING_BUFFER_START(dirtKickupShader)
 				UNITY_DEFINE_INSTANCED_PROP(float3, _NoiseOffset)
 				UNITY_DEFINE_INSTANCED_PROP(float, _InitTime)
 				UNITY_DEFINE_INSTANCED_PROP(float, _Lifetime)
-			UNITY_INSTANCING_BUFFER_END(muzzleFlashShader)
+			UNITY_INSTANCING_BUFFER_END(dirtKickupShader)
 
 
 			float3 mod3D289( float3 x ) { return x - floor( x / 289.0 ) * 289.0; }
@@ -1817,24 +1826,24 @@ Shader "muzzleFlashShader"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				float3 _Vector0 = float3(0,0,1);
-				float dotResult14 = dot( _Vector0 , v.ase_normal );
-				float clampResult16 = clamp( dotResult14 , 0.0 , 1.0 );
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float temp_output_100_0 = ( 1.0 + temp_output_97_0 );
-				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_NoiseOffset);
-				float simplePerlin3D6 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
-				simplePerlin3D6 = simplePerlin3D6*0.5 + 0.5;
-				float3 lerpResult18 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
-				float3 lerpResult29 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
+				float dotResult18 = dot( _Vector0 , v.ase_normal );
+				float clampResult26 = clamp( dotResult18 , 0.0 , 1.0 );
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float temp_output_25_0 = ( 1.0 + temp_output_21_0 );
+				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_NoiseOffset);
+				float simplePerlin3D28 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
+				simplePerlin3D28 = simplePerlin3D28*0.5 + 0.5;
+				float3 lerpResult41 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
+				float3 lerpResult42 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult16 , 3.0 ) * ( 15.0 * temp_output_100_0 ) * pow( simplePerlin3D6 , 1.25 ) ) * lerpResult18 ) + ( lerpResult29 * ( pow( simplePerlin3D6 , 1.5 ) * ( 6.0 * temp_output_100_0 ) * pow( ( 1.0 - abs( dotResult14 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
+				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult26 , 3.0 ) * ( 15.0 * temp_output_25_0 ) * pow( simplePerlin3D28 , 1.25 ) ) * lerpResult41 ) + ( lerpResult42 * ( pow( simplePerlin3D28 , 1.5 ) * ( 6.0 * temp_output_25_0 ) * pow( ( 1.0 - abs( dotResult18 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1968,20 +1977,20 @@ Shader "muzzleFlashShader"
 					#endif
 				#endif
 
-				float3 worldToObj72 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
-				float2 appendResult82 = (float2(worldToObj72.x , worldToObj72.y));
-				float simplePerlin3D86 = snoise( ( worldToObj72 / _Size )*0.25 );
-				simplePerlin3D86 = simplePerlin3D86*0.5 + 0.5;
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float ifLocalVar74 = 0;
-				if( ( length( appendResult82 ) * simplePerlin3D86 ) >= ( pow( temp_output_97_0 , 3.0 ) * ( _Size * 15.0 ) ) )
-				ifLocalVar74 = 1.0;
+				float3 worldToObj40 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
+				float2 appendResult45 = (float2(worldToObj40.x , worldToObj40.y));
+				float simplePerlin3D48 = snoise( ( worldToObj40 / _Size )*0.25 );
+				simplePerlin3D48 = simplePerlin3D48*0.5 + 0.5;
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float ifLocalVar64 = 0;
+				if( ( length( appendResult45 ) * simplePerlin3D48 ) >= ( pow( temp_output_21_0 , 3.0 ) * ( _Size * 15.0 ) ) )
+				ifLocalVar64 = 1.0;
 				else
-				ifLocalVar74 = 0.0;
+				ifLocalVar64 = 0.0;
 				
-				float Alpha = ifLocalVar74;
+				float Alpha = ifLocalVar64;
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 				float DepthValue = 0;
@@ -2024,6 +2033,7 @@ Shader "muzzleFlashShader"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define _RECEIVE_SHADOWS_OFF 1
 			#define _EMISSION
 			#define ASE_SRP_VERSION 110000
 
@@ -2117,11 +2127,12 @@ Shader "muzzleFlashShader"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			UNITY_INSTANCING_BUFFER_START(muzzleFlashShader)
+			UNITY_INSTANCING_BUFFER_START(dirtKickupShader)
+				UNITY_DEFINE_INSTANCED_PROP(float4, _Color0)
 				UNITY_DEFINE_INSTANCED_PROP(float3, _NoiseOffset)
-				UNITY_DEFINE_INSTANCED_PROP(float, _InitTime)
 				UNITY_DEFINE_INSTANCED_PROP(float, _Lifetime)
-			UNITY_INSTANCING_BUFFER_END(muzzleFlashShader)
+				UNITY_DEFINE_INSTANCED_PROP(float, _InitTime)
+			UNITY_INSTANCING_BUFFER_END(dirtKickupShader)
 
 
 			float3 mod3D289( float3 x ) { return x - floor( x / 289.0 ) * 289.0; }
@@ -2180,24 +2191,24 @@ Shader "muzzleFlashShader"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				float3 _Vector0 = float3(0,0,1);
-				float dotResult14 = dot( _Vector0 , v.ase_normal );
-				float clampResult16 = clamp( dotResult14 , 0.0 , 1.0 );
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float temp_output_100_0 = ( 1.0 + temp_output_97_0 );
-				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_NoiseOffset);
-				float simplePerlin3D6 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
-				simplePerlin3D6 = simplePerlin3D6*0.5 + 0.5;
-				float3 lerpResult18 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
-				float3 lerpResult29 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
+				float dotResult18 = dot( _Vector0 , v.ase_normal );
+				float clampResult26 = clamp( dotResult18 , 0.0 , 1.0 );
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float temp_output_25_0 = ( 1.0 + temp_output_21_0 );
+				float3 _NoiseOffset_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_NoiseOffset);
+				float simplePerlin3D28 = snoise( ( v.vertex.xyz + _NoiseOffset_Instance )*3.0 );
+				simplePerlin3D28 = simplePerlin3D28*0.5 + 0.5;
+				float3 lerpResult41 = lerp( _Vector0 , v.ase_normal , float3( 0.5,0.5,0.5 ));
+				float3 lerpResult42 = lerp( _Vector0 , v.ase_normal , float3( 0.75,0.75,0.75 ));
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult16 , 3.0 ) * ( 15.0 * temp_output_100_0 ) * pow( simplePerlin3D6 , 1.25 ) ) * lerpResult18 ) + ( lerpResult29 * ( pow( simplePerlin3D6 , 1.5 ) * ( 6.0 * temp_output_100_0 ) * pow( ( 1.0 - abs( dotResult14 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
+				float3 vertexValue = ( ( _Size * ( ( ( pow( clampResult26 , 3.0 ) * ( 15.0 * temp_output_25_0 ) * pow( simplePerlin3D28 , 1.25 ) ) * lerpResult41 ) + ( lerpResult42 * ( pow( simplePerlin3D28 , 1.5 ) * ( 6.0 * temp_output_25_0 ) * pow( ( 1.0 - abs( dotResult18 ) ) , 2.0 ) ) ) ) ) + ( v.ase_normal * float3( -0.5,-0.5,-0.5 ) ) );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -2376,29 +2387,29 @@ Shader "muzzleFlashShader"
 	
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
-				float4 color32 = IsGammaSpace() ? float4(1,0.8874891,0,0) : float4(1,0.762882,0,0);
+				float4 _Color0_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Color0);
 				
-				float3 worldToObj72 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
-				float2 appendResult82 = (float2(worldToObj72.x , worldToObj72.y));
-				float simplePerlin3D86 = snoise( ( worldToObj72 / _Size )*0.25 );
-				simplePerlin3D86 = simplePerlin3D86*0.5 + 0.5;
-				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_Lifetime);
-				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(muzzleFlashShader,_InitTime);
-				float temp_output_97_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
-				float ifLocalVar74 = 0;
-				if( ( length( appendResult82 ) * simplePerlin3D86 ) >= ( pow( temp_output_97_0 , 3.0 ) * ( _Size * 15.0 ) ) )
-				ifLocalVar74 = 1.0;
+				float3 worldToObj40 = mul( GetWorldToObjectMatrix(), float4( WorldPosition, 1 ) ).xyz;
+				float2 appendResult45 = (float2(worldToObj40.x , worldToObj40.y));
+				float simplePerlin3D48 = snoise( ( worldToObj40 / _Size )*0.25 );
+				simplePerlin3D48 = simplePerlin3D48*0.5 + 0.5;
+				float _Lifetime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_Lifetime);
+				float _InitTime_Instance = UNITY_ACCESS_INSTANCED_PROP(dirtKickupShader,_InitTime);
+				float temp_output_21_0 = ( 1.0 - ( ( _Lifetime_Instance - ( _TimeParameters.x - _InitTime_Instance ) ) / _Lifetime_Instance ) );
+				float ifLocalVar64 = 0;
+				if( ( length( appendResult45 ) * simplePerlin3D48 ) >= ( pow( temp_output_21_0 , 3.0 ) * ( _Size * 15.0 ) ) )
+				ifLocalVar64 = 1.0;
 				else
-				ifLocalVar74 = 0.0;
+				ifLocalVar64 = 0.0;
 				
-				float3 Albedo = color32.rgb;
+				float3 Albedo = _Color0_Instance.rgb;
 				float3 Normal = float3(0, 0, 1);
-				float3 Emission = ( color32 * 2.0 ).rgb;
+				float3 Emission = ( _Color0_Instance * 2.0 ).rgb;
 				float3 Specular = 0.5;
-				float Metallic = 0;
-				float Smoothness = 0.5;
+				float Metallic = 0.0;
+				float Smoothness = 0.0;
 				float Occlusion = 1;
-				float Alpha = ifLocalVar74;
+				float Alpha = ifLocalVar64;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -2553,139 +2564,143 @@ Shader "muzzleFlashShader"
 }
 /*ASEBEGIN
 Version=18935
-360;73;1280;655;2661.967;369.6859;3.955712;True;False
-Node;AmplifyShaderEditor.CommentaryNode;120;-843.4717,1185.112;Inherit;False;1196.256;628.7231;Time;12;89;90;93;94;96;97;75;112;98;92;100;88;;1,1,1,1;0;0
-Node;AmplifyShaderEditor.RangedFloatNode;89;-793.4717,1562.964;Inherit;False;InstancedProperty;_InitTime;InitTime;1;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleTimeNode;88;-793.4717,1466.964;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleSubtractOpNode;90;-577.8752,1509.176;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;93;-567.5883,1388.354;Inherit;False;InstancedProperty;_Lifetime;Lifetime;2;0;Create;True;0;0;0;False;0;False;0;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.NormalVertexDataNode;9;-673.4547,97.68941;Inherit;False;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.Vector3Node;13;-657.1619,-54.89541;Inherit;False;Constant;_Vector0;Vector 0;0;0;Create;True;0;0;0;False;0;False;0,0,1;0,0,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.SimpleSubtractOpNode;94;-423.5885,1468.354;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.PosVertexDataNode;11;-815.6002,-418.6432;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.Vector3Node;65;-815.6002,-258.6432;Inherit;False;InstancedProperty;_NoiseOffset;NoiseOffset;0;0;Create;True;0;0;0;False;0;False;0,0,0;0,0,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.DotProductOpNode;14;-314.4958,38.69232;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.CommentaryNode;118;-66,97.3564;Inherit;False;862.7495;469.6436;Radial;8;20;21;22;102;31;29;28;23;;1,1,1,1;0;0
-Node;AmplifyShaderEditor.SimpleDivideOpNode;96;-241.6068,1392.392;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleSubtractOpNode;97;-43.43621,1397.197;Inherit;False;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.AbsOpNode;20;-16,416;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;66;-607.5999,-418.6432;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.CommentaryNode;119;-72.02217,-449.1926;Inherit;False;884;452.5074;Forward;7;16;19;30;101;18;10;17;;1,1,1,1;0;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;100;117.8357,1235.112;Inherit;False;2;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ClampOpNode;16;-22.02218,-399.1926;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleSubtractOpNode;21;144,432;Inherit;False;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.NoiseGeneratorNode;6;-463.5999,-418.6432;Inherit;True;Simplex3D;True;False;2;0;FLOAT3;0,0,0;False;1;FLOAT;3;False;1;FLOAT;0
-Node;AmplifyShaderEditor.CommentaryNode;121;649.6672,630.3312;Inherit;False;1426.452;614.5302;Cutout;10;82;77;74;86;76;87;72;71;117;73;;1,1,1,1;0;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;101;147.3576,-131.6855;Inherit;False;2;2;0;FLOAT;15;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.PowerNode;30;159.1808,-253.5779;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;1.25;False;1;FLOAT;0
-Node;AmplifyShaderEditor.WorldPosInputsNode;71;699.6672,876.5865;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.PowerNode;19;153.9778,-383.1926;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;3;False;1;FLOAT;0
-Node;AmplifyShaderEditor.PowerNode;31;254.5029,289.3147;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;1.5;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;102;634.7495,368.6219;Inherit;False;2;2;0;FLOAT;6;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.PowerNode;22;304,432;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;2;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;28;491.0439,302.9188;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;12;False;2;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;103;-1415.335,726.3573;Inherit;False;Property;_Size;Size;3;0;Create;True;0;0;0;False;0;False;0.02;0.025;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;10;425.9778,-303.1927;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;30;False;2;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TransformPositionNode;72;874.6685,872.5865;Inherit;False;World;Object;False;Fast;True;1;0;FLOAT3;0,0,0;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.LerpOp;18;411.4632,-171.1493;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0.5,0.5,0.5;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.LerpOp;29;412.5704,147.3564;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0.75,0.75,0.75;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.RangedFloatNode;75;-241.0676,1697.835;Inherit;False;Constant;_Float2;Float 2;1;0;Create;True;0;0;0;False;0;False;15;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;17;649.9778,-207.1929;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.DynamicAppendNode;82;1323.803,821.4445;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.SimpleDivideOpNode;117;1142.067,940.7475;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;23;633.4932,163.9538;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.NoiseGeneratorNode;86;1300.865,985.8613;Inherit;True;Simplex3D;True;False;2;0;FLOAT3;0,0,0;False;1;FLOAT;0.25;False;1;FLOAT;0
-Node;AmplifyShaderEditor.NormalVertexDataNode;106;1103.2,-8.486884;Inherit;False;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleAddOpNode;25;861.5361,-81.6703;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.PowerNode;98;116.5237,1406.522;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;3;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;112;-40.73125,1595.634;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.LengthOpNode;73;1506.217,680.3312;Inherit;False;1;0;FLOAT2;0,0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;34;976.6219,-346.4801;Inherit;False;Constant;_Float0;Float 0;0;0;Create;True;0;0;0;False;0;False;2;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;109;1298.414,-0.2700195;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;-0.5,-0.5,-0.5;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;92;190.7843,1545.146;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;104;1107.518,-116.1315;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.ColorNode;32;907.6219,-554.4802;Inherit;False;Constant;_Color0;Color 0;0;0;Create;True;0;0;0;False;0;False;1,0.8874891,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;87;1708.122,966.7383;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;77;1539.247,827.9667;Inherit;False;Constant;_Float4;Float 4;1;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;76;1536.247,904.9669;Inherit;False;Constant;_Float3;Float 3;1;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;110;1426.414,-114.27;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;43;1179.467,-321.3689;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.ConditionalIfNode;74;1886.12,719.0358;Inherit;False;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;57;1280,-256;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;62;1280,-256;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;5;False;-1;10;False;-1;1;1;False;-1;10;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;2;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;55;1280,-256;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;61;1280,-256;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormals;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;56;2250.545,-294.1572;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;muzzleFlashShader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;5;False;-1;10;False;-1;1;1;False;-1;10;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;2;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;0;Surface;1;637893432814453577;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,-1;0;Translucency;0;0;  Translucency Strength;1,False,-1;0;  Normal Distortion;0.5,False,-1;0;  Scattering;2,False,-1;0;  Direct;0.9,False,-1;0;  Ambient;0.1,False,-1;0;  Shadow;0.5,False,-1;0;Cast Shadows;0;637910730861125904;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,-1;0;  Type;0;0;  Tess;16,False,-1;0;  Min;10,False,-1;0;  Max;25,False,-1;0;  Edge Length;16,False,-1;0;  Max Displacement;25,False,-1;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;637894244572154210;0;8;False;True;False;True;True;True;True;True;False;;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;58;1280,-256;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;60;1280,-256;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;5;False;-1;10;False;-1;1;1;False;-1;10;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;2;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;59;1280,-256;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-WireConnection;90;0;88;0
-WireConnection;90;1;89;0
-WireConnection;94;0;93;0
-WireConnection;94;1;90;0
-WireConnection;14;0;13;0
-WireConnection;14;1;9;0
-WireConnection;96;0;94;0
-WireConnection;96;1;93;0
-WireConnection;97;1;96;0
-WireConnection;20;0;14;0
-WireConnection;66;0;11;0
-WireConnection;66;1;65;0
-WireConnection;100;1;97;0
-WireConnection;16;0;14;0
+360;73;1280;612;1914.467;980.3805;1.3;True;False
+Node;AmplifyShaderEditor.CommentaryNode;8;-3771.565,407.6238;Inherit;False;1196.256;628.7231;Time;12;56;52;51;43;25;21;20;15;12;11;10;9;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.SimpleTimeNode;10;-3721.565,689.4757;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;9;-3721.565,785.4757;Inherit;False;InstancedProperty;_InitTime;InitTime;6;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;12;-3495.682,610.8657;Inherit;False;InstancedProperty;_Lifetime;Lifetime;7;0;Create;True;0;0;0;False;0;False;0;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleSubtractOpNode;11;-3505.969,731.6877;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleSubtractOpNode;15;-3351.682,690.8657;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.NormalVertexDataNode;13;-3601.548,-679.7989;Inherit;False;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Vector3Node;14;-3585.255,-832.3837;Inherit;False;Constant;_Vector0;Vector 0;0;0;Create;True;0;0;0;False;0;False;0,0,1;0,0,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.DotProductOpNode;18;-3242.589,-738.796;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleDivideOpNode;20;-3169.7,614.9037;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PosVertexDataNode;16;-3743.693,-1196.131;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Vector3Node;17;-3743.693,-1036.131;Inherit;False;InstancedProperty;_NoiseOffset;NoiseOffset;0;0;Create;True;0;0;0;False;0;False;0,0,0;0,0,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.CommentaryNode;19;-2994.093,-680.1319;Inherit;False;862.7495;469.6436;Radial;8;47;42;37;36;35;34;27;22;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.AbsOpNode;22;-2944.093,-361.4883;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;23;-3535.693,-1196.131;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.CommentaryNode;24;-3000.115,-1226.681;Inherit;False;884;452.5074;Forward;7;44;41;39;33;31;30;26;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.SimpleSubtractOpNode;21;-2971.53,619.7087;Inherit;False;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;25;-2810.258,457.6238;Inherit;False;2;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ClampOpNode;26;-2950.115,-1176.681;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.CommentaryNode;29;-2278.426,-147.1571;Inherit;False;1426.452;614.5302;Cutout;10;64;61;60;59;53;48;46;45;40;32;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.SimpleSubtractOpNode;27;-2784.093,-345.4883;Inherit;False;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.NoiseGeneratorNode;28;-3391.693,-1196.131;Inherit;True;Simplex3D;True;False;2;0;FLOAT3;0,0,0;False;1;FLOAT;3;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;30;-2780.736,-909.1738;Inherit;False;2;2;0;FLOAT;15;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PowerNode;31;-2768.912,-1031.066;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;1.25;False;1;FLOAT;0
+Node;AmplifyShaderEditor.WorldPosInputsNode;32;-2228.426,99.09821;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.PowerNode;34;-2673.59,-488.1736;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;1.5;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;35;-2293.344,-408.8664;Inherit;False;2;2;0;FLOAT;6;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PowerNode;36;-2624.093,-345.4883;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;2;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PowerNode;33;-2774.115,-1160.681;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;3;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;41;-2516.63,-948.6376;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0.5,0.5,0.5;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.LerpOp;42;-2515.523,-630.1319;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0.75,0.75,0.75;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;39;-2502.115,-1080.681;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;30;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;38;-4343.428,-51.13098;Inherit;False;Property;_Size;Size;8;0;Create;True;0;0;0;False;0;False;0.02;0.025;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;37;-2437.049,-474.5695;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;12;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TransformPositionNode;40;-2053.425,95.09821;Inherit;False;World;Object;False;Fast;True;1;0;FLOAT3;0,0,0;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.SimpleDivideOpNode;46;-1786.026,163.2592;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.DynamicAppendNode;45;-1604.29,43.95624;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;44;-2278.115,-984.6812;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.RangedFloatNode;43;-3169.161,920.3467;Inherit;False;Constant;_Float2;Float 2;1;0;Create;True;0;0;0;False;0;False;15;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;47;-2294.6,-613.5345;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;52;-2968.824,818.1458;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PowerNode;51;-2811.57,629.0337;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;3;False;1;FLOAT;0
+Node;AmplifyShaderEditor.NoiseGeneratorNode;48;-1627.228,208.373;Inherit;True;Simplex3D;True;False;2;0;FLOAT3;0,0,0;False;1;FLOAT;0.25;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LengthOpNode;53;-1421.876,-97.1571;Inherit;False;1;0;FLOAT2;0,0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.NormalVertexDataNode;49;-1824.893,-785.9752;Inherit;False;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleAddOpNode;50;-2066.557,-859.1586;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.RangedFloatNode;61;-1391.846,127.4786;Inherit;False;Constant;_Float3;Float 3;1;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;60;-1388.846,50.47839;Inherit;False;Constant;_Float4;Float 4;1;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;54;-1951.471,-1123.968;Inherit;False;Constant;_Float0;Float 0;0;0;Create;True;0;0;0;False;0;False;2;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;59;-1219.971,189.25;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;56;-2737.309,767.6577;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;58;-2020.471,-1331.969;Inherit;False;InstancedProperty;_Color0;Color 0;1;0;Create;True;0;0;0;False;0;False;0.4056604,0.3153234,0.1817818,0;0.4056604,0.3153234,0.1817818,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;55;-1629.679,-777.7583;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;-0.5,-0.5,-0.5;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;57;-1820.575,-893.6198;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.ConditionalIfNode;64;-1041.973,-58.45245;Inherit;False;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;65;-863.3452,-622.4601;Inherit;False;Constant;_Float1;Float 1;4;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;63;-1748.626,-1098.857;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;62;-1501.679,-891.7583;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.FunctionNode;66;-1358.071,-632.2054;Inherit;False;Blinn-Phong Light;2;;1;cf814dba44d007a4e958d2ddd5813da6;0;3;42;COLOR;0,0,0,0;False;52;FLOAT3;0,0,0;False;43;COLOR;0,0,0,0;False;2;COLOR;0;FLOAT;57
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;4;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;3;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;7;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;5;False;-1;10;False;-1;1;1;False;-1;10;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;2;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;5;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;5;False;-1;10;False;-1;1;1;False;-1;10;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;2;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;6;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormals;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;-666.176,-741.7505;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;dirtKickupShader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;5;False;-1;10;False;-1;1;1;False;-1;10;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;2;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;0;Surface;1;637910782634671719;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,-1;0;Translucency;0;0;  Translucency Strength;1,False,-1;0;  Normal Distortion;0.5,False,-1;0;  Scattering;2,False,-1;0;  Direct;0.9,False,-1;0;  Ambient;0.1,False,-1;0;  Shadow;0.5,False,-1;0;Cast Shadows;0;637910796586265061;  Use Shadow Threshold;0;0;Receive Shadows;0;637911508260855095;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,-1;0;  Type;0;0;  Tess;16,False,-1;0;  Min;10,False,-1;0;  Max;25,False,-1;0;  Edge Length;16,False,-1;0;  Max Displacement;25,False,-1;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;0;0;8;False;True;False;True;True;True;True;True;False;;False;0
+WireConnection;11;0;10;0
+WireConnection;11;1;9;0
+WireConnection;15;0;12;0
+WireConnection;15;1;11;0
+WireConnection;18;0;14;0
+WireConnection;18;1;13;0
+WireConnection;20;0;15;0
+WireConnection;20;1;12;0
+WireConnection;22;0;18;0
+WireConnection;23;0;16;0
+WireConnection;23;1;17;0
 WireConnection;21;1;20;0
-WireConnection;6;0;66;0
-WireConnection;101;1;100;0
-WireConnection;30;0;6;0
-WireConnection;19;0;16;0
-WireConnection;31;0;6;0
-WireConnection;102;1;100;0
-WireConnection;22;0;21;0
-WireConnection;28;0;31;0
-WireConnection;28;1;102;0
-WireConnection;28;2;22;0
-WireConnection;10;0;19;0
-WireConnection;10;1;101;0
-WireConnection;10;2;30;0
-WireConnection;72;0;71;0
-WireConnection;18;0;13;0
-WireConnection;18;1;9;0
-WireConnection;29;0;13;0
-WireConnection;29;1;9;0
-WireConnection;17;0;10;0
-WireConnection;17;1;18;0
-WireConnection;82;0;72;1
-WireConnection;82;1;72;2
-WireConnection;117;0;72;0
-WireConnection;117;1;103;0
-WireConnection;23;0;29;0
-WireConnection;23;1;28;0
-WireConnection;86;0;117;0
-WireConnection;25;0;17;0
-WireConnection;25;1;23;0
-WireConnection;98;0;97;0
-WireConnection;112;0;103;0
-WireConnection;112;1;75;0
-WireConnection;73;0;82;0
-WireConnection;109;0;106;0
-WireConnection;92;0;98;0
-WireConnection;92;1;112;0
-WireConnection;104;0;103;0
-WireConnection;104;1;25;0
-WireConnection;87;0;73;0
-WireConnection;87;1;86;0
-WireConnection;110;0;104;0
-WireConnection;110;1;109;0
-WireConnection;43;0;32;0
-WireConnection;43;1;34;0
-WireConnection;74;0;87;0
-WireConnection;74;1;92;0
-WireConnection;74;2;77;0
-WireConnection;74;3;77;0
-WireConnection;74;4;76;0
-WireConnection;56;0;32;0
-WireConnection;56;2;43;0
-WireConnection;56;6;74;0
-WireConnection;56;8;110;0
+WireConnection;25;1;21;0
+WireConnection;26;0;18;0
+WireConnection;27;1;22;0
+WireConnection;28;0;23;0
+WireConnection;30;1;25;0
+WireConnection;31;0;28;0
+WireConnection;34;0;28;0
+WireConnection;35;1;25;0
+WireConnection;36;0;27;0
+WireConnection;33;0;26;0
+WireConnection;41;0;14;0
+WireConnection;41;1;13;0
+WireConnection;42;0;14;0
+WireConnection;42;1;13;0
+WireConnection;39;0;33;0
+WireConnection;39;1;30;0
+WireConnection;39;2;31;0
+WireConnection;37;0;34;0
+WireConnection;37;1;35;0
+WireConnection;37;2;36;0
+WireConnection;40;0;32;0
+WireConnection;46;0;40;0
+WireConnection;46;1;38;0
+WireConnection;45;0;40;1
+WireConnection;45;1;40;2
+WireConnection;44;0;39;0
+WireConnection;44;1;41;0
+WireConnection;47;0;42;0
+WireConnection;47;1;37;0
+WireConnection;52;0;38;0
+WireConnection;52;1;43;0
+WireConnection;51;0;21;0
+WireConnection;48;0;46;0
+WireConnection;53;0;45;0
+WireConnection;50;0;44;0
+WireConnection;50;1;47;0
+WireConnection;59;0;53;0
+WireConnection;59;1;48;0
+WireConnection;56;0;51;0
+WireConnection;56;1;52;0
+WireConnection;55;0;49;0
+WireConnection;57;0;38;0
+WireConnection;57;1;50;0
+WireConnection;64;0;59;0
+WireConnection;64;1;56;0
+WireConnection;64;2;60;0
+WireConnection;64;3;60;0
+WireConnection;64;4;61;0
+WireConnection;63;0;58;0
+WireConnection;63;1;54;0
+WireConnection;62;0;57;0
+WireConnection;62;1;55;0
+WireConnection;1;0;58;0
+WireConnection;1;2;63;0
+WireConnection;1;3;65;0
+WireConnection;1;4;65;0
+WireConnection;1;6;64;0
+WireConnection;1;8;62;0
 ASEEND*/
-//CHKSM=FD3AA223E1BCBBE0BA0CF3478BB7D34024349AE8
+//CHKSM=FA390161ED6D57956B868C87AAAC4DBBDED3662C

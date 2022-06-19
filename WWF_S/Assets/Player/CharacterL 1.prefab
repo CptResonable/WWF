@@ -1151,6 +1151,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1739836410241570076, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1936066294042882144, guid: f6f9d26cb1925074db750c6b2c29af9c, type: 3}
       propertyPath: m_Enabled
       value: 0

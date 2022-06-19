@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GunSpec_p25_2
   m_EditorClassIdentifier: 
   _ammoType: 0
-  fireMode: 1
+  fireMode: 0
   muzzleVelocity: 715
   rpm: 600
   magSize: 11

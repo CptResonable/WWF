@@ -12,22 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016cf13ce523f5e4da23ef9afb9642cc, type: 3}
   m_Name: Sounds
   m_EditorClassIdentifier: 
-  gs_m1911:
-    variations:
-    - {fileID: 8300000, guid: 2d0495e94d00cbd43b90deccadd17c0c, type: 3}
-    - {fileID: 8300000, guid: 061d03172eb210b4b86703752dea3311, type: 3}
-    - {fileID: 8300000, guid: 3f91925b0e830a14a8c97d799bc076f9, type: 3}
-    - {fileID: 8300000, guid: dc6e0e25c3e189a479757542d60e1dc4, type: 3}
-    - {fileID: 8300000, guid: 65106586eb7f5fe4e9bf367f00fd27da, type: 3}
-    - {fileID: 8300000, guid: 2f9e9b8713a50ce43aeab126f8cf1604, type: 3}
-    volume: 0.36
-  gs_dyiAk:
-    variations:
-    - {fileID: 8300000, guid: bf5b6f88afa3fa1498e5c3ff73ec2324, type: 3}
-    volume: 0.04
   footstep_dirt:
     variations: []
     volume: 0
+    pitchMod: 1
+    pitchVariance: 0
   impact_flesh:
     variations:
     - {fileID: 8300000, guid: a6d5ce5c302401f4ba860c1b9ca3efcd, type: 3}
@@ -41,6 +30,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: af75347e5158d9d4ca154eb312d437f5, type: 3}
     - {fileID: 8300000, guid: a805fceaf4a56f143b60ef6c27bd9ce3, type: 3}
     volume: 0.1
+    pitchMod: 1
+    pitchVariance: 0
   impact_dirt:
     variations:
     - {fileID: 8300000, guid: b5656aeaeb878aa47904fb65358cba3f, type: 3}
@@ -51,4 +42,23 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 91e016e9a3fd4174f90adebabe8dcc00, type: 3}
     - {fileID: 8300000, guid: 9a6bffa3f699f18448b8c97003367bed, type: 3}
     - {fileID: 8300000, guid: 029c95f5ff0e033408532015591ae678, type: 3}
+    volume: 0.1
+    pitchMod: 0.75
+    pitchVariance: 0
+  gs_m1911:
+    variations:
+    - {fileID: 8300000, guid: 2d0495e94d00cbd43b90deccadd17c0c, type: 3}
+    - {fileID: 8300000, guid: 061d03172eb210b4b86703752dea3311, type: 3}
+    - {fileID: 8300000, guid: 3f91925b0e830a14a8c97d799bc076f9, type: 3}
+    - {fileID: 8300000, guid: dc6e0e25c3e189a479757542d60e1dc4, type: 3}
+    - {fileID: 8300000, guid: 65106586eb7f5fe4e9bf367f00fd27da, type: 3}
+    - {fileID: 8300000, guid: 2f9e9b8713a50ce43aeab126f8cf1604, type: 3}
     volume: 0.05
+    pitchMod: 0.9
+    pitchVariance: 0.1
+  gs_dyiAk:
+    variations:
+    - {fileID: 8300000, guid: bf5b6f88afa3fa1498e5c3ff73ec2324, type: 3}
+    volume: 0.04
+    pitchMod: 0.9
+    pitchVariance: 0.1

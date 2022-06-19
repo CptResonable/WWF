@@ -17,3 +17,5 @@ MonoBehaviour:
     vfx: {fileID: 638455987314716288, guid: 78b680f0f37a6d0479d39650b0200b83, type: 3}
   - vfxEnum: 2
     vfx: {fileID: 686620732679336379, guid: 1e796a1b7f1b0c2429a14974b62644b6, type: 3}
+  - vfxEnum: 1
+    vfx: {fileID: 638455987314716288, guid: ac017b1e7d5ac9d408dfbc0204869dac, type: 3}

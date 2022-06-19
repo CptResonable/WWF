@@ -8,10 +8,11 @@ using UnityEngine;
 public class GunSpecs : ScriptableObject {
     enum AmmoTypes { bullet_45ACP }
     public enum FireModes { semiAuto, fullAuto }
+    public FireModes fireMode;
+    public Sounds.GunshotSfxEnums sfx;
 
     [SerializeField] AmmoTypes _ammoType;
     Type ammoType;
-    public FireModes fireMode;
     public float muzzleVelocity;
     public float rpm;
     [HideInInspector] public float minFireInterval { private set; get; }

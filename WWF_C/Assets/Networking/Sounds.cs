@@ -37,6 +37,8 @@ public class Sounds : ScriptableObject {
 public class SFX {
     public AudioClip[] variations;
     [Range(0, 1)] public float volume;
+    [Range(0, 2)] public float pitchMod;
+    [Range(0, 0.5f)] public float pitchVariance;
 
     public AudioClip GetRandomVariation() {
         return variations[UnityEngine.Random.Range(0, variations.Length - 1)];
